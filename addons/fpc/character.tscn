@@ -1,0 +1,174 @@
+[gd_scene load_steps=13 format=3 uid="uid://cc1m2a1obsyn4"]
+
+[ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
+[ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
+[ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
+[ext_resource type="Script" path="res://addons/fpc/PlayerInventory.gd" id="4_wm3oi"]
+[ext_resource type="Resource" uid="uid://bbp1k8wssluac" path="res://weapon/resources/weapon_default.tres" id="5_20nk6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
+albedo_color = Color(0.909804, 0.596078, 0, 1)
+clearcoat_enabled = true
+clearcoat_roughness = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
+material = SubResource("StandardMaterial3D_kp17n")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
+
+[sub_resource type="Animation" id="Animation_gh776"]
+resource_name = "RESET"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_lrqmv"]
+resource_name = "headbob"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0.04, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -0.04, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0.04, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-0.05, -0.25, 0, 0.2, 0.005, 0, -0.25, 0, 0.25, 0, -0.05, -0.2, 0.005, 0.2, 0.005, 0, -0.25, 0, 0.25, 0, -0.05, -0.2, 0.005, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o0unb"]
+_data = {
+"RESET": SubResource("Animation_gh776"),
+"headbob": SubResource("Animation_lrqmv")
+}
+
+[sub_resource type="Theme" id="Theme_wdf0f"]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH", "player_inventory")]
+script = ExtResource("1_0t4e8")
+HEAD = NodePath("Head")
+CAMERA = NodePath("Head/Camera")
+CAMERA_ANIMATION = NodePath("Head/camera_animation")
+COLLISION_MESH = NodePath("Collision")
+player_inventory = NodePath("PlayerInventory")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_jw1de")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_uy03j")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+
+[node name="FPSRig" type="Node3D" parent="Head/Camera"]
+
+[node name="camera_animation" type="AnimationPlayer" parent="Head"]
+libraries = {
+"": SubResource("AnimationLibrary_o0unb")
+}
+blend_times = [&"headbob", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"RESET", &"RESET", 0.5]
+
+[node name="CrouchCeilingDetection" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, 1, 0)
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Reticle_1" parent="UserInterface" node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
+layout_mode = 1
+reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
+character = NodePath("../..")
+
+[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
+visible = false
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 453.0
+offset_bottom = 50.0
+theme = SubResource("Theme_wdf0f")
+script = ExtResource("3_x1wcc")
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="PlayerInventory" type="Node" parent="."]
+script = ExtResource("4_wm3oi")
+default_weapon_resource = ExtResource("5_20nk6")
+
+[editable path="UserInterface/Reticle_1"]
