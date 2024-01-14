@@ -76,6 +76,8 @@ func equip_weapon():
 	print("WeaponManager: Equip weapon %s" % active_weapon_slot_index)
 	player_model = weapon_resource_array[active_weapon_slot_index].player_model.instantiate()
 	PlayerManager.player.FPS_RIG.add_child(player_model)
+	player_model.position = weapon_resource_array[active_weapon_slot_index].default_position
+	player_model.rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
 
 
 func unequip_weapon():
