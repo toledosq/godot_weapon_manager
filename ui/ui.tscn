@@ -41,10 +41,10 @@ offset_bottom = 50.0
 [node name="ContainerInventory" parent="InventoryInterface" instance=ExtResource("2_l1pmx")]
 visible = false
 layout_mode = 0
-offset_left = 1121.0
-offset_top = 393.0
-offset_right = 1161.0
-offset_bottom = 433.0
+offset_left = 600.0
+offset_top = 10.0
+offset_right = 640.0
+offset_bottom = 50.0
 
 [node name="GrabbedSlot" parent="InventoryInterface" instance=ExtResource("3_jkjib")]
 visible = false
