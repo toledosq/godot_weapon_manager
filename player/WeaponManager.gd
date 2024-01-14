@@ -55,6 +55,9 @@ func set_active_weapon_slot(weapon_slot_index):
 	EventBus.active_weapon_changed.emit(active_weapon_slot_index)
 	print("WeaponManager: Active slot = ", active_weapon_slot_index)
 	
+	
+	if player_model != null:
+		unequip_weapon()
 	equip_weapon()
 
 
@@ -63,8 +66,10 @@ func fire_weapon():
 		print("WeaponManager: Slot is empty, cannot fire")
 		return
 	
-	# Tell weapon to fire
+	# Call the weapon resource's fire function to increment ammo
 	weapon_resource_array[active_weapon_slot_index].fire()
+	# Call the weapon model's fire function for animation
+	player_model.fire()
 
 
 func equip_weapon():
@@ -75,5 +80,5 @@ func equip_weapon():
 
 func unequip_weapon():
 	print("WeaponManager: Unequip weapon %s" % active_weapon_slot_index)
-	player_model.queue_free()
+	player_model.unequip()
 	
