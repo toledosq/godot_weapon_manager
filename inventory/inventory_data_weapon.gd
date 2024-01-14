@@ -1,7 +1,7 @@
 class_name InventoryDataWeapon extends InventoryData
 
-signal weapon_equipped(slot_data)
-signal weapon_unequipped()
+signal weapon_equipped(index)
+signal weapon_unequipped(index)
 
 # When player grabs an item from inventory
 func grab_slot_data(index: int) -> SlotData:
@@ -14,7 +14,7 @@ func grab_slot_data(index: int) -> SlotData:
 		inventory_updated.emit(self)
 		
 		# Alert weapon unequipped
-		weapon_unequipped.emit()
+		EventBus.weapon_unequipped.emit(index)
 		
 		# Give the grabbed slot's data to requestor
 		return slot_data
@@ -30,7 +30,7 @@ func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 		return grabbed_slot_data
 	
 	# Otherwise, drop it into the slot (using parents' function)
-	weapon_equipped.emit(grabbed_slot_data)
+	EventBus.weapon_equipped.emit(index)
 	return super.drop_slot_data(grabbed_slot_data, index)
 
 
@@ -42,5 +42,5 @@ func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 		return grabbed_slot_data
 	
 	# Otherwise, drop it into the slot (using parents' function)
-	weapon_equipped.emit()
+	EventBus.weapon_equipped.emit(index)
 	return super.drop_single_slot_data(grabbed_slot_data, index)
