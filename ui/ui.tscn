@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqslsrof1c25y"]
+[gd_scene load_steps=6 format=3 uid="uid://bqslsrof1c25y"]
 
 [ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="1_dpajk"]
+[ext_resource type="Script" path="res://ui/ui.gd" id="1_pr4e2"]
 [ext_resource type="PackedScene" uid="uid://dgx5uhiu3bkra" path="res://inventory/inventory.tscn" id="2_l1pmx"]
 [ext_resource type="PackedScene" uid="uid://btwia68styqve" path="res://inventory/slot.tscn" id="3_jkjib"]
 [ext_resource type="PackedScene" uid="uid://dd5s5axgliocv" path="res://inventory/hot_bar_inventory.tscn" id="4_i1rt4"]
 
 [node name="UI" type="CanvasLayer"]
+script = ExtResource("1_pr4e2")
 
 [node name="InventoryInterface" type="Control" parent="."]
 visible = false
@@ -59,6 +61,24 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 430.0
 offset_bottom = 90.0
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ActiveWeaponLabel" type="Label" parent="HUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "0"
 
 [connection signal="gui_input" from="InventoryInterface" to="InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="InventoryInterface" to="InventoryInterface" method="_on_visibility_changed"]

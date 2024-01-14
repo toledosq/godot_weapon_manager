@@ -8,4 +8,5 @@ signal toggle_inventory(external_inventory_owner)
 
 
 func interact() -> void:
+	print(self, ": Interacted with")
 	toggle_inventory.emit(self)

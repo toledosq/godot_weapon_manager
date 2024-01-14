@@ -19,6 +19,7 @@ class_name Player extends CharacterBody3D
 @export var CAMERA_ANIMATION : AnimationPlayer
 @export var COLLISION_MESH : CollisionShape3D
 @export var INTERACT_RAY : RayCast3D
+@export var WEAPON_MANAGER : WeaponManager
 
 @export_group("Controls")
 # We are using UI controls because they are built into Godot Engine so they can be used right away
@@ -257,7 +258,7 @@ func _unhandled_input(event):
 		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
 	
 	if Input.is_action_pressed("weapon_fire"):
-		print("Player: fire weapon")
+		fire_weapon()
 	
 	if Input.is_action_just_pressed("weapon_reload"):
 		print("Player: reload weapon")
@@ -267,13 +268,20 @@ func _unhandled_input(event):
 	
 	if Input.is_action_just_pressed("interact"):
 		interact()
+	
+	if Input.is_action_just_pressed("primary_weapon"):
+		print("Player: Equip primary weapon")
+		set_active_weapon_slot(0)
+	
+	if Input.is_action_just_pressed("secondary_weapon"):
+		print("Player: Equip secondary weapon")
+		set_active_weapon_slot(1)
 
 
 func interact() -> void:
 	print("Player: Interact called")
 	if INTERACT_RAY.is_colliding():
 		var interact_object = INTERACT_RAY.get_collider()
-		print("Player: Interacted with %s" % interact_object.name)
 		if interact_object.has_method("interact"):
 			print("Player: Calling interact on %s" % interact_object.name)
 			interact_object.interact()
@@ -283,3 +291,13 @@ func get_drop_position() -> Vector3:
 	# Get forward facing direction from camera
 	var direction = -CAMERA.global_transform.basis.z
 	return CAMERA.global_position + direction
+
+
+func set_active_weapon_slot(index):
+	print("Player: Set active weapon slot to ", index)
+	WEAPON_MANAGER.set_active_weapon_slot(index)
+
+
+func fire_weapon():
+	print("Player: fire weapon")
+	WEAPON_MANAGER.fire_weapon()

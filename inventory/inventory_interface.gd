@@ -14,7 +14,6 @@ var container
 @onready var armor_inventory = $ArmorInventory
 @onready var weapon_inventory = $WeaponInventory
 
-
 func _physics_process(_delta):
 	# If an item is grabbed (grabbed), have it follow the cursor
 	if grabbed_slot.visible:

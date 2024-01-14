@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=18 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://inventory/inventory_data_armor.gd" id="3_radmv"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 [ext_resource type="Script" path="res://inventory/inventory_data_weapon.gd" id="4_c4tes"]
+[ext_resource type="Script" path="res://player/WeaponManager.gd" id="7_ru6it"]
 
 [sub_resource type="Resource" id="Resource_5yuaq"]
 script = ExtResource("2_4ykg7")
@@ -117,7 +118,7 @@ MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH", "INTERACT_RAY")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH", "INTERACT_RAY", "WEAPON_MANAGER")]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_0t4e8")
@@ -126,6 +127,7 @@ CAMERA = NodePath("Head/Camera")
 CAMERA_ANIMATION = NodePath("Head/camera_animation")
 COLLISION_MESH = NodePath("Collision")
 INTERACT_RAY = NodePath("Head/Camera/InteractRay")
+WEAPON_MANAGER = NodePath("WeaponManager")
 inventory_data = SubResource("Resource_5yuaq")
 armor_inventory_data = SubResource("Resource_ki7oc")
 weapon_inventory_data = SubResource("Resource_hieul")
@@ -189,5 +191,8 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
 layout_mode = 2
+
+[node name="WeaponManager" type="Node" parent="."]
+script = ExtResource("7_ru6it")
 
 [editable path="UserInterface/Reticle_1"]

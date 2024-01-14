@@ -26,7 +26,7 @@ func _ready() -> void:
 
 
 func interact():
-	print(self, "interacted with")
+	print(self, ": Was interacted with")
 	if PlayerManager.player.inventory_data.pick_up_slot_data(slot_data):
 	# If successful, just delete pickup
 		queue_free()

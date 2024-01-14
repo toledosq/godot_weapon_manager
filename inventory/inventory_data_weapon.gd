@@ -30,7 +30,7 @@ func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 		return grabbed_slot_data
 	
 	# Otherwise, drop it into the slot (using parents' function)
-	EventBus.add_weapon.emit(index)
+	EventBus.add_weapon.emit(index, grabbed_slot_data.item_data)
 	return super.drop_slot_data(grabbed_slot_data, index)
 
 
@@ -42,5 +42,5 @@ func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 		return grabbed_slot_data
 	
 	# Otherwise, drop it into the slot (using parents' function)
-	EventBus.add_weapon.emit(index)
+	EventBus.add_weapon.emit(index, grabbed_slot_data.item_data)
 	return super.drop_single_slot_data(grabbed_slot_data, index)

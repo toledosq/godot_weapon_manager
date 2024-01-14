@@ -10,3 +10,7 @@ class_name ItemDataWeapon extends ItemData
 @export var default_rotation: Vector3
 @export var ads_position: Vector3
 @export var ads_rotation: Vector3
+
+
+func fire():
+	pass
