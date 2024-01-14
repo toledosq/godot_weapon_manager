@@ -1,6 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://giq451xcik8x"]
+[gd_scene load_steps=13 format=3 uid="uid://giq451xcik8x"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
+[ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://item/pickup/pickup.tscn" id="2_10460"]
+[ext_resource type="Resource" uid="uid://cnfo30nhkfxvp" path="res://item/items/pistol.tres" id="3_1xhwb"]
+[ext_resource type="Script" path="res://inventory/slot_data.gd" id="4_kjg3y"]
 
 [sub_resource type="Gradient" id="Gradient_ur0vy"]
 colors = PackedColorArray(0, 0.476245, 0.0193456, 1, 0.360494, 0.612721, 0.119744, 1)
@@ -30,14 +33,19 @@ sky = SubResource("Sky_2iust")
 tonemap_mode = 1
 ssao_enabled = true
 
+[sub_resource type="Resource" id="Resource_bet0b"]
+script = ExtResource("4_kjg3y")
+item_data = ExtResource("3_1xhwb")
+quantity = 1
+
 [node name="test_world" type="Node3D"]
 
 [node name="Character" parent="." instance=ExtResource("1_e18vq")]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0.491699)
 use_collision = true
-size = Vector3(10, 1, 10)
+size = Vector3(20, 1, 20)
 material = SubResource("StandardMaterial3D_67ysu")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -47,3 +55,7 @@ environment = SubResource("Environment_20rw3")
 transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
 light_energy = 4.0
 shadow_enabled = true
+
+[node name="Pickup" parent="." instance=ExtResource("2_10460")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30056, -4.1247)
+slot_data = SubResource("Resource_bet0b")

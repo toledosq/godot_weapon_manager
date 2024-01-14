@@ -18,6 +18,7 @@ class_name Player extends CharacterBody3D
 @export var CAMERA : Camera3D
 @export var CAMERA_ANIMATION : AnimationPlayer
 @export var COLLISION_MESH : CollisionShape3D
+@export var INTERACT_RAY : RayCast3D
 
 @export_group("Controls")
 # We are using UI controls because they are built into Godot Engine so they can be used right away
@@ -268,8 +269,14 @@ func _unhandled_input(event):
 		interact()
 
 
-func interact():
-	print("Player: Interact")
+func interact() -> void:
+	print("Player: Interact called")
+	if INTERACT_RAY.is_colliding():
+		var interact_object = INTERACT_RAY.get_collider()
+		print("Player: Interacted with %s" % interact_object.name)
+		if interact_object.has_method("interact"):
+			print("Player: Calling interact on %s" % interact_object.name)
+			interact_object.interact()
 
 
 func get_drop_position() -> Vector3:

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemDataWeapon" load_steps=3 format=3 uid="uid://cnfo30nhkfxvp"]
+
+[ext_resource type="Script" path="res://item/item_data_weapon.gd" id="1_cf11b"]
+[ext_resource type="Texture2D" uid="uid://j0ormpwrrvx" path="res://assets/items/textures/test_icons_atlas.tres" id="2_q6nkf"]
+
+[resource]
+script = ExtResource("1_cf11b")
+base_damage = 20
+base_range = 1000
+itemID = 0
+name = "Pistol"
+value = 220
+description = "Not one of a kind"
+stackable = false
+texture = ExtResource("2_q6nkf")
