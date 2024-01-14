@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://item/pickup/pickup.tscn" id="2_10460"]
-[ext_resource type="Resource" uid="uid://cnfo30nhkfxvp" path="res://item/items/pistol.tres" id="3_1xhwb"]
+[ext_resource type="Resource" uid="uid://bke0gsniyl1t4" path="res://item/items/glock.tres" id="3_sco3g"]
 [ext_resource type="Script" path="res://inventory/slot_data.gd" id="4_kjg3y"]
 
 [sub_resource type="Gradient" id="Gradient_ur0vy"]
@@ -35,7 +35,7 @@ ssao_enabled = true
 
 [sub_resource type="Resource" id="Resource_bet0b"]
 script = ExtResource("4_kjg3y")
-item_data = ExtResource("3_1xhwb")
+item_data = ExtResource("3_sco3g")
 quantity = 1
 
 [node name="test_world" type="Node3D"]
@@ -57,5 +57,5 @@ light_energy = 4.0
 shadow_enabled = true
 
 [node name="Pickup" parent="." instance=ExtResource("2_10460")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30056, -4.1247)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30056, -6.09891)
 slot_data = SubResource("Resource_bet0b")
