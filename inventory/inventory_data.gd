@@ -12,6 +12,9 @@ func grab_slot_data(index: int) -> SlotData:
 	
 	# If there is a slot at this grid index
 	if slot_data:
+		# Make the resource unique when grabbed
+		slot_data.item_data = slot_data.item_data.duplicate(true)
+		
 		# Remove the grabbed slot from the inventory and alert inventory panel
 		slot_datas[index] = null
 		inventory_updated.emit(self)
@@ -90,6 +93,9 @@ func use_slot_data(index: int) -> void:
 
 # When player picks up item in world
 func pick_up_slot_data(slot_data: SlotData) -> bool:
+	# Make the resource unique when picked up
+	slot_data.item_data = slot_data.item_data.duplicate(true)
+	
 	# Look for mergeable slots in inventory
 	for index in slot_datas.size():
 		if slot_datas[index] and slot_datas[index].can_fully_merge_with(slot_data):

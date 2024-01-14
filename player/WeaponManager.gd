@@ -25,7 +25,7 @@ func _ready():
 
 ## Weapon Management
 func _on_add_weapon(weapon_slot_index, weapon_resource: ItemDataWeapon):
-	weapon_resource_array[weapon_slot_index] = weapon_resource.duplicate(true)
+	weapon_resource_array[weapon_slot_index] = weapon_resource
 	print("WeaponManager: Added %s in slot %s" % [weapon_resource.name, weapon_slot_index])
 	
 	if weapon_slot_index == active_weapon_slot_index:

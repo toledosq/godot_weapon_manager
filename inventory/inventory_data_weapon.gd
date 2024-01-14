@@ -6,6 +6,7 @@ signal weapon_unequipped(index)
 # When player grabs an item from inventory
 func grab_slot_data(index: int) -> SlotData:
 	var slot_data = slot_datas[index]
+	print(slot_data.item_data.current_ammo)
 	
 	# If there is a slot at this grid index
 	if slot_data:

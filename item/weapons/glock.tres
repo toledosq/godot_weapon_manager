@@ -10,6 +10,7 @@ atlas = ExtResource("3_ekp3h")
 region = Rect2(128, 192, 32, 32)
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("2_oidbl")
 current_ammo = 10
 ammo_type = ""
