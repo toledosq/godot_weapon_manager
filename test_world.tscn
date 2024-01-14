@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://giq451xcik8x"]
+[gd_scene load_steps=14 format=3 uid="uid://giq451xcik8x"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://item/pickup/pickup.tscn" id="2_10460"]
-[ext_resource type="Resource" uid="uid://bke0gsniyl1t4" path="res://item/items/glock.tres" id="3_sco3g"]
+[ext_resource type="Resource" uid="uid://bke0gsniyl1t4" path="res://item/weapons/glock.tres" id="3_2pijc"]
 [ext_resource type="Script" path="res://inventory/slot_data.gd" id="4_kjg3y"]
 [ext_resource type="PackedScene" uid="uid://c4gkq0g3qlm84" path="res://interactable/chest.tscn" id="5_2dg3g"]
-[ext_resource type="Script" path="res://inventory/inventory_data.gd" id="6_hgy81"]
 
 [sub_resource type="Gradient" id="Gradient_ur0vy"]
 colors = PackedColorArray(0, 0.476245, 0.0193456, 1, 0.360494, 0.612721, 0.119744, 1)
@@ -37,17 +36,8 @@ ssao_enabled = true
 
 [sub_resource type="Resource" id="Resource_bet0b"]
 script = ExtResource("4_kjg3y")
-item_data = ExtResource("3_sco3g")
+item_data = ExtResource("3_2pijc")
 quantity = 1
-
-[sub_resource type="Resource" id="Resource_vo4oh"]
-script = ExtResource("4_kjg3y")
-item_data = ExtResource("3_sco3g")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_ecivs"]
-script = ExtResource("6_hgy81")
-slot_datas = Array[ExtResource("4_kjg3y")]([SubResource("Resource_vo4oh"), null, null, null, null, null])
 
 [node name="test_world" type="Node3D"]
 
@@ -73,4 +63,3 @@ slot_data = SubResource("Resource_bet0b")
 
 [node name="Chest" parent="." instance=ExtResource("5_2dg3g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32274, 0, -6.861)
-inventory_data = SubResource("Resource_ecivs")

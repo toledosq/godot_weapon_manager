@@ -1,14 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgio4y25l8p1q"]
+[gd_scene load_steps=2 format=3 uid="uid://dgio4y25l8p1q"]
 
 [ext_resource type="Script" path="res://item/pickup/pickup.gd" id="1_gw6l1"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_y16ic"]
-
 [node name="Pickup" type="RigidBody3D"]
-collision_layer = 16
+collision_layer = 17
 script = ExtResource("1_gw6l1")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_y16ic")

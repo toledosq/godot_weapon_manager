@@ -10,6 +10,7 @@ class_name ItemData extends Resource
 @export_group("Item Rendering")
 @export var texture: AtlasTexture
 @export var mesh: ArrayMesh
+@export var mesh_scale_modifier: float = 1.0
 
 # Placeholder function - children will define behavior
 func use(target) -> void:

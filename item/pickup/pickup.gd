@@ -13,9 +13,10 @@ func _ready() -> void:
 		# Create new MeshInstance3D to hold weapon mesh
 		var mesh = MeshInstance3D.new()
 		# Get mesh from weapon in slot
-		var model = slot_data.item_data.world_mesh
+		var model = slot_data.item_data.mesh
 		# Set MeshInstance3D mesh to weapon mesh and add as child
 		mesh.mesh = model
+		mesh.scale *= slot_data.item_data.mesh_scale_modifier
 		add_child(mesh)
 		# Generate collision shape from mesh
 		collision_shape_3d.make_convex_from_siblings()

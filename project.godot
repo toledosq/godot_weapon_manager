@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PlayerManager="*res://player/player_manager.gd"
 EventBus="*res://globals/EventBus.gd"
+PlayerManager="*res://player/player_manager.gd"
 
 [input]
 

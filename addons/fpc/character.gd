@@ -70,7 +70,7 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	PlayerManager.player = self
+	EventBus.set_active_player.emit(self)
 	
 	# Set the camera rotation to whatever initial_facing_direction is
 	if initial_facing_direction:

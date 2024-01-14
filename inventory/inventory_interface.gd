@@ -53,29 +53,30 @@ func set_container_inventory(_container) -> void:
 	# Get the external inventory's data
 	var inventory_data = container.inventory_data
 
-	# Connect to the external inventory data's interaction signal
-	inventory_data.inventory_interact.connect(on_inventory_interact)
-	# Set inventory data in panel (populate grid)
-	container_inventory.set_inventory_data(inventory_data)
+	if inventory_data != null:
+		# Connect to the external inventory data's interaction signal
+		inventory_data.inventory_interact.connect(on_inventory_interact)
+		# Set inventory data in panel (populate grid)
+		container_inventory.set_inventory_data(inventory_data)
 	
-	# Show the external inventory panel
-	container_inventory.show()
+		# Show the external inventory panel
+		container_inventory.show()
 
 
 func clear_container_inventory() -> void:
 	if container:
 		# Get the external inventory's data
 		var inventory_data = container.inventory_data
-
-		# Disconnect interact signal
-		inventory_data.inventory_interact.disconnect(on_inventory_interact)
-		# Clear inventory data in panel (depopulate grid)
-		container_inventory.clear_inventory_data(inventory_data)
+		if inventory_data != null:
+			# Disconnect interact signal
+			inventory_data.inventory_interact.disconnect(on_inventory_interact)
+			# Clear inventory data in panel (depopulate grid)
+			container_inventory.clear_inventory_data(inventory_data)
 		
-		# Hide the external inventory panel
-		container_inventory.hide()
-		# unlink the external inventory from the interface
-		container = null
+	# Hide the external inventory panel
+	container_inventory.hide()
+	# unlink the external inventory from the interface
+	container = null
 
 
 # Set up to allow multiple different inventories, useful for containers

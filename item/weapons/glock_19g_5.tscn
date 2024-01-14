@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://0i81usjxsr26"]
+
+[ext_resource type="ArrayMesh" uid="uid://dp51bp7lpt6gk" path="res://assets/weapons/pistol/glock19g5.res" id="1_8fv23"]
+
+[node name="Glock19G5" type="Node3D"]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, -2.22045e-18, 0, 2.22045e-18, 0.01, 0, 0, 0)
+mesh = ExtResource("1_8fv23")
+skeleton = NodePath("")

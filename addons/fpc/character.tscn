@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=17 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
@@ -6,25 +6,18 @@
 [ext_resource type="Script" path="res://inventory/inventory_data_armor.gd" id="3_radmv"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 [ext_resource type="Script" path="res://inventory/inventory_data_weapon.gd" id="4_c4tes"]
-[ext_resource type="Resource" uid="uid://cnfo30nhkfxvp" path="res://item/items/pistol.tres" id="5_0x28h"]
-[ext_resource type="Script" path="res://inventory/slot_data.gd" id="6_ggpux"]
 
 [sub_resource type="Resource" id="Resource_5yuaq"]
 script = ExtResource("2_4ykg7")
-slot_datas = Array[ExtResource("6_ggpux")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="Resource" id="Resource_ki7oc"]
 script = ExtResource("3_radmv")
-slot_datas = Array[ExtResource("6_ggpux")]([null])
-
-[sub_resource type="Resource" id="Resource_kpbo4"]
-script = ExtResource("6_ggpux")
-item_data = ExtResource("5_0x28h")
-quantity = 1
+slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null])
 
 [sub_resource type="Resource" id="Resource_hieul"]
 script = ExtResource("4_c4tes")
-slot_datas = Array[ExtResource("6_ggpux")]([SubResource("Resource_kpbo4"), null])
+slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null, null])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
