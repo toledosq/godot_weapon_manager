@@ -1,5 +1,8 @@
 class_name WeaponManager extends Node3D
 
+enum STATES { NOT_READY, READY, FIRING, RELOADING }
+var STATE = STATES.NOT_READY
+
 signal weapon_equipped(weapon_slot_index)
 signal weapon_unequipped(weapon_slot_index)
 signal weapon_array_updated(weapon_array)
@@ -11,6 +14,7 @@ var active_weapon_slot_index: int = 0:
 	set(val):
 		active_weapon_slot_index = val
 		print("WeaponManager: Active weapon slot set to %s" % active_weapon_slot_index)
+var single_fire: bool = true
 
 var weapon_resource_array: Array[ItemDataWeapon]	# Stores the Weapon's resource data
 var player_model : Node3D
@@ -19,9 +23,28 @@ var player_model : Node3D
 func _ready():
 	weapon_resource_array.resize(2)
 	print("WeaponManager: weapon_resource_array size: %s" % weapon_resource_array.size())
-
+	
 	EventBus.add_weapon.connect(_on_add_weapon)
 	EventBus.remove_weapon.connect(_on_remove_weapon)
+
+
+func _process(delta):
+	
+	if STATE == STATES.READY:
+		if single_fire:
+			if Input.is_action_just_pressed("weapon_fire"):
+				fire_weapon()
+		else:
+			if Input.is_action_pressed("weapon_fire"):
+				fire_weapon()
+		
+		if Input.is_action_just_pressed("weapon_reload"):
+			print("Player: reload weapon")
+
+
+func change_state(new_state: STATES):
+	print("WeaponManager: STATE = ", STATE)
+	STATE = new_state
 
 
 ## Weapon Management
@@ -63,30 +86,55 @@ func set_active_weapon_slot(weapon_slot_index):
 
 
 func fire_weapon():
+	if STATE != STATES.READY:
+		return
+	
 	if !weapon_resource_array[active_weapon_slot_index]:
 		print("WeaponManager: Slot is empty, cannot fire")
 		return
 	
+	change_state(STATES.FIRING)
+	
 	# Do raycast method
-	var camera_collision = get_camera_collision(weapon_resource_array[active_weapon_slot_index].base_range)
+	get_camera_collision(weapon_resource_array[active_weapon_slot_index].base_range)
 	
 	# Call the weapon resource's fire function to increment ammo
 	weapon_resource_array[active_weapon_slot_index].fire()
 	# Call the weapon model's fire function for animation
 	player_model.fire()
+	
+	print("Changing state back to ready")
+	change_state(STATES.READY)
 
 
 func equip_weapon():
+	if STATE == STATES.FIRING or STATE == STATES.RELOADING:
+		return
+		
+	change_state(STATES.NOT_READY)
+	
 	print("WeaponManager: Equip weapon %s" % active_weapon_slot_index)
 	player_model = weapon_resource_array[active_weapon_slot_index].player_model.instantiate()
 	PlayerManager.player.FPS_RIG.add_child(player_model)
 	
+	if weapon_resource_array[active_weapon_slot_index].single_fire:
+		single_fire = true
+	else:
+		single_fire = false
+	
 	# TODO: Temporary fix for weapon render placement, will be replaced w/ anims
 	player_model.position = weapon_resource_array[active_weapon_slot_index].default_position
 	player_model.rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
+	
+	change_state(STATES.READY)
 
 
 func unequip_weapon():
+	if STATE == STATES.NOT_READY:
+		return
+		
+	STATE = STATES.NOT_READY
+	
 	print("WeaponManager: Unequip weapon %s" % active_weapon_slot_index)
 	player_model.unequip()
 

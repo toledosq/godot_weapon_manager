@@ -245,6 +245,13 @@ func _process(delta):
 		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
+	# Weapon inputs handled in WeaponManager
+	#if Input.is_action_pressed("weapon_fire"):
+		#fire_weapon()
+	#
+	#if Input.is_action_just_pressed("weapon_reload"):
+		#print("Player: reload weapon")
+	
 	HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 	
 	# Uncomment if you want full controller support
@@ -257,12 +264,6 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
 		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
-	
-	if Input.is_action_pressed("weapon_fire"):
-		fire_weapon()
-	
-	if Input.is_action_just_pressed("weapon_reload"):
-		print("Player: reload weapon")
 	
 	if Input.is_action_just_pressed("inventory"):
 		toggle_inventory.emit()
