@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dgio4y25l8p1q"]
+
+[node name="Pickup" type="RigidBody3D"]

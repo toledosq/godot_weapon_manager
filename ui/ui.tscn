@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqslsrof1c25y"]
+
+[ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="1_dpajk"]
+[ext_resource type="PackedScene" uid="uid://dgx5uhiu3bkra" path="res://inventory/inventory.tscn" id="2_l1pmx"]
+[ext_resource type="PackedScene" uid="uid://btwia68styqve" path="res://inventory/slot.tscn" id="3_jkjib"]
+[ext_resource type="PackedScene" uid="uid://dd5s5axgliocv" path="res://inventory/hot_bar_inventory.tscn" id="4_i1rt4"]
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="InventoryInterface" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dpajk")
+
+[node name="PlayerInventory" parent="InventoryInterface" instance=ExtResource("2_l1pmx")]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 50.0
+
+[node name="ArmorInventory" parent="InventoryInterface" instance=ExtResource("2_l1pmx")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 100.0
+offset_right = 490.0
+offset_bottom = 140.0
+
+[node name="WeaponInventory" parent="InventoryInterface" instance=ExtResource("2_l1pmx")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 10.0
+offset_right = 490.0
+offset_bottom = 50.0
+
+[node name="ContainerInventory" parent="InventoryInterface" instance=ExtResource("2_l1pmx")]
+visible = false
+layout_mode = 0
+offset_left = 1121.0
+offset_top = 393.0
+offset_right = 1161.0
+offset_bottom = 433.0
+
+[node name="GrabbedSlot" parent="InventoryInterface" instance=ExtResource("3_jkjib")]
+visible = false
+modulate = Color(1, 1, 1, 0.501961)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="HotBarInventory" parent="." instance=ExtResource("4_i1rt4")]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 430.0
+offset_bottom = 90.0
+
+[connection signal="gui_input" from="InventoryInterface" to="InventoryInterface" method="_on_gui_input"]
+[connection signal="visibility_changed" from="InventoryInterface" to="InventoryInterface" method="_on_visibility_changed"]

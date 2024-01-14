@@ -1,10 +1,23 @@
-[gd_scene load_steps=13 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=17 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
+[ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
 [ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
+[ext_resource type="Script" path="res://inventory/inventory_data_armor.gd" id="3_radmv"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
-[ext_resource type="Script" path="res://addons/fpc/PlayerInventory.gd" id="4_wm3oi"]
-[ext_resource type="Resource" uid="uid://bbp1k8wssluac" path="res://weapon/resources/weapon_default.tres" id="5_20nk6"]
+[ext_resource type="Script" path="res://inventory/inventory_data_weapon.gd" id="4_c4tes"]
+
+[sub_resource type="Resource" id="Resource_5yuaq"]
+script = ExtResource("2_4ykg7")
+slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+
+[sub_resource type="Resource" id="Resource_ki7oc"]
+script = ExtResource("3_radmv")
+slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null])
+
+[sub_resource type="Resource" id="Resource_hieul"]
+script = ExtResource("4_c4tes")
+slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null, null])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -104,13 +117,15 @@ MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH", "player_inventory")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH")]
 script = ExtResource("1_0t4e8")
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
 CAMERA_ANIMATION = NodePath("Head/camera_animation")
 COLLISION_MESH = NodePath("Collision")
-player_inventory = NodePath("PlayerInventory")
+inventory_data = SubResource("Resource_5yuaq")
+armor_inventory_data = SubResource("Resource_ki7oc")
+weapon_inventory_data = SubResource("Resource_hieul")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -166,9 +181,5 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
 layout_mode = 2
-
-[node name="PlayerInventory" type="Node" parent="."]
-script = ExtResource("4_wm3oi")
-default_weapon_resource = ExtResource("5_20nk6")
 
 [editable path="UserInterface/Reticle_1"]

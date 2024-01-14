@@ -50,7 +50,11 @@ class_name Player extends CharacterBody3D
 @export var view_bobbing : bool = true
 
 @export_group("Inventory")
-@export var player_inventory: Inventory
+@export var inventory_data: InventoryData
+@export var armor_inventory_data: InventoryDataArmor
+@export var weapon_inventory_data: InventoryDataWeapon
+
+signal toggle_inventory()
 
 # Member variables
 var speed : float = base_speed
@@ -64,6 +68,8 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") 
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	PlayerManager.player = self
 	
 	# Set the camera rotation to whatever initial_facing_direction is
 	if initial_facing_direction:
@@ -250,7 +256,23 @@ func _unhandled_input(event):
 		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
 	
 	if Input.is_action_pressed("weapon_fire"):
-		player_inventory.fire_weapon()
+		print("Player: fire weapon")
 	
 	if Input.is_action_just_pressed("weapon_reload"):
-		player_inventory.reload_weapon()
+		print("Player: reload weapon")
+	
+	if Input.is_action_just_pressed("inventory"):
+		toggle_inventory.emit()
+	
+	if Input.is_action_just_pressed("interact"):
+		interact()
+
+
+func interact():
+	print("Player: Interact")
+
+
+func get_drop_position() -> Vector3:
+	# Get forward facing direction from camera
+	var direction = -CAMERA.global_transform.basis.z
+	return CAMERA.global_position + direction
