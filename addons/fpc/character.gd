@@ -20,6 +20,7 @@ class_name Player extends CharacterBody3D
 @export var COLLISION_MESH : CollisionShape3D
 @export var INTERACT_RAY : RayCast3D
 @export var WEAPON_MANAGER : WeaponManager
+@export var FPS_RIG : Node3D
 
 @export_group("Controls")
 # We are using UI controls because they are built into Godot Engine so they can be used right away

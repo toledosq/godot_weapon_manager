@@ -118,7 +118,7 @@ MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH", "INTERACT_RAY", "WEAPON_MANAGER")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH", "INTERACT_RAY", "WEAPON_MANAGER", "FPS_RIG")]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_0t4e8")
@@ -128,6 +128,7 @@ CAMERA_ANIMATION = NodePath("Head/camera_animation")
 COLLISION_MESH = NodePath("Collision")
 INTERACT_RAY = NodePath("Head/Camera/InteractRay")
 WEAPON_MANAGER = NodePath("WeaponManager")
+FPS_RIG = NodePath("Head/Camera/FPSRig")
 inventory_data = SubResource("Resource_5yuaq")
 armor_inventory_data = SubResource("Resource_ki7oc")
 weapon_inventory_data = SubResource("Resource_hieul")
@@ -156,7 +157,7 @@ collision_mask = 16
 libraries = {
 "": SubResource("AnimationLibrary_o0unb")
 }
-blend_times = [&"headbob", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"RESET", &"RESET", 0.5]
+blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"headbob", &"RESET", 0.5]
 
 [node name="CrouchCeilingDetection" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
