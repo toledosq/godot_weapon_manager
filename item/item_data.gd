@@ -13,5 +13,5 @@ class_name ItemData extends Resource
 @export var mesh_scale_modifier: float = 1.0
 
 # Placeholder function - children will define behavior
-func use(target) -> void:
+func use(_target) -> void:
 	print(self, ": Used")

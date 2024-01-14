@@ -23,10 +23,9 @@ func _ready():
 
 
 ## Weapon Management
-func _on_add_weapon(weapon_slot_index, weapon_resource=null):
-	if weapon_resource:
-		print("WeaponManager: Added %s in slot %s" % [weapon_resource.name, weapon_slot_index])
-	weapon_resource_array[weapon_slot_index] = weapon_resource
+func _on_add_weapon(weapon_slot_index, weapon_resource: ItemDataWeapon):
+	weapon_resource_array[weapon_slot_index] = weapon_resource.duplicate(true)
+	print("WeaponManager: Added %s in slot %s" % [weapon_resource.name, weapon_slot_index])
 
 
 func _on_remove_weapon(weapon_slot_index):
@@ -38,11 +37,16 @@ func set_active_weapon_slot(weapon_slot_index):
 	if !weapon_resource_array[weapon_slot_index]:
 		print("WeaponManager: Slot is empty, cannot change")
 		return
-
+	
 	active_weapon_slot_index = weapon_slot_index
 	EventBus.active_weapon_changed.emit(active_weapon_slot_index)
 	print("WeaponManager: Active slot = ", active_weapon_slot_index)
 
 
 func fire_weapon():
-	pass
+	if !weapon_resource_array[active_weapon_slot_index]:
+		print("WeaponManager: Slot is empty, cannot fire")
+		return
+	
+	# Tell weapon to fire
+	weapon_resource_array[active_weapon_slot_index].fire()
