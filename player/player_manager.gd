@@ -9,8 +9,8 @@ var active_weapon_slot_index: int = 0
 
 func _ready():
 	EventBus.set_active_player.connect(_set_active_player)
-	EventBus.weapon_equipped.connect(_equip_weapon)
-	EventBus.weapon_unequipped.connect(_unequip_weapon)
+	EventBus.add_weapon.connect(_on_add_weapon)
+	EventBus.remove_weapon.connect(_on_remove_weapon)
 	EventBus.set_active_weapon_slot.connect(_set_active_weapon_slot)
 
 
@@ -22,12 +22,12 @@ func get_global_position() -> Vector3:
 	return player.global_position
 
 
-func _equip_weapon(weapon_slot_index):
-	print("Equipped weapon in slot %s" % weapon_slot_index)
+func _on_add_weapon(weapon_slot_index):
+	print("Added weapon in slot %s" % weapon_slot_index)
 
 
-func _unequip_weapon(weapon_slot_index):
-	print("Unequipped weapon in slot %s" % weapon_slot_index)
+func _on_remove_weapon(weapon_slot_index):
+	print("Removed weapon in slot %s" % weapon_slot_index)
 
 
 func _set_active_weapon_slot(weapon_slot_index):

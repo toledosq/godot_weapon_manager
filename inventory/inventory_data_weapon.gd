@@ -14,7 +14,7 @@ func grab_slot_data(index: int) -> SlotData:
 		inventory_updated.emit(self)
 		
 		# Alert weapon unequipped
-		EventBus.weapon_unequipped.emit(index)
+		EventBus.remove_weapon.emit(index)
 		
 		# Give the grabbed slot's data to requestor
 		return slot_data
@@ -30,7 +30,7 @@ func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 		return grabbed_slot_data
 	
 	# Otherwise, drop it into the slot (using parents' function)
-	EventBus.weapon_equipped.emit(index)
+	EventBus.add_weapon.emit(index)
 	return super.drop_slot_data(grabbed_slot_data, index)
 
 
@@ -42,5 +42,5 @@ func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 		return grabbed_slot_data
 	
 	# Otherwise, drop it into the slot (using parents' function)
-	EventBus.weapon_equipped.emit(index)
+	EventBus.add_weapon.emit(index)
 	return super.drop_single_slot_data(grabbed_slot_data, index)
