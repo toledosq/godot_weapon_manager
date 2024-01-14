@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://giq451xcik8x"]
+[gd_scene load_steps=18 format=3 uid="uid://giq451xcik8x"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://item/pickup/pickup.tscn" id="2_10460"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://inventory/slot_data.gd" id="4_kjg3y"]
 [ext_resource type="PackedScene" uid="uid://c4gkq0g3qlm84" path="res://interactable/chest.tscn" id="5_2dg3g"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="6_hgy81"]
+[ext_resource type="Resource" uid="uid://dagc3e7asl7ha" path="res://item/weapons/cz45.tres" id="7_bfhe3"]
 
 [sub_resource type="Gradient" id="Gradient_ur0vy"]
 colors = PackedColorArray(0, 0.476245, 0.0193456, 1, 0.360494, 0.612721, 0.119744, 1)
@@ -42,7 +43,7 @@ quantity = 1
 
 [sub_resource type="Resource" id="Resource_j0iae"]
 script = ExtResource("4_kjg3y")
-item_data = ExtResource("3_2pijc")
+item_data = ExtResource("7_bfhe3")
 quantity = 1
 
 [sub_resource type="Resource" id="Resource_6xgok"]

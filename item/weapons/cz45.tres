@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=6 format=3 uid="uid://dagc3e7asl7ha"]
+
+[ext_resource type="ArrayMesh" uid="uid://b06gshtue0gyo" path="res://assets/weapons/cz45/cz45.res" id="1_0ufjy"]
+[ext_resource type="Script" path="res://item/item_data_weapon_ranged.gd" id="1_4724w"]
+[ext_resource type="PackedScene" uid="uid://bs8dftrkpo413" path="res://item/weapons/cz_45.tscn" id="1_q2375"]
+[ext_resource type="Texture2D" uid="uid://dk0xksws8yuka" path="res://assets/items/textures/test_icons.png" id="2_wosoc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t6a0"]
+atlas = ExtResource("2_wosoc")
+region = Rect2(192, 192, 32, 32)
+
+[resource]
+script = ExtResource("1_4724w")
+current_ammo = 0
+ammo_type = ""
+player_model = ExtResource("1_q2375")
+base_damage = 0
+base_range = 0
+default_position = Vector3(0.2, -0.26, -0.67)
+default_rotation = Vector3(0, -3.14159, 0)
+ads_position = Vector3(0, 0, 0)
+ads_rotation = Vector3(0, 0, 0)
+itemID = 2
+name = "CZ-45"
+value = 500
+description = ""
+stackable = false
+texture = SubResource("AtlasTexture_0t6a0")
+mesh = ExtResource("1_0ufjy")
+mesh_scale_modifier = 0.001
