@@ -1,6 +1,6 @@
 class_name WeaponManager extends Node3D
 
-enum STATES { NOT_READY, READY, FIRING, RELOADING }
+enum STATES { NONE, NOT_READY, READY, FIRING, RELOADING }
 var STATE = STATES.NOT_READY
 
 signal weapon_equipped(weapon_slot_index)
@@ -107,11 +107,12 @@ func fire_weapon():
 	change_state(STATES.READY)
 
 
-func equip_weapon():
+func equip_weapon(fast: bool = false):
 	if STATE == STATES.FIRING or STATE == STATES.RELOADING:
 		return
-		
+	
 	change_state(STATES.NOT_READY)
+	await unequip_weapon(fast)
 	
 	print("WeaponManager: Equip weapon %s" % active_weapon_slot_index)
 	player_model = weapon_resource_array[active_weapon_slot_index].player_model.instantiate()
@@ -126,17 +127,23 @@ func equip_weapon():
 	player_model.position = weapon_resource_array[active_weapon_slot_index].default_position
 	player_model.rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
 	
+	if !fast:
+		await player_model.equip()
+	
 	change_state(STATES.READY)
 
 
-func unequip_weapon():
-	if STATE == STATES.NOT_READY:
+func unequip_weapon(fast: bool = false):
+	if player_model == null:
 		return
 		
-	STATE = STATES.NOT_READY
+	change_state(STATES.NONE)
 	
 	print("WeaponManager: Unequip weapon %s" % active_weapon_slot_index)
-	player_model.unequip()
+	
+	if !fast:
+		await player_model.unequip()
+	player_model.queue_free()
 
 
 func get_camera_collision(distance) -> Vector3:
