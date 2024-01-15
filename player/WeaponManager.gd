@@ -30,7 +30,8 @@ func _ready():
 
 func _process(delta):
 	
-	if STATE == STATES.READY:
+	# Only do this if the player is controlling character
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and STATE == STATES.READY:
 		if single_fire:
 			if Input.is_action_just_pressed("weapon_fire"):
 				fire_weapon()
@@ -103,7 +104,6 @@ func fire_weapon():
 	# Call the weapon model's fire function for animation
 	player_model.fire()
 	
-	print("Changing state back to ready")
 	change_state(STATES.READY)
 
 

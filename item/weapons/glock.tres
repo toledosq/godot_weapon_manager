@@ -1,7 +1,5 @@
-[gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=6 format=3 uid="uid://bke0gsniyl1t4"]
+[gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=4 format=3 uid="uid://bke0gsniyl1t4"]
 
-[ext_resource type="ArrayMesh" uid="uid://dp51bp7lpt6gk" path="res://assets/weapons/pistol/glock19g5.res" id="1_31y0o"]
-[ext_resource type="PackedScene" uid="uid://0i81usjxsr26" path="res://item/weapons/glock_19g_5.tscn" id="1_ml6qp"]
 [ext_resource type="Script" path="res://item/item_data_weapon_ranged.gd" id="2_oidbl"]
 [ext_resource type="Texture2D" uid="uid://dk0xksws8yuka" path="res://assets/items/textures/test_icons.png" id="3_ekp3h"]
 
@@ -14,9 +12,9 @@ resource_local_to_scene = true
 script = ExtResource("2_oidbl")
 current_ammo = 10
 ammo_type = ""
-player_model = ExtResource("1_ml6qp")
 base_damage = 20
 base_range = 1000
+single_fire = true
 default_position = Vector3(0.05, -0.12, -0.25)
 default_rotation = Vector3(0, -3.14159, 0)
 ads_position = Vector3(0, 0, 0)
@@ -27,5 +25,4 @@ value = 300
 description = "Ol reliable"
 stackable = false
 texture = SubResource("AtlasTexture_pudp5")
-mesh = ExtResource("1_31y0o")
 mesh_scale_modifier = 0.02
