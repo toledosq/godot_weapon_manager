@@ -19,6 +19,16 @@ var single_fire: bool = true
 var weapon_resource_array: Array[ItemDataWeapon]	# Stores the Weapon's resource data
 var player_model : Node3D
 
+var ads := false
+
+# Dynamic Recoil vars
+var recoil_amplitude_modifier := 1.0
+var return_position : Vector3
+var return_rotation : Vector3
+var target_rot: Vector3
+var target_pos: Vector3
+var current_time: float
+
 
 func _ready():
 	weapon_resource_array.resize(2)
@@ -29,6 +39,9 @@ func _ready():
 
 
 func _process(delta):
+	if player_model and STATE != STATES.NONE:
+		if weapon_resource_array[active_weapon_slot_index].dynamic_recoil:
+			lerp_recoil(delta)
 	
 	# Only do this if the player is controlling character
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and STATE == STATES.READY:
@@ -41,6 +54,8 @@ func _process(delta):
 		
 		if Input.is_action_just_pressed("weapon_reload"):
 			print("Player: reload weapon")
+	
+	
 
 
 func change_state(new_state: STATES):
@@ -103,8 +118,50 @@ func fire_weapon():
 	weapon_resource_array[active_weapon_slot_index].fire()
 	# Call the weapon model's fire function for animation
 	player_model.fire()
+	# Do procedural recoil
+	if weapon_resource_array[active_weapon_slot_index].dynamic_recoil:
+		apply_recoil()
+	# Do Camera recoil
+	EventBus.weapon_fired.emit()
 	
 	change_state(STATES.READY)
+
+
+func lerp_recoil(delta: float) -> void:
+	# If weapon just fired
+	if current_time < 0.05:
+		# Increment timer
+		current_time += delta
+		
+		# Lerp to the rotation/position given by the apply_recoil function
+		player_model.position.z = lerp(player_model.position.z, target_pos.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
+		player_model.rotation.z = lerp(player_model.rotation.z, target_rot.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
+		player_model.rotation.x = lerp(player_model.rotation.x, target_rot.x, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
+
+		# Adjust target rotation/position for next physics tic
+		target_rot.z = weapon_resource_array[active_weapon_slot_index].recoil_rotation_z.sample(current_time) * weapon_resource_array[active_weapon_slot_index].recoil_amplitude.y * recoil_amplitude_modifier
+		target_rot.x = weapon_resource_array[active_weapon_slot_index].recoil_rotation_x.sample(current_time) * -weapon_resource_array[active_weapon_slot_index].recoil_amplitude.x * recoil_amplitude_modifier
+		target_pos.z = weapon_resource_array[active_weapon_slot_index].recoil_position_z.sample(current_time) * weapon_resource_array[active_weapon_slot_index].recoil_amplitude.z * recoil_amplitude_modifier
+		
+	else:
+		# Lerp to the default rotation/position
+		player_model.position.z = lerp(player_model.position.z, return_position.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+		player_model.rotation.z = lerp(player_model.rotation.z, return_rotation.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+		player_model.rotation.x = lerp(player_model.rotation.x, return_rotation.x, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+
+
+func apply_recoil():
+	# Randomize which y direction the gun rotates
+	weapon_resource_array[active_weapon_slot_index].recoil_amplitude.y *= -1 if randf() > 0.6 else 1
+	
+	# Rotate
+	target_rot.z = weapon_resource_array[active_weapon_slot_index].recoil_rotation_z.sample(0)
+	target_rot.x = weapon_resource_array[active_weapon_slot_index].recoil_rotation_x.sample(0)
+	target_rot.y = weapon_resource_array[active_weapon_slot_index].recoil_rotation_y.sample(0) * 0.1
+	
+	# Move gun backwards
+	target_pos.z = weapon_resource_array[active_weapon_slot_index].recoil_position_z.sample(0)
+	current_time = 0
 
 
 func equip_weapon(fast: bool = false):
@@ -127,6 +184,9 @@ func equip_weapon(fast: bool = false):
 	player_model.position = weapon_resource_array[active_weapon_slot_index].default_position
 	player_model.rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
 	
+	return_position = weapon_resource_array[active_weapon_slot_index].default_position
+	return_rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
+	
 	if !fast:
 		await player_model.equip()
 	
@@ -147,6 +207,7 @@ func unequip_weapon(fast: bool = false):
 
 
 func get_camera_collision(distance) -> Vector3:
+	# Get active camera
 	var camera_ = get_viewport().get_camera_3d()
 	var viewport_size = get_viewport().get_size()
 	

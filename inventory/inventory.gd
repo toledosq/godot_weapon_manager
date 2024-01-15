@@ -4,6 +4,12 @@ const SLOT = preload("res://inventory/slot.tscn")
 
 @onready var item_grid = $MarginContainer/ItemGrid
 
+var active_slot: int = 1
+
+
+func _ready():
+	pass
+
 
 func set_inventory_data(inventory_data: InventoryData) -> void:
 	# Set up listener so if inventory changes, repopulate the item grid

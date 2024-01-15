@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://giq451xcik8x"]
+[gd_scene load_steps=17 format=3 uid="uid://giq451xcik8x"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://item/pickup/pickup.tscn" id="2_10460"]
@@ -45,14 +45,9 @@ script = ExtResource("4_kjg3y")
 item_data = ExtResource("3_2pijc")
 quantity = 1
 
-[sub_resource type="Resource" id="Resource_kft4i"]
-script = ExtResource("4_kjg3y")
-item_data = ExtResource("3_2pijc")
-quantity = 1
-
 [sub_resource type="Resource" id="Resource_6xgok"]
 script = ExtResource("6_hgy81")
-slot_datas = Array[ExtResource("4_kjg3y")]([SubResource("Resource_j0iae"), SubResource("Resource_kft4i"), null, null, null, null])
+slot_datas = Array[ExtResource("4_kjg3y")]([SubResource("Resource_j0iae"), null, null, null, null])
 
 [node name="test_world" type="Node3D"]
 
