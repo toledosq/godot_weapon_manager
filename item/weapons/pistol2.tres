@@ -8,20 +8,20 @@
 
 [resource]
 script = ExtResource("1_vugfe")
-current_ammo = 8
-max_ammo = 8
-ammo_type = null
-rate_of_fire = null
+current_ammo = 30
+max_ammo = 30
+ammo_type = ""
+rate_of_fire = 600
 dynamic_recoil = true
 recoil_rotation_x = ExtResource("2_omusc")
 recoil_rotation_y = ExtResource("2_omusc")
 recoil_rotation_z = ExtResource("2_omusc")
 recoil_position_z = ExtResource("2_omusc")
-recoil_amplitude = null
-lerp_speed = null
+recoil_amplitude = Vector3(1, 1, 1)
+lerp_speed = 1.0
 player_model = ExtResource("1_72lhd")
-base_damage = null
-base_range = null
+base_damage = 20
+base_range = 1000
 single_fire = false
 default_position = Vector3(0.25, -0.29, -0.57)
 default_rotation = Vector3(0, -3.14159, 0)

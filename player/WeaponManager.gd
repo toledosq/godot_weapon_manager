@@ -147,7 +147,11 @@ func reload_weapon():
 		return
 	
 	# Retrieve ammo from inventory
-	# TODO: logic here
+	# if Globals.player_ammo_reserve_current > 0 and weapon_resource_array[active_weapon_slot_index].current_ammo < weapon_resource_array[active_weapon_slot_index].max_ammo:
+		# var reload_amount = min(
+			# weapon_resource_array[active_weapon_slot_index].max_ammo - weapon_resource_array[active_weapon_slot_index].current_ammo, 
+			# weapon_resource_array[active_weapon_slot_index].max_ammo, 
+			# Globals.player_ammo_reserve_current)
 	var reload_amount = weapon_resource_array[active_weapon_slot_index].max_ammo
 	
 	if reload_amount <= 0:
@@ -162,9 +166,11 @@ func reload_weapon():
 	
 	# Call resource reload func for ammo mgmt
 	weapon_resource_array[active_weapon_slot_index].reload(reload_amount)
+	# Globals.player_ammo_reserve_current -= reload_amount
 	
 	# Broadcast reloaded event
 	EventBus.weapon_reloaded.emit()
+	EventBus.weapon_ammo_changed.emit()
 	
 	# Return to ready
 	change_state(STATES.READY)
@@ -200,7 +206,7 @@ func fire_weapon():
 	EventBus.weapon_fired.emit()
 	
 	# Call the weapon model's fire function for animation/timing
-	await player_model.fire()
+	await player_model.fire(weapon_resource_array[active_weapon_slot_index].rate_of_fire)
 	
 	# Change state to READY
 	change_state(STATES.READY)
