@@ -1,13 +1,220 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqslsrof1c25y"]
+[gd_scene load_steps=9 format=3 uid="uid://bqslsrof1c25y"]
 
 [ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="1_dpajk"]
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_pr4e2"]
 [ext_resource type="PackedScene" uid="uid://dgx5uhiu3bkra" path="res://inventory/inventory.tscn" id="2_l1pmx"]
 [ext_resource type="PackedScene" uid="uid://btwia68styqve" path="res://inventory/slot.tscn" id="3_jkjib"]
-[ext_resource type="PackedScene" uid="uid://dd5s5axgliocv" path="res://inventory/hot_bar_inventory.tscn" id="4_i1rt4"]
+[ext_resource type="Texture2D" uid="uid://44ppud4c8jir" path="res://icon.svg" id="5_8dvbn"]
+
+[sub_resource type="Animation" id="Animation_efedr"]
+resource_name = "display_alert_text"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AlertLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AlertLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7ohl6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AlertLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AlertLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tsr2w"]
+_data = {
+"RESET": SubResource("Animation_7ohl6"),
+"display_alert_text": SubResource("Animation_efedr")
+}
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_pr4e2")
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="WeaponInfoPanelContainer" type="PanelContainer" parent="HUD/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="WeaponInfoHBox" type="HBoxContainer" parent="HUD/MarginContainer/HBoxContainer/WeaponInfoPanelContainer"]
+custom_minimum_size = Vector2(300, 128)
+layout_mode = 2
+alignment = 2
+
+[node name="WeaponNameLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer/WeaponInfoPanelContainer/WeaponInfoHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No weapon equipped"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AmmoVbox" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer/WeaponInfoPanelContainer/WeaponInfoHBox"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+alignment = 1
+
+[node name="AmmoCounterLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer/WeaponInfoPanelContainer/WeaponInfoHBox/AmmoVbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 42
+text = "30"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AmmoReserveCounterLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer/WeaponInfoPanelContainer/WeaponInfoHBox/AmmoVbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 42
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="GrenadeCounterLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GrenadeIconTexture" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_8dvbn")
+expand_mode = 4
+
+[node name="GrenadeHotkeyLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "G"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="ArmorPanelContainer" type="PanelContainer" parent="HUD/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+
+[node name="ArmorProgressBar" type="ProgressBar" parent="HUD/MarginContainer/VBoxContainer/ArmorPanelContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+value = 30.0
+
+[node name="HealthPanelContainer2" type="PanelContainer" parent="HUD/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+
+[node name="HealthProgressBar" type="ProgressBar" parent="HUD/MarginContainer/VBoxContainer/HealthPanelContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+mouse_filter = 2
+value = 70.0
+
+[node name="AlertLabel" type="Label" parent="HUD"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = 26.0
+offset_right = 15.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD"]
+libraries = {
+"": SubResource("AnimationLibrary_tsr2w")
+}
 
 [node name="InventoryInterface" type="Control" parent="."]
 visible = false
@@ -55,30 +262,6 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
-
-[node name="HotBarInventory" parent="." instance=ExtResource("4_i1rt4")]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 430.0
-offset_bottom = 90.0
-
-[node name="HUD" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="ActiveWeaponLabel" type="Label" parent="HUD"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "0"
 
 [connection signal="gui_input" from="InventoryInterface" to="InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="InventoryInterface" to="InventoryInterface" method="_on_visibility_changed"]

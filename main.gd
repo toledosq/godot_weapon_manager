@@ -3,7 +3,6 @@ extends Node
 const PickUp = preload("res://item/pickup/pickup.tscn")
 
 @onready var inventory_interface = $UI/InventoryInterface
-@onready var hot_bar_inventory = $UI/HotBarInventory
 
 
 func _ready() -> void:
@@ -33,9 +32,9 @@ func initialize_inventories() -> void:
 	# Populate weapon inventory
 	inventory_interface.set_weapon_inventory_data(PlayerManager.player.weapon_inventory_data)
 	
-	print("Main: Populating Player Hot Bar")
-	# Populate hotbar with player inventory data
-	hot_bar_inventory.set_inventory_data(PlayerManager.player.inventory_data)
+	#print("Main: Populating Player Hot Bar")
+	## Populate hotbar with player inventory data
+	#hot_bar_inventory.set_inventory_data(PlayerManager.player.inventory_data)
 	
 	print("Main: Connecting to External Inventories")
 	# Find all containers in world and connect to their toggle function (for interacting)
@@ -47,13 +46,13 @@ func toggle_inventory_interface(container = null) -> void:
 # Inventory interface is hidden by default
 	inventory_interface.visible = not inventory_interface.visible
 	
-	# Show mouse if interface is visible
+	## Show mouse if interface is visible
 	if inventory_interface.visible:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		hot_bar_inventory.hide()
+		#hot_bar_inventory.hide()
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		hot_bar_inventory.show()
+		#hot_bar_inventory.show()
 
 	# If an external inventory is being interacted with, populate the container panel
 	if container and inventory_interface.visible:

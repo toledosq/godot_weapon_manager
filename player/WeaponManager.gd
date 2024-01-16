@@ -122,6 +122,8 @@ func equip_weapon(fast: bool = false):
 	return_position = weapon_resource_array[active_weapon_slot_index].default_position
 	return_rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
 	
+	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
+	
 	if !fast:
 		await player_model.equip()
 	
@@ -170,7 +172,7 @@ func reload_weapon():
 	
 	# Broadcast reloaded event
 	EventBus.weapon_reloaded.emit()
-	EventBus.weapon_ammo_changed.emit()
+	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
 	
 	# Return to ready
 	change_state(STATES.READY)
@@ -202,8 +204,9 @@ func fire_weapon():
 	if weapon_resource_array[active_weapon_slot_index].dynamic_recoil:
 		apply_recoil()
 	
-	# Broadcast weapon fired event (listened to by at least camera and UI)
+	# Broadcast weapon fired event (listened to by at least camera)
 	EventBus.weapon_fired.emit()
+	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
 	
 	# Call the weapon model's fire function for animation/timing
 	await player_model.fire(weapon_resource_array[active_weapon_slot_index].rate_of_fire)
