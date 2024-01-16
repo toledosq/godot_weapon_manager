@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cq1whxsacte53"]
+[gd_scene load_steps=11 format=3 uid="uid://cq1whxsacte53"]
 
 [ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="1_75bwf"]
 [ext_resource type="Script" path="res://item/weapons/Weapon.gd" id="1_ppkwk"]
+[ext_resource type="AudioStream" uid="uid://dstepgdm88yx8" path="res://assets/audio/sfx/9mm-pistol-shot-trimmed.mp3" id="3_bfhg7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7klqe"]
 albedo_color = Color(0.121569, 0.121569, 0.121569, 1)
@@ -188,8 +189,10 @@ _data = {
 "unequip": SubResource("Animation_glhd0")
 }
 
-[node name="Pistol" type="Node3D"]
+[node name="Pistol" type="Node3D" node_paths=PackedStringArray("animation_player", "fire_audio")]
 script = ExtResource("1_ppkwk")
+animation_player = NodePath("AnimationPlayer")
+fire_audio = NodePath("FireAudio")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
@@ -200,3 +203,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_7klqe")
 libraries = {
 "": SubResource("AnimationLibrary_doqsb")
 }
+
+[node name="FireAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bfhg7")
+max_polyphony = 3

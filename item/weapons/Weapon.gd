@@ -1,10 +1,15 @@
 class_name Weapon extends Node3D
 
 
-@onready var animation_player = $AnimationPlayer
+@export var animation_player: AnimationPlayer
+@export var fire_audio: AudioStreamPlayer
+
 
 func fire(rof=60.0):
 	print("WeaponModel: Firing")
+	if fire_audio:
+		fire_audio.pitch_scale = randf_range(0.9, 1.05)
+		fire_audio.play()
 	if animation_player:
 		animation_player.play("fire", -1, rof / 60.0)
 		await animation_player.animation_finished
