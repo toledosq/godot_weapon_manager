@@ -151,12 +151,16 @@ func reload_weapon():
 	# Call player model for animation
 	await player_model.reload()
 	
+	# Retrieve ammo from inventory
+	# TODO: logic here
+	
 	# Call resource reload func for ammo mgmt
 	weapon_resource_array[active_weapon_slot_index].reload()
 	
 	# Broadcast reloaded event
 	EventBus.weapon_reloaded.emit()
 	
+	# Return to ready
 	change_state(STATES.READY)
 
 
@@ -169,6 +173,7 @@ func fire_weapon():
 		print("WeaponManager: Slot is empty, cannot fire")
 		return
 	
+	# Change state to FIRING
 	change_state(STATES.FIRING)
 	
 	# Do raycast method
@@ -181,12 +186,13 @@ func fire_weapon():
 	if weapon_resource_array[active_weapon_slot_index].dynamic_recoil:
 		apply_recoil()
 	
-	# Do Camera recoil
+	# Broadcast weapon fired event (listened to by at least camera and UI)
 	EventBus.weapon_fired.emit()
 	
 	# Call the weapon model's fire function for animation/timing
 	await player_model.fire()
 	
+	# Change state to READY
 	change_state(STATES.READY)
 
 
