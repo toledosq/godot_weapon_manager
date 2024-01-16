@@ -22,6 +22,6 @@ func fire():
 	print("%s: Remaining ammo - %s" % [name, current_ammo])
 
 
-func reload():
-	current_ammo = max_ammo
+func reload(amount):
+	current_ammo = amount
 	

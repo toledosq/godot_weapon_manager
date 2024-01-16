@@ -18,5 +18,5 @@ func fire():
 
 
 # Virtual func
-func reload():
+func reload(_amount):
 	pass

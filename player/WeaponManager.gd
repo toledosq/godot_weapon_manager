@@ -144,6 +144,15 @@ func unequip_weapon(fast: bool = false):
 func reload_weapon():
 	if STATE != STATES.READY:
 		print("WeaponManager: Cannot reload, weapon not ready")
+		return
+	
+	# Retrieve ammo from inventory
+	# TODO: logic here
+	var reload_amount = weapon_resource_array[active_weapon_slot_index].max_ammo
+	
+	if reload_amount <= 0:
+		print("WeaponManager: Cannot reload, no ammo in reserve")
+		return
 	
 	# Set state to reloading
 	change_state(STATES.RELOADING)
@@ -151,11 +160,8 @@ func reload_weapon():
 	# Call player model for animation
 	await player_model.reload()
 	
-	# Retrieve ammo from inventory
-	# TODO: logic here
-	
 	# Call resource reload func for ammo mgmt
-	weapon_resource_array[active_weapon_slot_index].reload()
+	weapon_resource_array[active_weapon_slot_index].reload(reload_amount)
 	
 	# Broadcast reloaded event
 	EventBus.weapon_reloaded.emit()
@@ -171,6 +177,10 @@ func fire_weapon():
 	
 	if !weapon_resource_array[active_weapon_slot_index]:
 		print("WeaponManager: Slot is empty, cannot fire")
+		return
+	
+	if weapon_resource_array[active_weapon_slot_index].current_ammo <= 0:
+		print("WeaponManager: Cannot fire, no ammo")
 		return
 	
 	# Change state to FIRING
