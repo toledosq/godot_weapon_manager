@@ -9,6 +9,8 @@ func fire():
 	if animation_player:
 		animation_player.play("fire")
 		await animation_player.animation_finished
+	else:
+		await get_tree().create_timer(1).timeout
 
 func unequip():
 	print("%s: Unequipping" % name)
@@ -21,4 +23,11 @@ func equip():
 	print("%s: Equipping" % name)
 	if animation_player:
 		animation_player.play("equip")
+		await animation_player.animation_finished
+
+
+func reload():
+	print("%s: Reloading" % name)
+	if animation_player:
+		animation_player.play("reload")
 		await animation_player.animation_finished

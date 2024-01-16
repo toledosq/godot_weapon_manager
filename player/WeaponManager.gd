@@ -53,9 +53,7 @@ func _process(delta):
 				fire_weapon()
 		
 		if Input.is_action_just_pressed("weapon_reload"):
-			print("Player: reload weapon")
-	
-	
+			reload_weapon()
 
 
 func change_state(new_state: STATES):
@@ -101,69 +99,6 @@ func set_active_weapon_slot(weapon_slot_index):
 	equip_weapon()
 
 
-func fire_weapon():
-	if STATE != STATES.READY:
-		return
-	
-	if !weapon_resource_array[active_weapon_slot_index]:
-		print("WeaponManager: Slot is empty, cannot fire")
-		return
-	
-	change_state(STATES.FIRING)
-	
-	# Do raycast method
-	get_camera_collision(weapon_resource_array[active_weapon_slot_index].base_range)
-	
-	# Call the weapon resource's fire function to increment ammo
-	weapon_resource_array[active_weapon_slot_index].fire()
-	# Call the weapon model's fire function for animation
-	player_model.fire()
-	# Do procedural recoil
-	if weapon_resource_array[active_weapon_slot_index].dynamic_recoil:
-		apply_recoil()
-	# Do Camera recoil
-	EventBus.weapon_fired.emit()
-	
-	change_state(STATES.READY)
-
-
-func lerp_recoil(delta: float) -> void:
-	# If weapon just fired
-	if current_time < 0.05:
-		# Increment timer
-		current_time += delta
-		
-		# Lerp to the rotation/position given by the apply_recoil function
-		player_model.position.z = lerp(player_model.position.z, target_pos.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
-		player_model.rotation.z = lerp(player_model.rotation.z, target_rot.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
-		player_model.rotation.x = lerp(player_model.rotation.x, target_rot.x, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
-
-		# Adjust target rotation/position for next physics tic
-		target_rot.z = weapon_resource_array[active_weapon_slot_index].recoil_rotation_z.sample(current_time) * weapon_resource_array[active_weapon_slot_index].recoil_amplitude.y * recoil_amplitude_modifier
-		target_rot.x = weapon_resource_array[active_weapon_slot_index].recoil_rotation_x.sample(current_time) * -weapon_resource_array[active_weapon_slot_index].recoil_amplitude.x * recoil_amplitude_modifier
-		target_pos.z = weapon_resource_array[active_weapon_slot_index].recoil_position_z.sample(current_time) * weapon_resource_array[active_weapon_slot_index].recoil_amplitude.z * recoil_amplitude_modifier
-		
-	else:
-		# Lerp to the default rotation/position
-		player_model.position.z = lerp(player_model.position.z, return_position.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
-		player_model.rotation.z = lerp(player_model.rotation.z, return_rotation.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
-		player_model.rotation.x = lerp(player_model.rotation.x, return_rotation.x, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
-
-
-func apply_recoil():
-	# Randomize which y direction the gun rotates
-	weapon_resource_array[active_weapon_slot_index].recoil_amplitude.y *= -1 if randf() > 0.6 else 1
-	
-	# Rotate
-	target_rot.z = weapon_resource_array[active_weapon_slot_index].recoil_rotation_z.sample(0)
-	target_rot.x = weapon_resource_array[active_weapon_slot_index].recoil_rotation_x.sample(0)
-	target_rot.y = weapon_resource_array[active_weapon_slot_index].recoil_rotation_y.sample(0) * 0.1
-	
-	# Move gun backwards
-	target_pos.z = weapon_resource_array[active_weapon_slot_index].recoil_position_z.sample(0)
-	current_time = 0
-
-
 func equip_weapon(fast: bool = false):
 	if STATE == STATES.FIRING or STATE == STATES.RELOADING:
 		return
@@ -204,6 +139,92 @@ func unequip_weapon(fast: bool = false):
 	if !fast:
 		await player_model.unequip()
 	player_model.queue_free()
+
+
+func reload_weapon():
+	if STATE != STATES.READY:
+		print("WeaponManager: Cannot reload, weapon not ready")
+	
+	# Set state to reloading
+	change_state(STATES.RELOADING)
+	
+	# Call player model for animation
+	await player_model.reload()
+	
+	# Call resource reload func for ammo mgmt
+	weapon_resource_array[active_weapon_slot_index].reload()
+	
+	# Broadcast reloaded event
+	EventBus.weapon_reloaded.emit()
+	
+	change_state(STATES.READY)
+
+
+## Weapon firing
+func fire_weapon():
+	if STATE != STATES.READY:
+		return
+	
+	if !weapon_resource_array[active_weapon_slot_index]:
+		print("WeaponManager: Slot is empty, cannot fire")
+		return
+	
+	change_state(STATES.FIRING)
+	
+	# Do raycast method
+	get_camera_collision(weapon_resource_array[active_weapon_slot_index].base_range)
+	
+	# Call the weapon resource's fire function to decrement weapon ammo
+	weapon_resource_array[active_weapon_slot_index].fire()
+	
+	# Do procedural recoil
+	if weapon_resource_array[active_weapon_slot_index].dynamic_recoil:
+		apply_recoil()
+	
+	# Do Camera recoil
+	EventBus.weapon_fired.emit()
+	
+	# Call the weapon model's fire function for animation/timing
+	await player_model.fire()
+	
+	change_state(STATES.READY)
+
+
+func lerp_recoil(delta: float) -> void:
+	# If weapon just fired
+	if current_time < 0.05:
+		# Increment timer
+		current_time += delta
+		
+		# Lerp to the rotation/position given by the apply_recoil function
+		player_model.position.z = lerp(player_model.position.z, target_pos.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
+		player_model.rotation.z = lerp(player_model.rotation.z, target_rot.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
+		player_model.rotation.x = lerp(player_model.rotation.x, target_rot.x, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta)
+
+		# Adjust target rotation/position for next physics tic
+		target_rot.z = weapon_resource_array[active_weapon_slot_index].recoil_rotation_z.sample(current_time) * weapon_resource_array[active_weapon_slot_index].recoil_amplitude.y * recoil_amplitude_modifier
+		target_rot.x = weapon_resource_array[active_weapon_slot_index].recoil_rotation_x.sample(current_time) * -weapon_resource_array[active_weapon_slot_index].recoil_amplitude.x * recoil_amplitude_modifier
+		target_pos.z = weapon_resource_array[active_weapon_slot_index].recoil_position_z.sample(current_time) * weapon_resource_array[active_weapon_slot_index].recoil_amplitude.z * recoil_amplitude_modifier
+		
+	else:
+		# Lerp to the default rotation/position
+		player_model.position.z = lerp(player_model.position.z, return_position.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+		player_model.rotation.z = lerp(player_model.rotation.z, return_rotation.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+		player_model.rotation.x = lerp(player_model.rotation.x, return_rotation.x, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+
+
+func apply_recoil():
+	# Randomize which y direction the gun rotates
+	weapon_resource_array[active_weapon_slot_index].recoil_amplitude.y *= -1 if randf() > 0.6 else 1
+	
+	# Rotate
+	target_rot.z = weapon_resource_array[active_weapon_slot_index].recoil_rotation_z.sample(0)
+	target_rot.x = weapon_resource_array[active_weapon_slot_index].recoil_rotation_x.sample(0)
+	target_rot.y = weapon_resource_array[active_weapon_slot_index].recoil_rotation_y.sample(0) * 0.1
+	
+	# Move gun backwards
+	target_pos.z = weapon_resource_array[active_weapon_slot_index].recoil_position_z.sample(0)
+	current_time = 0
 
 
 func get_camera_collision(distance) -> Vector3:

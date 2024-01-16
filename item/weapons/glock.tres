@@ -13,7 +13,9 @@ region = Rect2(128, 192, 32, 32)
 [resource]
 script = ExtResource("2_oidbl")
 current_ammo = 10
+max_ammo = 10
 ammo_type = ""
+rate_of_fire = 100
 dynamic_recoil = true
 recoil_rotation_x = ExtResource("3_p1y1b")
 recoil_rotation_y = ExtResource("3_p1y1b")

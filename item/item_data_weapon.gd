@@ -15,3 +15,8 @@ class_name ItemDataWeapon extends ItemData
 
 func fire():
 	pass
+
+
+# Virtual func
+func reload():
+	pass

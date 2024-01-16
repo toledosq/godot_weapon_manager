@@ -250,7 +250,7 @@ func _process(delta):
 		#fire_weapon()
 	#
 	#if Input.is_action_just_pressed("weapon_reload"):
-		#print("Player: reload weapon")
+		#reload_weapon()
 	
 	HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 	

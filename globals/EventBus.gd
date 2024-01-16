@@ -6,3 +6,4 @@ signal set_active_player(active_player)
 
 signal active_weapon_changed(index)
 signal weapon_fired()
+signal weapon_reloaded()
