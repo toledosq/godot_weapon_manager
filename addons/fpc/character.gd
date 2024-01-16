@@ -19,8 +19,9 @@ class_name Player extends CharacterBody3D
 @export var CAMERA_ANIMATION : AnimationPlayer
 @export var COLLISION_MESH : CollisionShape3D
 @export var INTERACT_RAY : RayCast3D
-@export var WEAPON_MANAGER : WeaponManager
 @export var FPS_RIG : Node3D
+@export var WEAPON_MANAGER : WeaponManager
+@export var HEALTH_MANAGER : HealthManager
 
 @export_group("Controls")
 # We are using UI controls because they are built into Godot Engine so they can be used right away
@@ -252,6 +253,9 @@ func _process(delta):
 	#if Input.is_action_just_pressed("weapon_reload"):
 		#reload_weapon()
 	
+	if Input.is_action_just_pressed("test_health"):
+		hit(5)
+	
 	HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 	
 	# Uncomment if you want full controller support
@@ -303,3 +307,7 @@ func set_active_weapon_slot(index):
 func fire_weapon():
 	print("Player: fire weapon")
 	WEAPON_MANAGER.fire_weapon()
+
+
+func hit(damage):
+	HEALTH_MANAGER.hit(damage)

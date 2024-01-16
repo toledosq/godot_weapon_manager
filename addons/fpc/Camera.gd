@@ -1,8 +1,8 @@
 extends Camera3D
 
-var base_recoil_pitch_strength = 3.0
-var randomness_factor = 0.5
-var return_speed = 5.0
+var base_recoil_pitch_strength = 2.5
+var randomness_factor = 1.0
+var return_speed = 4.0
 var original_rotation_degrees = Vector3.ZERO
 var target_rotation_degrees = Vector3.ZERO
 

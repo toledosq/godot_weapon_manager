@@ -8,3 +8,6 @@ signal active_weapon_changed(index)
 signal weapon_fired()
 signal weapon_reloaded()
 signal weapon_ammo_changed()
+
+signal player_health_updated(health)
+signal player_died()
