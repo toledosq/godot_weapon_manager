@@ -19,8 +19,13 @@ sky_material = SubResource("PhysicalSkyMaterial_edcox")
 [sub_resource type="Environment" id="Environment_20rw3"]
 background_mode = 2
 sky = SubResource("Sky_2iust")
-tonemap_mode = 1
+tonemap_mode = 2
+tonemap_exposure = 1.2
 ssao_enabled = true
+ssao_power = 2.0
+ssao_light_affect = 1.0
+ssao_ao_channel_affect = 1.0
+ssil_enabled = true
 
 [sub_resource type="Resource" id="Resource_bet0b"]
 script = ExtResource("4_kjg3y")
@@ -57,9 +62,11 @@ uv1_triplanar = true
 environment = SubResource("Environment_20rw3")
 
 [node name="sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
+transform = Transform3D(0.873772, -0.455239, 0.171113, 0, 0.351842, 0.93606, -0.486335, -0.817903, 0.30743, 0, 0, 0)
 light_energy = 4.0
+light_volumetric_fog_energy = 2.0
 shadow_enabled = true
+shadow_bias = 0.05
 
 [node name="Pickup" parent="." instance=ExtResource("2_10460")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30056, -6.09891)

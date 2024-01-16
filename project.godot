@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 EventBus="*res://globals/EventBus.gd"
 PlayerManager="*res://player/player_manager.gd"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
 [input]
 
 crouch={
@@ -93,3 +98,17 @@ secondary_weapon={
 3d_physics/layer_1="world"
 3d_physics/layer_2="player"
 3d_physics/layer_5="interactable"
+
+[rendering]
+
+lights_and_shadows/directional_shadow/size=8192
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=3
+environment/ssao/quality=3
+environment/ssao/half_size=false
+environment/ssil/quality=3
+environment/ssil/half_size=false
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+global_illumination/sdfgi/probe_ray_count=2
+global_illumination/sdfgi/frames_to_converge=4
+anti_aliasing/quality/msaa_3d=2
