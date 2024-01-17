@@ -2,7 +2,10 @@ class_name HealthManager extends Node
 
 @export var MAX_HEALTH: int = 100
 
-var health
+var health: int:
+	set(val):
+		health = val
+		EventBus.player_health_updated.emit(health)
 
 func _ready():
 	health = MAX_HEALTH
@@ -10,7 +13,7 @@ func _ready():
 
 func hit(damage):
 	health -= damage
-	print("HealthManager: Player Health = ", health)
+	print("HealthManager: (HIT) Player Health = ", health)
 	EventBus.player_health_updated.emit(health)
 	
 	if health <= 0:
@@ -19,3 +22,14 @@ func hit(damage):
 
 func on_death():
 	print("Player died")
+
+
+func heal(amount):
+	if health < MAX_HEALTH:
+		var heal_amount = min(MAX_HEALTH - health, 
+							  amount, 
+							  MAX_HEALTH)
+		
+		health += heal_amount
+		print("HealthManager: (HEAL) Amount = ", heal_amount)
+		

@@ -311,3 +311,7 @@ func fire_weapon():
 
 func hit(damage):
 	HEALTH_MANAGER.hit(damage)
+
+
+func heal(amount):
+	HEALTH_MANAGER.heal(amount)
