@@ -175,6 +175,7 @@ custom_minimum_size = Vector2(350, 50)
 layout_mode = 2
 
 [node name="ArmorProgressBar" type="ProgressBar" parent="HUD/MarginContainer/VBoxContainer/ArmorPanelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 value = 30.0

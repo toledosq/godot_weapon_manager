@@ -118,7 +118,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 inventory_data = SubResource("Resource_6xgok")
 
 [node name="Label3D" type="Label3D" parent="Chest"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 text = "Container"
 
 [node name="CSG" type="Node3D" parent="."]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AmmoReserve" load_steps=2 format=3 uid="uid://0g3fwiht7j32"]
+
+[ext_resource type="Script" path="res://resources/ammo/ammo_reserve.gd" id="1_821ki"]
+
+[resource]
+script = ExtResource("1_821ki")
+ammo_reserve = {
+"pistol": Vector2(30, 120),
+"rifle": Vector2(30, 240),
+"shotgun": Vector2(30, 80)
+}

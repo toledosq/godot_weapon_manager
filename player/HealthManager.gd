@@ -1,14 +1,22 @@
 class_name HealthManager extends Node
 
 @export var MAX_HEALTH: int = 100
+@export var MAX_ARMOR: int = 50
+
 
 var health: int:
 	set(val):
 		health = val
 		EventBus.player_health_updated.emit(health)
+var armor: int:
+	set(val):
+		armor = val
+		EventBus.player_armor_updated.emit(armor)
+
 
 func _ready():
 	health = MAX_HEALTH
+	armor = MAX_ARMOR
 
 
 func hit(damage):

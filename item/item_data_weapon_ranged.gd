@@ -23,5 +23,5 @@ func fire():
 
 
 func reload(amount):
-	current_ammo = amount
+	current_ammo += amount
 	

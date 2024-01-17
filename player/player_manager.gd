@@ -1,6 +1,6 @@
 extends Node
 
-var player
+var player: Player
 
 
 func _ready():
@@ -18,3 +18,7 @@ func get_global_position() -> Vector3:
 func _set_active_player(active_player):
 	player = active_player
 	print("PlayerManager: Active player set to %s" % player)
+
+
+func get_ammo_type() -> String:
+	return player.WEAPON_MANAGER._on_get_ammo_type()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=21 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
@@ -8,7 +8,8 @@
 [ext_resource type="Script" path="res://inventory/inventory_data_weapon.gd" id="4_c4tes"]
 [ext_resource type="Script" path="res://addons/fpc/Camera.gd" id="5_pgif6"]
 [ext_resource type="Script" path="res://player/WeaponManager.gd" id="7_ru6it"]
-[ext_resource type="Script" path="res://addons/fpc/HealthManager.gd" id="9_kbn1c"]
+[ext_resource type="Resource" uid="uid://0g3fwiht7j32" path="res://resources/ammo/ammo_reserve.tres" id="9_2qw64"]
+[ext_resource type="Script" path="res://player/HealthManager.gd" id="9_o1n28"]
 
 [sub_resource type="Resource" id="Resource_5yuaq"]
 script = ExtResource("2_4ykg7")
@@ -161,7 +162,7 @@ collision_mask = 16
 libraries = {
 "": SubResource("AnimationLibrary_o0unb")
 }
-blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"headbob", &"RESET", 0.5]
+blend_times = [&"headbob", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"RESET", &"RESET", 0.5]
 
 [node name="CrouchCeilingDetection" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -199,8 +200,9 @@ layout_mode = 2
 
 [node name="WeaponManager" type="Node3D" parent="."]
 script = ExtResource("7_ru6it")
+ammo_reserve = ExtResource("9_2qw64")
 
 [node name="HealthManager" type="Node" parent="."]
-script = ExtResource("9_kbn1c")
+script = ExtResource("9_o1n28")
 
 [editable path="UserInterface/Reticle_1"]

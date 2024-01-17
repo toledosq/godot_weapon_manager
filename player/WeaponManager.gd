@@ -7,6 +7,8 @@ signal weapon_equipped(weapon_slot_index)
 signal weapon_unequipped(weapon_slot_index)
 signal weapon_array_updated(weapon_array)
 
+@export var ammo_reserve: AmmoReserve
+
 var debug_bullet := preload("res://object/debug/debug_bullet.tscn")
 
 var max_weapon_slots: int = 2
@@ -36,6 +38,7 @@ func _ready():
 	
 	EventBus.add_weapon.connect(_on_add_weapon)
 	EventBus.remove_weapon.connect(_on_remove_weapon)
+	active_weapon_slot_index = 0
 
 
 func _process(delta):
@@ -90,7 +93,7 @@ func set_active_weapon_slot(weapon_slot_index):
 		return
 	
 	active_weapon_slot_index = weapon_slot_index
-	EventBus.active_weapon_changed.emit(active_weapon_slot_index)
+	
 	print("WeaponManager: Active slot = ", active_weapon_slot_index)
 	
 	
@@ -122,7 +125,9 @@ func equip_weapon(fast: bool = false):
 	return_position = weapon_resource_array[active_weapon_slot_index].default_position
 	return_rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
 	
+	EventBus.weapon_equipped.emit(weapon_resource_array[active_weapon_slot_index].name)
 	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
+	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
 	
 	if !fast:
 		await player_model.equip()
@@ -148,18 +153,23 @@ func reload_weapon():
 		print("WeaponManager: Cannot reload, weapon not ready")
 		return
 	
-	# Retrieve ammo from inventory
-	# if Globals.player_ammo_reserve_current > 0 and weapon_resource_array[active_weapon_slot_index].current_ammo < weapon_resource_array[active_weapon_slot_index].max_ammo:
-		# var reload_amount = min(
-			# weapon_resource_array[active_weapon_slot_index].max_ammo - weapon_resource_array[active_weapon_slot_index].current_ammo, 
-			# weapon_resource_array[active_weapon_slot_index].max_ammo, 
-			# Globals.player_ammo_reserve_current)
-	var reload_amount = weapon_resource_array[active_weapon_slot_index].max_ammo
+	if weapon_resource_array[active_weapon_slot_index].current_ammo >= weapon_resource_array[active_weapon_slot_index].max_ammo:
+		print("WeaponManager: Cannot reload, magazine full")
+		return
 	
+	## Ammo Reserve Management
+	# Get ammo type from weapon resource
+	var ammo_type = weapon_resource_array[active_weapon_slot_index].ammo_type
+	var ammo_needed: int = weapon_resource_array[active_weapon_slot_index].max_ammo - weapon_resource_array[active_weapon_slot_index].current_ammo
+	# Request that amount from Ammo Reserve
+	var reload_amount = ammo_reserve.take_ammo_from_reserve(ammo_type, ammo_needed)
+	
+	# If no ammo is given, return w/ message
 	if reload_amount <= 0:
 		print("WeaponManager: Cannot reload, no ammo in reserve")
 		return
 	
+	## Reloading logic
 	# Set state to reloading
 	change_state(STATES.RELOADING)
 	
@@ -282,3 +292,7 @@ func create_hit_indicator(_position: Vector3) -> void:
 	var world = get_tree().get_root().get_child(0)
 	world.add_child(hit_indicator)
 	hit_indicator.global_translate(_position)
+
+
+func _on_get_ammo_type() -> String:
+	return weapon_resource_array[active_weapon_slot_index].ammo_type
