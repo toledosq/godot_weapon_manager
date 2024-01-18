@@ -3,6 +3,7 @@ class_name AmmoReserve extends Resource
 
 # name, current amount, max amount
 @export var ammo_reserve: Dictionary = {
+	"grenade": Vector2(1, 2),
 	"pistol": Vector2(30, 120),
 	"shotgun": Vector2(30, 80),
 	"rifle": Vector2(30, 240)
@@ -45,4 +46,4 @@ func fill_all_ammo_reserve():
 
 
 func get_ammo_amount(type: String):
-	return ammo_reserve[type]
+	return ammo_reserve[type][0]

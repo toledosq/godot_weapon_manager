@@ -10,6 +10,7 @@ signal weapon_array_updated(weapon_array)
 @export var ammo_reserve: AmmoReserve
 
 var debug_bullet := preload("res://object/debug/debug_bullet.tscn")
+var grenade_scene := preload("res://item/weapons/grenade.tscn")
 
 var max_weapon_slots: int = 2
 var active_weapon_slot_index: int = 0:
@@ -54,16 +55,20 @@ func _process(delta):
 			player_model.ads = false
 	
 	# Only do this if the player is controlling character
-	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and STATE == STATES.READY:
-		if single_fire:
-			if Input.is_action_just_pressed("weapon_fire"):
-				fire_weapon()
-		else:
-			if Input.is_action_pressed("weapon_fire"):
-				fire_weapon()
-		
-		if Input.is_action_just_pressed("weapon_reload"):
-			reload_weapon()
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		if STATE == STATES.READY:
+			if single_fire:
+				if Input.is_action_just_pressed("weapon_fire"):
+					fire_weapon()
+			else:
+				if Input.is_action_pressed("weapon_fire"):
+					fire_weapon()
+			
+			if Input.is_action_just_pressed("weapon_reload"):
+				reload_weapon()
+				
+		if Input.is_action_just_pressed("weapon_grenade"):
+			throw_grenade()
 		
 
 
@@ -177,7 +182,6 @@ func reload_weapon():
 	
 	# Call resource reload func for ammo mgmt
 	weapon_resource_array[active_weapon_slot_index].reload(reload_amount)
-	# Globals.player_ammo_reserve_current -= reload_amount
 	
 	# Broadcast reloaded event
 	EventBus.weapon_reloaded.emit()
@@ -217,6 +221,18 @@ func fire_weapon():
 	
 	# Change state to READY
 	change_state(STATES.READY)
+
+
+func throw_grenade():
+	if ammo_reserve.get_ammo_amount("grenade") > 0:
+		ammo_reserve.take_ammo_from_reserve("grenade", 1)
+		var grenade = grenade_scene.instantiate()
+		var camera_ = get_viewport().get_camera_3d()
+		var direction = -camera_.global_transform.basis.z
+		var world = get_tree().get_root().get_child(0)
+		world.add_child(grenade)
+		grenade.global_position = camera_.global_position + direction
+		grenade.apply_impulse(direction * 10)
 
 
 func get_camera_collision(distance) -> Vector3:
