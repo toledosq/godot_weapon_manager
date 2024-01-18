@@ -209,8 +209,7 @@ func fire_weapon():
 	# Call the weapon resource's fire function to decrement weapon ammo
 	weapon_resource_array[active_weapon_slot_index].fire()
 	
-	# Broadcast weapon fired event (listened to by at least camera)
-	
+	# Alert UI that weapon ammo changed
 	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
 	
 	# Call the weapon model's fire function for animation/timing
