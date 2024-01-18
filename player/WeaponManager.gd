@@ -1,7 +1,7 @@
 class_name WeaponManager extends Node3D
 
 enum STATES { NONE, NOT_READY, READY, FIRING, RELOADING }
-var STATE = STATES.NOT_READY
+var STATE = STATES.NONE
 
 signal weapon_equipped(weapon_slot_index)
 signal weapon_unequipped(weapon_slot_index)
@@ -313,8 +313,10 @@ func create_hit_indicator(_position: Vector3) -> void:
 
 
 func _on_get_ammo_type() -> String:
-	return weapon_resource_array[active_weapon_slot_index].ammo_type
-
+	if STATE != STATES.NONE:
+		return weapon_resource_array[active_weapon_slot_index].ammo_type
+	else:
+		return "pistol"
 
 func _on_refill_ammo_reserve() -> void:
 	ammo_reserve.fill_all_ammo_reserve()

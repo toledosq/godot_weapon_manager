@@ -205,4 +205,5 @@ libraries = {
 
 [node name="FireAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_sm7pi")
+volume_db = -4.0
 max_polyphony = 3

@@ -61,40 +61,33 @@ uv1_triplanar = true
 albedo_texture = ExtResource("8_wd1ma")
 uv1_triplanar = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edw0e"]
-albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
-albedo_texture = ExtResource("9_vefh7")
-uv1_triplanar = true
-
 [sub_resource type="PrismMesh" id="PrismMesh_jkqp2"]
-material = SubResource("StandardMaterial3D_edw0e")
 left_to_right = 0.0
 size = Vector3(4, 1, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jd5o8"]
-albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
-albedo_texture = ExtResource("9_vefh7")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6woil"]
+albedo_texture = ExtResource("8_wd1ma")
 uv1_triplanar = true
 
 [sub_resource type="PrismMesh" id="PrismMesh_bjpcb"]
-material = SubResource("StandardMaterial3D_jd5o8")
 left_to_right = 0.0
 size = Vector3(4, 2, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_03k3h"]
-albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
-albedo_texture = ExtResource("9_vefh7")
-uv1_triplanar = true
-
 [sub_resource type="PrismMesh" id="PrismMesh_i2qvj"]
-material = SubResource("StandardMaterial3D_03k3h")
 left_to_right = 0.0
 size = Vector3(4, 3, 2)
 
 [sub_resource type="PrismMesh" id="PrismMesh_umcaa"]
-material = SubResource("StandardMaterial3D_03k3h")
 left_to_right = 0.0
 size = Vector3(4, 4, 2)
+
+[sub_resource type="PrismMesh" id="PrismMesh_lun72"]
+left_to_right = 0.0
+size = Vector3(4, 5, 2)
+
+[sub_resource type="PrismMesh" id="PrismMesh_31j33"]
+left_to_right = 0.0
+size = Vector3(4, 6, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8s6ue"]
 albedo_texture = ExtResource("9_vefh7")
@@ -107,6 +100,8 @@ uv1_triplanar = true
 [node name="test_world" type="Node3D"]
 
 [node name="Character" parent="." instance=ExtResource("1_e18vq")]
+floor_stop_on_slope = false
+floor_max_angle = 0.872665
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_20rw3")
@@ -139,50 +134,67 @@ size = Vector3(30, 1, 20)
 material = SubResource("StandardMaterial3D_o7dp0")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2.5, 0)
 use_collision = true
 size = Vector3(1, 5, 20)
 material = SubResource("StandardMaterial3D_0fyno")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, 0)
 use_collision = true
 size = Vector3(1, 5, 20)
 material = SubResource("StandardMaterial3D_0fyno")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="CSG"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2, 10)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.5, 10)
 use_collision = true
 size = Vector3(1, 5, 30)
 material = SubResource("StandardMaterial3D_0fyno")
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="CSG"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2, -10)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.5, -10)
 use_collision = true
 size = Vector3(1, 5, 30)
 material = SubResource("StandardMaterial3D_0fyno")
 
 [node name="InclineTest" type="Node3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 
 [node name="CSGMesh3D3" type="CSGMesh3D" parent="CSG/InclineTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0.5, 4)
 use_collision = true
 mesh = SubResource("PrismMesh_jkqp2")
+material = SubResource("StandardMaterial3D_6woil")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="CSG/InclineTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 1, 2)
 use_collision = true
 mesh = SubResource("PrismMesh_bjpcb")
+material = SubResource("StandardMaterial3D_6woil")
 
 [node name="CSGMesh3D2" type="CSGMesh3D" parent="CSG/InclineTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 1.5, 0)
 use_collision = true
 mesh = SubResource("PrismMesh_i2qvj")
+material = SubResource("StandardMaterial3D_6woil")
 
 [node name="CSGMesh3D4" type="CSGMesh3D" parent="CSG/InclineTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 2, -2)
 use_collision = true
 mesh = SubResource("PrismMesh_umcaa")
+material = SubResource("StandardMaterial3D_6woil")
+
+[node name="CSGMesh3D5" type="CSGMesh3D" parent="CSG/InclineTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 2.5, -4)
+use_collision = true
+mesh = SubResource("PrismMesh_lun72")
+material = SubResource("StandardMaterial3D_6woil")
+
+[node name="CSGMesh3D6" type="CSGMesh3D" parent="CSG/InclineTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 3, -6)
+use_collision = true
+mesh = SubResource("PrismMesh_31j33")
+material = SubResource("StandardMaterial3D_6woil")
 
 [node name="CurbTest" type="Node3D" parent="CSG"]
 
