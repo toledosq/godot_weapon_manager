@@ -211,11 +211,13 @@ func enter_sprint_state():
 	var prev_state = state
 	state = "sprinting"
 	speed = sprint_speed
-
+	toggle_ads(false)
 
 func update_camera_fov():
 	if state == "sprinting":
-		CAMERA.fov = lerp(CAMERA.fov, 85.0, 0.3)
+		CAMERA.fov = lerp(CAMERA.fov, 85.0, 0.1)
+	elif is_ads:
+		CAMERA.fov = lerp(CAMERA.fov, 65.0, 0.3)
 	else:
 		CAMERA.fov = lerp(CAMERA.fov, 75.0, 0.3)
 
@@ -256,14 +258,11 @@ func _process(delta):
 		#reload_weapon()
 	
 	if Input.is_action_just_released("weapon_ads"):
-		is_ads = false
-		WEAPON_MANAGER.ads = false
-		reticle_1.show()
+		toggle_ads(false)
 	
 	if Input.is_action_pressed("weapon_ads"):
-		is_ads = true
-		WEAPON_MANAGER.ads = true
-		reticle_1.hide()
+		if state != "sprinting":
+			toggle_ads(true)
 	
 	if Input.is_action_just_pressed("test_health"):
 		hit(5)
@@ -294,6 +293,12 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("secondary_weapon"):
 		print("Player: Equip secondary weapon")
 		set_active_weapon_slot(1)
+
+
+func toggle_ads(ads: bool):
+	is_ads = ads
+	WEAPON_MANAGER.ads = ads
+	reticle_1.visible = !ads
 
 
 func interact() -> void:
