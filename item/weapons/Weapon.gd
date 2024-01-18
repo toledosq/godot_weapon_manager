@@ -28,11 +28,6 @@ var ads := false
 const ADS_LERP := 20
 
 
-func _ready():
-	position = default_position
-	rotation = default_rotation
-
-
 func _process(delta):
 	if ads:
 		position = position.lerp(ads_position, ADS_LERP * delta)

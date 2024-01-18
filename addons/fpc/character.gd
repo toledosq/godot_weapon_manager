@@ -279,6 +279,8 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
 		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
+		
+		CAMERA.sway(Vector2(event.relative.x, event.relative.y))
 	
 	if Input.is_action_just_pressed("inventory"):
 		toggle_inventory.emit()
