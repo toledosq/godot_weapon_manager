@@ -123,6 +123,7 @@ MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH", "INTERACT_RAY", "FPS_RIG", "WEAPON_MANAGER", "HEALTH_MANAGER")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_0t4e8")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://giq451xcik8x"]
+[gd_scene load_steps=31 format=3 uid="uid://giq451xcik8x"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://item/pickup/pickup.tscn" id="2_10460"]
@@ -61,16 +61,6 @@ uv1_triplanar = true
 albedo_texture = ExtResource("8_wd1ma")
 uv1_triplanar = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jd5o8"]
-albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
-albedo_texture = ExtResource("9_vefh7")
-uv1_triplanar = true
-
-[sub_resource type="PrismMesh" id="PrismMesh_bjpcb"]
-material = SubResource("StandardMaterial3D_jd5o8")
-left_to_right = 0.0
-size = Vector3(4, 2, 2)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edw0e"]
 albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
 albedo_texture = ExtResource("9_vefh7")
@@ -80,6 +70,16 @@ uv1_triplanar = true
 material = SubResource("StandardMaterial3D_edw0e")
 left_to_right = 0.0
 size = Vector3(4, 1, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jd5o8"]
+albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
+albedo_texture = ExtResource("9_vefh7")
+uv1_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_bjpcb"]
+material = SubResource("StandardMaterial3D_jd5o8")
+left_to_right = 0.0
+size = Vector3(4, 2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_03k3h"]
 albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
@@ -95,6 +95,14 @@ size = Vector3(4, 3, 2)
 material = SubResource("StandardMaterial3D_03k3h")
 left_to_right = 0.0
 size = Vector3(4, 4, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8s6ue"]
+albedo_texture = ExtResource("9_vefh7")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23ios"]
+albedo_texture = ExtResource("9_vefh7")
+uv1_triplanar = true
 
 [node name="test_world" type="Node3D"]
 
@@ -154,25 +162,110 @@ use_collision = true
 size = Vector3(1, 5, 30)
 material = SubResource("StandardMaterial3D_0fyno")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="CSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 1, 2)
-use_collision = true
-mesh = SubResource("PrismMesh_bjpcb")
+[node name="InclineTest" type="Node3D" parent="CSG"]
 
-[node name="CSGMesh3D3" type="CSGMesh3D" parent="CSG"]
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="CSG/InclineTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0.5, 4)
 use_collision = true
 mesh = SubResource("PrismMesh_jkqp2")
 
-[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSG"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CSG/InclineTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 1, 2)
+use_collision = true
+mesh = SubResource("PrismMesh_bjpcb")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSG/InclineTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 1.5, 0)
 use_collision = true
 mesh = SubResource("PrismMesh_i2qvj")
 
-[node name="CSGMesh3D4" type="CSGMesh3D" parent="CSG"]
+[node name="CSGMesh3D4" type="CSGMesh3D" parent="CSG/InclineTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 2, -2)
 use_collision = true
 mesh = SubResource("PrismMesh_umcaa")
+
+[node name="CurbTest" type="Node3D" parent="CSG"]
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSG/CurbTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0500001, 8)
+use_collision = true
+size = Vector3(1, 0.1, 1)
+material = SubResource("StandardMaterial3D_8s6ue")
+
+[node name="Label3D" type="Label3D" parent="CSG/CurbTest/CSGBox3D6"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, 0.5)
+text = "0.1m"
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSG/CurbTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.1, 8)
+use_collision = true
+size = Vector3(1, 0.2, 1)
+material = SubResource("StandardMaterial3D_8s6ue")
+
+[node name="Label3D2" type="Label3D" parent="CSG/CurbTest/CSGBox3D7"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.95, 0.5)
+text = "0.2m"
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSG/CurbTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.15, 8)
+use_collision = true
+size = Vector3(1, 0.3, 1)
+material = SubResource("StandardMaterial3D_8s6ue")
+
+[node name="Label3D3" type="Label3D" parent="CSG/CurbTest/CSGBox3D8"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.9, 0.5)
+text = "0.3m"
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSG/CurbTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.2, 8)
+use_collision = true
+size = Vector3(1, 0.4, 1)
+material = SubResource("StandardMaterial3D_8s6ue")
+
+[node name="Label3D3" type="Label3D" parent="CSG/CurbTest/CSGBox3D9"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.9, 0.5)
+text = "0.4m"
+
+[node name="ClearanceTest" type="Node3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="CSG/ClearanceTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1, 8)
+use_collision = true
+size = Vector3(0.5, 2, 1)
+material = SubResource("StandardMaterial3D_23ios")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="CSG/ClearanceTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.75, 1.25, 8)
+use_collision = true
+size = Vector3(0.5, 2.5, 1)
+material = SubResource("StandardMaterial3D_23ios")
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="CSG/ClearanceTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 1.25, 8)
+use_collision = true
+size = Vector3(0.5, 2.5, 1)
+material = SubResource("StandardMaterial3D_23ios")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="CSG/ClearanceTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.875, 1.75, 8)
+use_collision = true
+size = Vector3(1.25, 0.5, 1)
+material = SubResource("StandardMaterial3D_23ios")
+
+[node name="Label3D3" type="Label3D" parent="CSG/ClearanceTest/CSGBox3D16"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.5, 0.5)
+text = "1.5m"
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="CSG/ClearanceTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.75, 2.25, 8)
+use_collision = true
+size = Vector3(1.5, 0.5, 1)
+material = SubResource("StandardMaterial3D_23ios")
+
+[node name="Label3D4" type="Label3D" parent="CSG/ClearanceTest/CSGBox3D18"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.5, 0.5)
+text = "2.0m"
 
 [node name="AmmoCrate" parent="." instance=ExtResource("11_tn7qr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.346855, -8)
