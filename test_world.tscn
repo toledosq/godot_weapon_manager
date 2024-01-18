@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://giq451xcik8x"]
+[gd_scene load_steps=29 format=3 uid="uid://giq451xcik8x"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://item/pickup/pickup.tscn" id="2_10460"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://eol2uf3pkpqe" path="res://item/consumable/pills.tres" id="8_ena0f"]
 [ext_resource type="Texture2D" uid="uid://ce3tgu3q1oek1" path="res://assets/prototype/texture_01.png" id="8_wd1ma"]
 [ext_resource type="Texture2D" uid="uid://dt7c020x7j8a6" path="res://assets/prototype/texture_02.png" id="9_vefh7"]
+[ext_resource type="PackedScene" uid="uid://bh267nu3soeiq" path="res://interactable/ammo_crate.tscn" id="11_tn7qr"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -172,3 +173,10 @@ mesh = SubResource("PrismMesh_i2qvj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 2, -2)
 use_collision = true
 mesh = SubResource("PrismMesh_umcaa")
+
+[node name="AmmoCrate" parent="." instance=ExtResource("11_tn7qr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.346855, -8)
+
+[node name="Label3D" type="Label3D" parent="AmmoCrate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+text = "Ammo Crate"

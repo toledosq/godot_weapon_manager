@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh267nu3soeiq"]
+
+[ext_resource type="Script" path="res://interactable/ammo_crate.gd" id="1_rsypn"]
+[ext_resource type="ArrayMesh" uid="uid://dsvekehwvbimc" path="res://assets/objects/plastic_ammo_crate_box.res" id="2_2aiw6"]
+[ext_resource type="AudioStream" uid="uid://b3b861mhtq4ic" path="res://assets/audio/sfx/grab_ammo.mp3" id="3_lpyoi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4q8d4"]
+size = Vector3(78, 60, 50)
+
+[node name="AmmoCrate" type="StaticBody3D"]
+collision_layer = 17
+collision_mask = 0
+script = ExtResource("1_rsypn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.015, 0, 0, 0, -6.55671e-10, 0.015, 0, -0.015, -6.55671e-10, 0, 0.112579, 0)
+mesh = ExtResource("2_2aiw6")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.015, 0, 0, 0, 0.015, 1.06581e-16, 0, -1.06581e-16, 0.015, 0, 0, 0)
+shape = SubResource("BoxShape3D_4q8d4")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_lpyoi")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

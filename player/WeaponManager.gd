@@ -296,3 +296,7 @@ func create_hit_indicator(_position: Vector3) -> void:
 
 func _on_get_ammo_type() -> String:
 	return weapon_resource_array[active_weapon_slot_index].ammo_type
+
+
+func _on_refill_ammo_reserve() -> void:
+	ammo_reserve.fill_all_ammo_reserve()

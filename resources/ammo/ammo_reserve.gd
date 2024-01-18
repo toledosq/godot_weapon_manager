@@ -22,7 +22,7 @@ func add_ammo_to_reserve(type: String, amount: int):
 
 
 func take_ammo_from_reserve(type: String, amount: int):
-	var amount_to_return = min(ammo_reserve[type][1] - ammo_reserve[type][0], ammo_reserve[type][0], amount)
+	var amount_to_return = min(ammo_reserve[type][0], amount)
 	ammo_reserve[type][0] -= amount_to_return
 	send_event()
 	return amount_to_return

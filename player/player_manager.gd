@@ -22,3 +22,7 @@ func _set_active_player(active_player):
 
 func get_ammo_type() -> String:
 	return player.WEAPON_MANAGER._on_get_ammo_type()
+
+
+func refill_ammo_reserve() -> void:
+	player.WEAPON_MANAGER._on_refill_ammo_reserve()
