@@ -20,13 +20,18 @@ var single_fire: bool = true
 
 var weapon_resource_array: Array[ItemDataWeapon]	# Stores the Weapon's resource data
 var player_model : Node3D
+var return_position : Vector3
+var return_rotation : Vector3
 
 var ads := false
+const ADS_LERP := 20
+var default_position : Vector3
+var default_rotation : Vector3
+var ads_position : Vector3
+var ads_rotation : Vector3
 
 # Dynamic Recoil vars
 var recoil_amplitude_modifier := 1.0
-var return_position : Vector3
-var return_rotation : Vector3
 var target_rot: Vector3
 var target_pos: Vector3
 var current_time: float
@@ -43,6 +48,15 @@ func _ready():
 
 func _process(delta):
 	if player_model and STATE != STATES.NONE:
+		if ads:
+			player_model.position = player_model.position.lerp(ads_position, ADS_LERP * delta)
+			player_model.rotation = player_model.rotation.lerp(ads_rotation, ADS_LERP * delta)
+			recoil_amplitude_modifier = 0.25
+		else:
+			player_model.position = player_model.position.lerp(default_position, ADS_LERP * delta)
+			player_model.rotation = player_model.rotation.lerp(default_rotation, ADS_LERP * delta)
+			recoil_amplitude_modifier = 1.0
+			
 		if weapon_resource_array[active_weapon_slot_index].dynamic_recoil:
 			lerp_recoil(delta)
 	
@@ -57,6 +71,7 @@ func _process(delta):
 		
 		if Input.is_action_just_pressed("weapon_reload"):
 			reload_weapon()
+		
 
 
 func change_state(new_state: STATES):
@@ -118,12 +133,15 @@ func equip_weapon(fast: bool = false):
 	else:
 		single_fire = false
 	
-	# TODO: Temporary fix for weapon render placement, will be replaced w/ anims
-	player_model.position = weapon_resource_array[active_weapon_slot_index].default_position
-	player_model.rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
+	default_position = weapon_resource_array[active_weapon_slot_index].default_position
+	default_rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
+	ads_position = weapon_resource_array[active_weapon_slot_index].ads_position
+	ads_rotation = weapon_resource_array[active_weapon_slot_index].ads_rotation
+	return_position = default_position
+	return_rotation = default_rotation
 	
-	return_position = weapon_resource_array[active_weapon_slot_index].default_position
-	return_rotation = weapon_resource_array[active_weapon_slot_index].default_rotation
+	player_model.position = return_position
+	player_model.rotation = return_rotation
 	
 	EventBus.weapon_equipped.emit(weapon_resource_array[active_weapon_slot_index].name)
 	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
@@ -241,11 +259,11 @@ func lerp_recoil(delta: float) -> void:
 		target_rot.x = weapon_resource_array[active_weapon_slot_index].recoil_rotation_x.sample(current_time) * -weapon_resource_array[active_weapon_slot_index].recoil_amplitude.x * recoil_amplitude_modifier
 		target_pos.z = weapon_resource_array[active_weapon_slot_index].recoil_position_z.sample(current_time) * weapon_resource_array[active_weapon_slot_index].recoil_amplitude.z * recoil_amplitude_modifier
 		
-	else:
-		# Lerp to the default rotation/position
-		player_model.position.z = lerp(player_model.position.z, return_position.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
-		player_model.rotation.z = lerp(player_model.rotation.z, return_rotation.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
-		player_model.rotation.x = lerp(player_model.rotation.x, return_rotation.x, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+	#else:
+		## Lerp to the default rotation/position
+		#player_model.position.z = lerp(player_model.position.z, return_position.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+		#player_model.rotation.z = lerp(player_model.rotation.z, return_rotation.z, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
+		#player_model.rotation.x = lerp(player_model.rotation.x, return_rotation.x, weapon_resource_array[active_weapon_slot_index].lerp_speed * delta * 8)
 
 
 func apply_recoil():

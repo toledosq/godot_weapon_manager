@@ -65,6 +65,8 @@ var speed : float = base_speed
 # States: normal, crouching, sprinting
 var state : String = "normal"
 var low_ceiling : bool = false # This is for when the cieling is too low and the player needs to crouch.
+var is_ads : bool = false
+@onready var reticle_1 = $UserInterface/Reticle_1
 
 # Get the gravity from the project settings to be synced with RigidBody nodes
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") # Don't set this as a const, see the gravity section in _physics_process
@@ -252,6 +254,16 @@ func _process(delta):
 	#
 	#if Input.is_action_just_pressed("weapon_reload"):
 		#reload_weapon()
+	
+	if Input.is_action_just_released("weapon_ads"):
+		is_ads = false
+		WEAPON_MANAGER.ads = false
+		reticle_1.show()
+	
+	if Input.is_action_pressed("weapon_ads"):
+		is_ads = true
+		WEAPON_MANAGER.ads = true
+		reticle_1.hide()
 	
 	if Input.is_action_just_pressed("test_health"):
 		hit(5)

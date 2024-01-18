@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=22 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 [ext_resource type="Script" path="res://inventory/inventory_data_weapon.gd" id="4_c4tes"]
 [ext_resource type="Script" path="res://addons/fpc/Camera.gd" id="5_pgif6"]
+[ext_resource type="Texture2D" uid="uid://c8exgis8hi50l" path="res://assets/crosshairs/crosshair160.png" id="7_37vqj"]
 [ext_resource type="Script" path="res://player/WeaponManager.gd" id="7_ru6it"]
 [ext_resource type="Resource" uid="uid://0g3fwiht7j32" path="res://resources/ammo/ammo_reserve.tres" id="9_2qw64"]
 [ext_resource type="Script" path="res://player/HealthManager.gd" id="9_o1n28"]
@@ -157,6 +158,12 @@ script = ExtResource("5_pgif6")
 [node name="InteractRay" type="RayCast3D" parent="Head/Camera"]
 target_position = Vector3(0, 0, -3)
 collision_mask = 16
+
+[node name="TrueCenterReference" type="Sprite3D" parent="Head/Camera"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -2.95929)
+visible = false
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("7_37vqj")
 
 [node name="camera_animation" type="AnimationPlayer" parent="Head"]
 libraries = {

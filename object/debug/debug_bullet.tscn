@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bmr14cwjxsavt"]
 
-[ext_resource type="Texture2D" uid="uid://dp0ae4xmxuf70" path="res://assets/debug/crosshair086.png" id="1_6t6kl"]
+[ext_resource type="Texture2D" uid="uid://dp0ae4xmxuf70" path="res://assets/crosshairs/crosshair086.png" id="1_6t6kl"]
 [ext_resource type="Script" path="res://object/debug/debug_bullet.gd" id="1_80t6e"]
 
 [node name="DebugBullet" type="Sprite3D"]
