@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://inventory/slot_data.gd" id="4_kjg3y"]
 [ext_resource type="PackedScene" uid="uid://c4gkq0g3qlm84" path="res://interactable/chest.tscn" id="5_2dg3g"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="6_hgy81"]
-[ext_resource type="Resource" uid="uid://d27ee4dnn45fm" path="res://item/weapons/pistol2.tres" id="7_10lmg"]
+[ext_resource type="Resource" uid="uid://d27ee4dnn45fm" path="res://item/weapons/rifle.tres" id="7_10lmg"]
 [ext_resource type="Resource" uid="uid://eol2uf3pkpqe" path="res://item/consumable/pills.tres" id="8_ena0f"]
 [ext_resource type="Texture2D" uid="uid://ce3tgu3q1oek1" path="res://assets/prototype/texture_01.png" id="8_wd1ma"]
 [ext_resource type="Texture2D" uid="uid://dt7c020x7j8a6" path="res://assets/prototype/texture_02.png" id="9_vefh7"]

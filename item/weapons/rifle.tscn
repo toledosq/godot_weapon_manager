@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bsdx2usalhemp"]
+[gd_scene load_steps=12 format=3 uid="uid://bsdx2usalhemp"]
 
-[ext_resource type="Script" path="res://item/weapons/Weapon.gd" id="1_un0g5"]
-[ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="2_pmxrl"]
-[ext_resource type="AudioStream" uid="uid://dstepgdm88yx8" path="res://assets/audio/sfx/9mm-pistol-shot-trimmed.mp3" id="3_sm7pi"]
+[ext_resource type="Script" path="res://item/weapons/Weapon.gd" id="1_setpl"]
+[ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="2_ebkpp"]
+[ext_resource type="Curve" uid="uid://763d20qh4fo6" path="res://resources/recoil_curve/recoil_curve.tres" id="2_xs732"]
+[ext_resource type="AudioStream" uid="uid://dstepgdm88yx8" path="res://assets/audio/sfx/9mm-pistol-shot-trimmed.mp3" id="3_78cn6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgi8u"]
 albedo_color = Color(0.254902, 0.00784314, 0.0196078, 1)
@@ -190,12 +191,20 @@ _data = {
 }
 
 [node name="Pistol" type="Node3D" node_paths=PackedStringArray("animation_player", "fire_audio")]
-script = ExtResource("1_un0g5")
+script = ExtResource("1_setpl")
+default_position = Vector3(0.25, -0.29, -0.57)
+default_rotation = Vector3(0, -3.14159, 0)
+ads_position = Vector3(0, -0.184, -0.57)
+ads_rotation = Vector3(-0.0437554, -3.14159, -1.10999e-07)
 animation_player = NodePath("AnimationPlayer")
 fire_audio = NodePath("FireAudio")
+recoil_rotation_x = ExtResource("2_xs732")
+recoil_rotation_y = ExtResource("2_xs732")
+recoil_rotation_z = ExtResource("2_xs732")
+recoil_position_z = ExtResource("2_xs732")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = ExtResource("2_pmxrl")
+mesh = ExtResource("2_ebkpp")
 surface_material_override/0 = SubResource("StandardMaterial3D_sgi8u")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -204,6 +213,6 @@ libraries = {
 }
 
 [node name="FireAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_sm7pi")
+stream = ExtResource("3_78cn6")
 volume_db = -4.0
 max_polyphony = 3

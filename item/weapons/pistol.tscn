@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cq1whxsacte53"]
+[gd_scene load_steps=12 format=3 uid="uid://cq1whxsacte53"]
 
 [ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="1_75bwf"]
 [ext_resource type="Script" path="res://item/weapons/Weapon.gd" id="1_ppkwk"]
+[ext_resource type="Curve" uid="uid://763d20qh4fo6" path="res://resources/recoil_curve/recoil_curve.tres" id="2_gswq1"]
 [ext_resource type="AudioStream" uid="uid://dstepgdm88yx8" path="res://assets/audio/sfx/9mm-pistol-shot-trimmed.mp3" id="3_bfhg7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7klqe"]
@@ -191,8 +192,16 @@ _data = {
 
 [node name="Pistol" type="Node3D" node_paths=PackedStringArray("animation_player", "fire_audio")]
 script = ExtResource("1_ppkwk")
+default_position = Vector3(0.25, -0.29, -0.57)
+default_rotation = Vector3(0, -3.14159, 0)
+ads_position = Vector3(0, -0.184, -0.57)
+ads_rotation = Vector3(-0.0437554, -3.14159, -1.10999e-07)
 animation_player = NodePath("AnimationPlayer")
 fire_audio = NodePath("FireAudio")
+recoil_rotation_x = ExtResource("2_gswq1")
+recoil_rotation_y = ExtResource("2_gswq1")
+recoil_rotation_z = ExtResource("2_gswq1")
+recoil_position_z = ExtResource("2_gswq1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_75bwf")
