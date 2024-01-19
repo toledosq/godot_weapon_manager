@@ -5,7 +5,7 @@ var randomness_factor = 0.5
 var return_speed = 4.0
 var original_rotation_degrees = Vector3.ZERO
 var target_rotation_degrees = Vector3.ZERO
-var original_position = Vector3.ZERO
+var fps_rig_original_position = Vector3.ZERO
 @onready var fps_rig = $FPSRig
 
 
@@ -17,7 +17,7 @@ func _ready():
 func _process(delta):
 	# Interpolate from current rotation to the original rotation
 	rotation_degrees = rotation_degrees.lerp(original_rotation_degrees, return_speed * delta)
-	fps_rig.position = fps_rig.position.lerp(original_position, return_speed * 2 * delta)
+	fps_rig.position = fps_rig.position.lerp(fps_rig_original_position, return_speed * 2 * delta)
 
 
 func sway(sway_amount):
