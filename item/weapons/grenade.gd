@@ -2,11 +2,14 @@ class_name Grenade extends RigidBody3D
 
 @export var damage: int = 30
 @export var explosion_radius: int = 3
+@export var default_position : Vector3
+@export var default_rotation : Vector3
 
 @onready var collision_shape_3d: CollisionShape3D = $BlastArea/CollisionShape3D
 @onready var blast_area: Area3D = $BlastArea
 @onready var smoke_particles = $SmokeParticles
 @onready var mesh_instance_3d = $MeshInstance3D
+
 
 
 func _ready():

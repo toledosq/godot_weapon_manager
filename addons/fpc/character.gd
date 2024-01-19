@@ -57,6 +57,7 @@ class_name Player extends CharacterBody3D
 @export var inventory_data: InventoryData
 @export var armor_inventory_data: InventoryDataArmor
 @export var weapon_inventory_data: InventoryDataWeapon
+@export var grenade_inventory_data: InventoryDataGrenade
 
 signal toggle_inventory()
 
@@ -290,14 +291,6 @@ func _unhandled_input(event):
 	
 	if Input.is_action_just_pressed("interact"):
 		interact()
-	
-	if Input.is_action_just_pressed("primary_weapon"):
-		print("Player: Equip primary weapon")
-		set_active_weapon_slot(0)
-	
-	if Input.is_action_just_pressed("secondary_weapon"):
-		print("Player: Equip secondary weapon")
-		set_active_weapon_slot(1)
 
 
 func toggle_ads(ads: bool):
@@ -319,11 +312,6 @@ func get_drop_position() -> Vector3:
 	# Get forward facing direction from camera
 	var direction = -CAMERA.global_transform.basis.z
 	return CAMERA.global_position + direction
-
-
-func set_active_weapon_slot(index):
-	print("Player: Set active weapon slot to ", index)
-	WEAPON_MANAGER.set_active_weapon_slot(index)
 
 
 func fire_weapon():

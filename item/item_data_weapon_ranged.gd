@@ -2,7 +2,6 @@ class_name ItemDataWeaponRanged extends ItemDataWeapon
 
 @export var current_ammo: int
 @export var max_ammo: int
-@export var ammo_type: String # TODO: this should be an enum defined somewhere globally
 @export var projectile: PackedScene
 @export var rate_of_fire: int = 100
 

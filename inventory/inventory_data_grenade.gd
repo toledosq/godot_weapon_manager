@@ -1,9 +1,7 @@
-class_name InventoryData extends Resource
+class_name InventoryDataGrenade extends InventoryData
 
-signal inventory_updated(inventory_data: InventoryData)
-signal inventory_interact(inventory_data: InventoryData, index: int, button: int)
-
-@export var slot_datas: Array[SlotData]
+signal weapon_equipped(index)
+signal weapon_unequipped(index)
 
 
 # When player grabs an item from inventory
@@ -12,12 +10,12 @@ func grab_slot_data(index: int) -> SlotData:
 	
 	# If there is a slot at this grid index
 	if slot_data:
-		# Make the resource unique when grabbed
-		slot_data.item_data = slot_data.item_data.duplicate(true)
-		
 		# Remove the grabbed slot from the inventory and alert inventory panel
 		slot_datas[index] = null
 		inventory_updated.emit(self)
+		
+		# Alert weapon unequipped
+		EventBus.remove_grenade.emit()
 		
 		# Give the grabbed slot's data to requestor
 		return slot_data
@@ -25,8 +23,13 @@ func grab_slot_data(index: int) -> SlotData:
 		return null
 
 
-# When player drops an item into inventory
+# When player drops an item into equip inventory, check that it's equipable
 func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
+	
+	# If it's not an equipable item, don't drop it, give it back
+	if not grabbed_slot_data.item_data is ItemDataGrenade:
+		return grabbed_slot_data
+
 	# Get the slot at grid index
 	var slot_data = slot_datas[index]
 
@@ -42,12 +45,21 @@ func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	
 	# Alert inventory panel of update
 	inventory_updated.emit(self)
+	
+	# Alert WeaponManager that grenade was added
+	EventBus.add_grenade.emit(slot_datas[index])
+	
 	# Return null if stacks merged or slot was already empty, otherwise return swapped slot
 	return return_slot_data
 
 
-# When player drops a single item into inventory
+# When player drops a single item into equip inventory, check that it's equipable
 func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
+	
+	# If it's not an equipable item, don't drop it, give it back
+	if not grabbed_slot_data.item_data is ItemDataGrenade:
+		return grabbed_slot_data
+	
 	# Get the slot at grid index
 	var slot_data = slot_datas[index]
 	
@@ -55,12 +67,14 @@ func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	if not slot_data:
 		slot_datas[index] = grabbed_slot_data.create_single_slot_data()
 	# If it can be merged, do that
-	# Note calling can_merge_with since we are testing against a single item
 	elif slot_data.can_merge_with(grabbed_slot_data):
 		slot_data.fully_merge_with(grabbed_slot_data.create_single_slot_data())
 	
 	# Alert inventory panel to update
 	inventory_updated.emit(self)
+	
+	# Alert WeaponManager that grenade was added
+	EventBus.add_grenade.emit(slot_datas[index])
 	
 	# If there's still items in the stack, return grabbed slot data
 	if grabbed_slot_data.quantity > 0:
@@ -74,47 +88,14 @@ func use_slot_data(index: int) -> void:
 	
 	if not slot_data:
 		return
-	
-	# If consumable is used
-	if slot_data.item_data is ItemDataConsumable:
-		# Subtract one from stack
-		slot_data.quantity -= 1
-		# If nothing left in stack, remove item from inventory
-		if slot_data.quantity < 1:
-			slot_datas[index] = null
+
+	# Subtract one from stack
+	slot_data.quantity -= 1
+	# If nothing left in stack, remove item from inventory
+	if slot_data.quantity < 1:
+		slot_datas[index] = null
 
 	print(slot_data.item_data.name)
 	
-	# Tell player manager item was used
-	PlayerManager.use_slot_data(slot_data)
-	
 	# Alert inventory panel of update
 	inventory_updated.emit(self)
-
-
-# When player picks up item in world
-func pick_up_slot_data(slot_data: SlotData) -> bool:
-	# Make the resource unique when picked up
-	slot_data.item_data = slot_data.item_data.duplicate(true)
-	
-	# Look for mergeable slots in inventory
-	for index in slot_datas.size():
-		if slot_datas[index] and slot_datas[index].can_fully_merge_with(slot_data):
-			slot_datas[index].fully_merge_with(slot_data)
-			inventory_updated.emit(self)
-			return true
-			
-	# Find first empty slot in inventory and add picked up item to it
-	for index in slot_datas.size():
-		if not slot_datas[index]:
-			slot_datas[index] = slot_data
-			inventory_updated.emit(self)
-			return true
-	
-	# If no valid slots, pick up fails
-	return false
-
-
-func on_slot_clicked(index: int, button: int) -> void:
-	# Received from slot -> relay to inventory_interface
-	inventory_interact.emit(self, index,  button)

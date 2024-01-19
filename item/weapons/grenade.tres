@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemDataGrenade" load_steps=4 format=3 uid="uid://doby5fljcaryo"]
+
+[ext_resource type="SphereMesh" uid="uid://v0p2rbyolcxy" path="res://assets/weapons/grenade/grenade_mesh.tres" id="1_8fn1y"]
+[ext_resource type="Script" path="res://item/item_data_weapon_grenade.gd" id="1_b3tar"]
+[ext_resource type="Texture2D" uid="uid://j0ormpwrrvx" path="res://assets/items/textures/test_icons_atlas.tres" id="3_bywgv"]
+
+[resource]
+script = ExtResource("1_b3tar")
+base_damage = 20
+base_range = 1000
+single_fire = true
+ammo_type = "grenade"
+itemID = 5
+name = "Frag Grenade"
+value = 150
+description = "It go boom"
+stackable = true
+texture = ExtResource("3_bywgv")
+mesh = ExtResource("1_8fn1y")
+mesh_scale_modifier = 1.0

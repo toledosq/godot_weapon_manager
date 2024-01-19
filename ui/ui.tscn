@@ -217,7 +217,6 @@ libraries = {
 }
 
 [node name="InventoryInterface" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -246,6 +245,13 @@ offset_left = 450.0
 offset_top = 10.0
 offset_right = 490.0
 offset_bottom = 50.0
+
+[node name="GrenadeInventory" parent="InventoryInterface" instance=ExtResource("2_l1pmx")]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 100.0
+offset_right = 580.0
+offset_bottom = 140.0
 
 [node name="ContainerInventory" parent="InventoryInterface" instance=ExtResource("2_l1pmx")]
 visible = false

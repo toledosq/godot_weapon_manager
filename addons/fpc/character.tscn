@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=24 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://inventory/inventory_data_armor.gd" id="3_radmv"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 [ext_resource type="Script" path="res://inventory/inventory_data_weapon.gd" id="4_c4tes"]
+[ext_resource type="Script" path="res://inventory/inventory_data_grenade.gd" id="5_d3fca"]
 [ext_resource type="Script" path="res://addons/fpc/Camera.gd" id="5_pgif6"]
 [ext_resource type="Texture2D" uid="uid://c8exgis8hi50l" path="res://assets/crosshairs/crosshair160.png" id="7_37vqj"]
 [ext_resource type="Script" path="res://player/WeaponManager.gd" id="7_ru6it"]
@@ -23,6 +24,10 @@ slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null])
 [sub_resource type="Resource" id="Resource_hieul"]
 script = ExtResource("4_c4tes")
 slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null, null])
+
+[sub_resource type="Resource" id="Resource_e1pag"]
+script = ExtResource("5_d3fca")
+slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -138,6 +143,7 @@ HEALTH_MANAGER = NodePath("HealthManager")
 inventory_data = SubResource("Resource_5yuaq")
 armor_inventory_data = SubResource("Resource_ki7oc")
 weapon_inventory_data = SubResource("Resource_hieul")
+grenade_inventory_data = SubResource("Resource_e1pag")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

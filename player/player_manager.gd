@@ -5,6 +5,7 @@ var player: Player
 
 func _ready():
 	EventBus.set_active_player.connect(_set_active_player)
+	EventBus.grenade_thrown.connect(_on_grenade_thrown)
 
 
 func use_slot_data(slot_data: SlotData) -> void:
@@ -26,3 +27,7 @@ func get_ammo_type() -> String:
 
 func refill_ammo_reserve() -> void:
 	player.WEAPON_MANAGER._on_refill_ammo_reserve()
+
+
+func _on_grenade_thrown():
+	player.grenade_inventory_data.use_slot_data(0)
