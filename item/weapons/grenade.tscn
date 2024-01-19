@@ -1,21 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2nk75nqe6x4r"]
+[gd_scene load_steps=5 format=3 uid="uid://c2nk75nqe6x4r"]
 
 [ext_resource type="Script" path="res://item/weapons/grenade.gd" id="1_6wtes"]
-[ext_resource type="Texture2D" uid="uid://ce3tgu3q1oek1" path="res://assets/prototype/texture_01.png" id="1_sj6fa"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmhhh"]
-albedo_color = Color(0.137255, 0.929412, 0, 1)
-albedo_texture = ExtResource("1_sj6fa")
 
 [sub_resource type="SphereMesh" id="SphereMesh_cj38n"]
-material = SubResource("StandardMaterial3D_mmhhh")
-radius = 0.2
-height = 0.4
+radius = 0.1
+height = 0.2
 radial_segments = 32
 rings = 16
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rosx6"]
-radius = 0.2
+radius = 0.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gwrgw"]
 radius = 2.0
@@ -23,7 +17,7 @@ radius = 2.0
 [node name="Grenade" type="RigidBody3D"]
 collision_layer = 4
 collision_mask = 3
-mass = 0.25
+continuous_cd = true
 script = ExtResource("1_6wtes")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -32,11 +26,13 @@ mesh = SubResource("SphereMesh_cj38n")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_rosx6")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="BlastArea" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 2
+linear_damp = 1.0
+angular_damp = 10.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlastArea"]
 shape = SubResource("SphereShape3D_gwrgw")
 
 [node name="Timer" type="Timer" parent="."]

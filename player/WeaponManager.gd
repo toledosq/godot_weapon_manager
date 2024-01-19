@@ -226,13 +226,24 @@ func fire_weapon():
 func throw_grenade():
 	if ammo_reserve.get_ammo_amount("grenade") > 0:
 		ammo_reserve.take_ammo_from_reserve("grenade", 1)
-		var grenade = grenade_scene.instantiate()
+		
+		# Get reference to camera position and direction
 		var camera_ = get_viewport().get_camera_3d()
 		var direction = -camera_.global_transform.basis.z
+		
+		# Bring grenade into the world
+		var grenade = grenade_scene.instantiate()
 		var world = get_tree().get_root().get_child(0)
 		world.add_child(grenade)
+		
+		# Set grenade's starting position and direction
 		grenade.global_position = camera_.global_position + direction
-		grenade.apply_impulse(direction * 10)
+		
+		# Throw the grenade
+		grenade.throw(direction)
+		
+		# Alert UI to change
+		EventBus.grenade_ammo_changed.emit(ammo_reserve.get_ammo_amount("grenade"))
 
 
 func get_camera_collision(distance) -> Vector3:

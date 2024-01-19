@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var weapon_name_label = %WeaponNameLabel
 @onready var ammo_counter_label = %AmmoCounterLabel
 @onready var ammo_reserve_counter_label = %AmmoReserveCounterLabel
+@onready var grenade_counter_label = %GrenadeCounterLabel
 
 @onready var health_progress_bar = %HealthProgressBar
 @onready var armor_progress_bar = %ArmorProgressBar
@@ -14,6 +15,7 @@ extends CanvasLayer
 func _ready():
 	EventBus.weapon_equipped.connect(_on_weapon_equipped)
 	EventBus.weapon_ammo_changed.connect(update_ammo_counter)
+	EventBus.grenade_ammo_changed.connect(update_grenade_counter)
 	EventBus.reserve_ammo_changed.connect(update_ammo_reserve_counter)
 	EventBus.display_alert_text.connect(display_alert_text)
 	EventBus.player_health_updated.connect(update_health_bar)
@@ -26,6 +28,10 @@ func _on_weapon_equipped(name_):
 
 func update_ammo_counter(amount):
 	ammo_counter_label.text = str(amount)
+
+
+func update_grenade_counter(amount):
+	grenade_counter_label.text = str(amount)
 
 
 func update_ammo_reserve_counter(ammo_reserve):

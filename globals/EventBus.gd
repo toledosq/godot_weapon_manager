@@ -9,6 +9,7 @@ signal weapon_fired()
 signal weapon_reloaded()
 signal weapon_ammo_changed(amount)
 signal reserve_ammo_changed(amount)
+signal grenade_ammo_changed(amount)
 
 signal player_health_updated(health)
 signal player_armor_updated(armor)
