@@ -38,6 +38,7 @@ func update_ammo_reserve_counter(ammo_reserve):
 	var weapon_type = PlayerManager.get_ammo_type()
 	var amount = ammo_reserve[weapon_type][0]
 	ammo_reserve_counter_label.text = str(amount)
+	update_grenade_counter(ammo_reserve["grenade"][0])
 
 
 func update_health_bar(amount):

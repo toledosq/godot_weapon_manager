@@ -124,7 +124,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 42
-text = "30"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -133,7 +132,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 42
-text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 

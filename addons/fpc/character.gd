@@ -83,6 +83,9 @@ func _ready():
 	
 	# Reset the camera position
 	CAMERA_ANIMATION.play("RESET")
+	
+	# TODO: Find out how to call this from within WeaponManager
+	EventBus.reserve_ammo_changed.emit(WEAPON_MANAGER.ammo_reserve.ammo_reserve)
 
 
 func _physics_process(delta):

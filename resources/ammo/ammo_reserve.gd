@@ -3,10 +3,11 @@ class_name AmmoReserve extends Resource
 
 # name, current amount, max amount
 @export var ammo_reserve: Dictionary = {
-	"grenade": Vector2(1, 2),
-	"pistol": Vector2(30, 120),
-	"shotgun": Vector2(30, 80),
-	"rifle": Vector2(30, 240)
+	"": ["", ""],
+	"grenade": [1, 2],
+	"pistol": [30, 120],
+	"shotgun": [30, 80],
+	"rifle": [30, 240]
 }
 
 

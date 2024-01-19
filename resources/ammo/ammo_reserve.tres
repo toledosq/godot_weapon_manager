@@ -5,8 +5,9 @@
 [resource]
 script = ExtResource("1_821ki")
 ammo_reserve = {
-"grenade": Vector2(1, 2),
-"pistol": Vector2(30, 120),
-"rifle": Vector2(30, 240),
-"shotgun": Vector2(30, 80)
+"": ["", ""],
+"grenade": [1, 2],
+"pistol": [30, 120],
+"rifle": [30, 240],
+"shotgun": [30, 80]
 }

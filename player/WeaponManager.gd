@@ -132,11 +132,12 @@ func equip_weapon(fast: bool = false):
 	
 	EventBus.weapon_equipped.emit(weapon_resource_array[active_weapon_slot_index].name)
 	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
-	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
 	
 	player_model.equip(fast)
 	
 	change_state(STATES.READY)
+	
+	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
 
 
 func unequip_weapon(fast: bool = false):
@@ -282,7 +283,8 @@ func _on_get_ammo_type() -> String:
 	if STATE != STATES.NONE:
 		return weapon_resource_array[active_weapon_slot_index].ammo_type
 	else:
-		return "pistol"
+		return ""
 
 func _on_refill_ammo_reserve() -> void:
 	ammo_reserve.fill_all_ammo_reserve()
+	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
