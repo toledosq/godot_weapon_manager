@@ -6,7 +6,6 @@
 script = ExtResource("1_821ki")
 ammo_reserve = {
 "": ["", ""],
-"grenade": [1, 2],
 "pistol": [30, 120],
 "rifle": [30, 240],
 "shotgun": [30, 80]

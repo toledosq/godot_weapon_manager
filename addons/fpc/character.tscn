@@ -197,7 +197,6 @@ reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath(
 character = NodePath("../..")
 
 [node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
-visible = false
 layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0

@@ -254,13 +254,6 @@ func _process(delta):
 		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	# Weapon inputs handled in WeaponManager
-	#if Input.is_action_pressed("weapon_fire"):
-		#fire_weapon()
-	#
-	#if Input.is_action_just_pressed("weapon_reload"):
-		#reload_weapon()
-	
 	if Input.is_action_just_released("weapon_ads"):
 		toggle_ads(false)
 	
@@ -312,11 +305,6 @@ func get_drop_position() -> Vector3:
 	# Get forward facing direction from camera
 	var direction = -CAMERA.global_transform.basis.z
 	return CAMERA.global_position + direction
-
-
-func fire_weapon():
-	print("Player: fire weapon")
-	WEAPON_MANAGER.fire_weapon()
 
 
 func hit(damage):
