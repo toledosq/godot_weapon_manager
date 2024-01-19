@@ -5,6 +5,8 @@ class_name Grenade extends RigidBody3D
 
 @onready var collision_shape_3d: CollisionShape3D = $BlastArea/CollisionShape3D
 @onready var blast_area: Area3D = $BlastArea
+@onready var smoke_particles = $SmokeParticles
+@onready var mesh_instance_3d = $MeshInstance3D
 
 
 func _ready():
@@ -12,8 +14,8 @@ func _ready():
 
 
 func throw(direction):
-	print("Grenade: Throwing")
-	apply_impulse(direction * 15)
+	print("Grenade: Throwing ", direction)
+	apply_impulse(direction * 16)
 
 
 func _on_timer_timeout():
@@ -22,4 +24,11 @@ func _on_timer_timeout():
 			body.hit(damage)
 	
 	print("Grenade goes boom")
+	mesh_instance_3d.hide()
+	smoke_particles.show()
+	smoke_particles.emitting = true
+
+
+func _on_smoke_particles_finished():
+	print("Grenade: going away")
 	queue_free()
