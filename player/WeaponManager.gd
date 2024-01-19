@@ -113,11 +113,13 @@ func _on_remove_weapon(weapon_slot_index):
 func _on_add_grenade(slot_data):
 	print("Grenade Added")
 	grenade_data = slot_data
+	EventBus.grenade_ammo_changed.emit(grenade_data.quantity)
 
 
 func _on_remove_grenade():
 	print("Grenade Removed")
 	grenade_data = null
+	EventBus.grenade_ammo_changed.emit(0)
 
 
 func set_active_weapon_slot(weapon_slot_index):
@@ -273,10 +275,13 @@ func throw_grenade():
 		
 		# signal -> EventBus -> PlayerManager -> GrenadeInventory
 		EventBus.grenade_thrown.emit()
+		EventBus.grenade_ammo_changed.emit(grenade_data.quantity)
 		
 		# If GrenadeInventory is now empty, sync w/ WeaponManager
 		if grenade_data.quantity < 1:
 			grenade_data = null
+		
+		
 
 
 func get_camera_collision(distance) -> Vector3:
