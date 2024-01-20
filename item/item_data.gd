@@ -1,5 +1,7 @@
 class_name ItemData extends Resource
 
+@export var unique = false
+
 @export_group("Item Details")
 @export var itemID: int
 @export var name: String = ""

@@ -53,20 +53,6 @@ func _ready():
 	PlayerManager.player_ready.connect(_on_player_ready)
 
 
-func _on_player_ready():
-	force_ui_refresh()
-
-
-func force_ui_refresh():
-	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
-	if weapon_resource_array[active_weapon_slot_index] != null:
-		EventBus.weapon_equipped.emit(weapon_resource_array[active_weapon_slot_index].name)
-		EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
-	else:
-		EventBus.weapon_equipped.emit("No weapon equipped")
-		EventBus.weapon_ammo_changed.emit("")
-
-
 func _process(delta):
 	if player_model and STATE != STATES.NONE:
 		if ads:
@@ -77,6 +63,16 @@ func _process(delta):
 	# Only do this if the player is controlling character
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		handle_input()
+
+
+func force_ui_refresh():
+	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
+	if weapon_resource_array[active_weapon_slot_index] != null:
+		EventBus.weapon_equipped.emit(weapon_resource_array[active_weapon_slot_index].name)
+		EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
+	else:
+		EventBus.weapon_equipped.emit("No weapon equipped")
+		EventBus.weapon_ammo_changed.emit("")
 
 
 func handle_input():
@@ -109,7 +105,7 @@ func change_state(new_state: STATES):
 	STATE = new_state
 
 
-## Weapon Management
+#region Weapon/Inventory Management
 func _on_add_weapon(weapon_slot_index, weapon_resource: ItemDataWeapon):
 	weapon_resource_array[weapon_slot_index] = weapon_resource
 	print("WeaponManager: Added %s in slot %s" % [weapon_resource.name, weapon_slot_index])
@@ -154,8 +150,10 @@ func set_active_weapon_slot(weapon_slot_index):
 	print("WeaponManager: Active slot = ", active_weapon_slot_index)
 	
 	equip_weapon()
+#endregion#
 
 
+#region Equipping/Unequipping
 func equip_weapon(fast: bool = false):
 	if STATE == STATES.FIRING or STATE == STATES.RELOADING:
 		return
@@ -192,6 +190,39 @@ func unequip_weapon(fast: bool = false):
 	player_model.queue_free()
 	
 	force_ui_refresh()
+#endregion
+
+
+#region Firing/Reloading
+func fire_weapon():
+	if STATE != STATES.READY:
+		return
+	
+	if !weapon_resource_array[active_weapon_slot_index]:
+		print("WeaponManager: Slot is empty, cannot fire")
+		return
+	
+	
+	if weapon_resource_array[active_weapon_slot_index] is ItemDataWeaponRanged and weapon_resource_array[active_weapon_slot_index].current_ammo <= 0:
+		print("WeaponManager: Cannot fire, no ammo")
+		return
+	
+	# Change state to FIRING
+	change_state(STATES.FIRING)
+	
+	# Do raycast method
+	get_camera_collision(weapon_resource_array[active_weapon_slot_index].base_range)
+	
+	# Call the weapon resource's fire function to decrement weapon ammo
+	weapon_resource_array[active_weapon_slot_index].fire()
+	
+	# Alert UI that weapon ammo changed
+	if weapon_resource_array[active_weapon_slot_index] is ItemDataWeaponRanged:
+		EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
+		await player_model.fire(weapon_resource_array[active_weapon_slot_index].rate_of_fire)
+	
+	# Change state to READY
+	change_state(STATES.READY)
 
 
 func reload_weapon():
@@ -231,40 +262,10 @@ func reload_weapon():
 	
 	# Return to ready
 	change_state(STATES.READY)
+#endregion
 
 
-## Weapon firing
-func fire_weapon():
-	if STATE != STATES.READY:
-		return
-	
-	if !weapon_resource_array[active_weapon_slot_index]:
-		print("WeaponManager: Slot is empty, cannot fire")
-		return
-	
-	
-	if weapon_resource_array[active_weapon_slot_index] is ItemDataWeaponRanged and weapon_resource_array[active_weapon_slot_index].current_ammo <= 0:
-		print("WeaponManager: Cannot fire, no ammo")
-		return
-	
-	# Change state to FIRING
-	change_state(STATES.FIRING)
-	
-	# Do raycast method
-	get_camera_collision(weapon_resource_array[active_weapon_slot_index].base_range)
-	
-	# Call the weapon resource's fire function to decrement weapon ammo
-	weapon_resource_array[active_weapon_slot_index].fire()
-	
-	# Alert UI that weapon ammo changed
-	if weapon_resource_array[active_weapon_slot_index] is ItemDataWeaponRanged:
-		EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
-		await player_model.fire(weapon_resource_array[active_weapon_slot_index].rate_of_fire)
-	
-	# Change state to READY
-	change_state(STATES.READY)
-
-
+#region Grenade Management
 func throw_grenade():
 		if !grenade_data:
 			print("Cannot throw grenade, no grenades equipped")
@@ -297,6 +298,7 @@ func throw_grenade():
 		# If GrenadeInventory is now empty, sync w/ WeaponManager
 		if grenade_data.quantity < 1:
 			grenade_data = null
+#endregion
 
 
 func get_camera_collision(distance) -> Vector3:
@@ -331,11 +333,16 @@ func create_hit_indicator(_position: Vector3) -> void:
 	hit_indicator.global_translate(_position)
 
 
+func _on_player_ready():
+	force_ui_refresh()
+
+
 func _on_get_ammo_type() -> String:
 	if STATE != STATES.NONE:
 		return weapon_resource_array[active_weapon_slot_index].ammo_type
 	else:
 		return ""
+
 
 func _on_refill_ammo_reserve() -> void:
 	ammo_reserve.fill_all_ammo_reserve()
