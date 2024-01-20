@@ -49,6 +49,22 @@ func _ready():
 	EventBus.add_grenade.connect(_on_add_grenade)
 	EventBus.remove_grenade.connect(_on_remove_grenade)
 	active_weapon_slot_index = 0
+	
+	PlayerManager.player_ready.connect(_on_player_ready)
+
+
+func _on_player_ready():
+	force_ui_refresh()
+
+
+func force_ui_refresh():
+	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
+	if weapon_resource_array[active_weapon_slot_index] != null:
+		EventBus.weapon_equipped.emit(weapon_resource_array[active_weapon_slot_index].name)
+		EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
+	else:
+		EventBus.weapon_equipped.emit("No weapon equipped")
+		EventBus.weapon_ammo_changed.emit("")
 
 
 func _process(delta):
@@ -95,8 +111,6 @@ func _on_add_weapon(weapon_slot_index, weapon_resource: ItemDataWeapon):
 	print("WeaponManager: Added %s in slot %s" % [weapon_resource.name, weapon_slot_index])
 	
 	if weapon_slot_index == active_weapon_slot_index:
-		if player_model != null:
-			unequip_weapon()
 		equip_weapon()
 
 
@@ -128,13 +142,13 @@ func set_active_weapon_slot(weapon_slot_index):
 		return
 	if active_weapon_slot_index == weapon_slot_index:
 		return
+	if STATE == STATES.FIRING or STATE == STATES.RELOADING:
+		return
 	
 	active_weapon_slot_index = weapon_slot_index
 	
 	print("WeaponManager: Active slot = ", active_weapon_slot_index)
 	
-	if player_model != null:
-		unequip_weapon()
 	equip_weapon()
 
 
@@ -156,12 +170,9 @@ func equip_weapon(fast: bool = false):
 	else:
 		single_fire = false
 	
-	EventBus.weapon_equipped.emit(weapon_resource_array[active_weapon_slot_index].name)
-	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
-	
 	change_state(STATES.READY)
 	
-	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
+	force_ui_refresh()
 
 
 func unequip_weapon(fast: bool = false):
@@ -175,6 +186,8 @@ func unequip_weapon(fast: bool = false):
 	if !fast:
 		await player_model.unequip()
 	player_model.queue_free()
+	
+	force_ui_refresh()
 
 
 func reload_weapon():

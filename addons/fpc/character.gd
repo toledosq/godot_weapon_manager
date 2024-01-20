@@ -27,7 +27,6 @@ var state: STATES = STATES.NORMAL
 @export var HEALTH_MANAGER : HealthManager
 
 @export_group("Controls")
-# We are using UI controls because they are built into Godot Engine so they can be used right away
 @export var JUMP : String = "jump"
 @export var LEFT : String = "move_left"
 @export var RIGHT : String = "move_right"
@@ -37,7 +36,7 @@ var state: STATES = STATES.NORMAL
 @export var CROUCH : String = "crouch"
 @export var SPRINT : String = "sprint"
 
-# Uncomment if you want full controller support
+# Uncomment for full controller support
 #@export var LOOK_LEFT : String
 #@export var LOOK_RIGHT : String
 #@export var LOOK_UP : String
@@ -80,15 +79,12 @@ func _ready():
 	
 	EventBus.set_active_player.emit(self)
 	
-	# Set the camera rotation to whatever initial_facing_direction is
-	if initial_facing_direction:
-		HEAD.set_rotation_degrees(initial_facing_direction) # I don't want to be calling this function if the vector is zero
+	# Set the camera rotation to initial facing direction
+	if initial_facing_direction and HEAD.rotation_degrees != Vector3.ZERO:
+		HEAD.set_rotation_degrees(initial_facing_direction)
 	
 	# Reset the camera position
 	CAMERA_ANIMATION.play("RESET")
-	
-	# TODO: Find out how to call this from within WeaponManager
-	EventBus.reserve_ammo_changed.emit(WEAPON_MANAGER.ammo_reserve.ammo_reserve)
 
 
 func _physics_process(delta):
