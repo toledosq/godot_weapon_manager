@@ -22,7 +22,7 @@ var single_fire: bool = true
 
 var weapon_resource_array: Array[ItemDataWeapon]	# Stores the Weapon's resource data
 var grenade_slot: SlotData
-var player_model : Node3D
+var weapon_model : Node3D
 var return_position : Vector3
 var return_rotation : Vector3
 
@@ -54,11 +54,11 @@ func _ready():
 
 
 func _process(delta):
-	if player_model and STATE != STATES.NONE:
+	if weapon_model and STATE != STATES.NONE:
 		if ads:
-			player_model.ads = true
+			weapon_model.ads = true
 		else:
-			player_model.ads = false
+			weapon_model.ads = false
 	
 	# Only do this if the player is controlling character
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -118,7 +118,7 @@ func _on_remove_weapon(weapon_slot_index):
 	print("WeaponManager: Removed weapon in slot %s" % weapon_slot_index)
 	
 	if weapon_slot_index == active_weapon_slot_index:
-		if player_model != null:
+		if weapon_model != null:
 			unequip_weapon()
 	
 	weapon_resource_array[weapon_slot_index] = null
@@ -162,32 +162,41 @@ func equip_weapon():
 	await unequip_weapon()
 	
 	print("WeaponManager: Equip weapon %s" % active_weapon_slot_index)
-	if weapon_resource_array[active_weapon_slot_index].player_model:
-		player_model = weapon_resource_array[active_weapon_slot_index].player_model.instantiate()
-		PlayerManager.player.FPS_RIG.add_child(player_model)
-		player_model.equip()
-		
+	
+	# Render weapon and play equip animation
+	if weapon_resource_array[active_weapon_slot_index].weapon_model:
+		weapon_model = weapon_resource_array[active_weapon_slot_index].weapon_model.instantiate()
+		PlayerManager.player.FPS_RIG.add_child(weapon_model)
+		weapon_model.equip()
+	
+	# If weapon is single fire, set flag for input switch
 	if weapon_resource_array[active_weapon_slot_index].single_fire:
 		single_fire = true
 	else:
 		single_fire = false
 	
+	# Return to ready
 	change_state(STATES.READY)
 	
+	# Force UI refresh
 	force_ui_refresh()
 
 
 func unequip_weapon():
-	if player_model == null:
+	# Check if weapon is being rendered
+	if weapon_model == null:
 		return
-		
+	
+	# Change state to NONE
 	change_state(STATES.NONE)
 	
 	print("WeaponManager: Unequip weapon %s" % active_weapon_slot_index)
 	
-	await player_model.unequip()
-	player_model.queue_free()
+	# Play unequip animation and delete render model
+	await weapon_model.unequip()
+	weapon_model.queue_free()
 	
+	# Force UI refresh
 	force_ui_refresh()
 #endregion
 
@@ -218,7 +227,7 @@ func fire_weapon():
 	# Alert UI that weapon ammo changed
 	if weapon_resource_array[active_weapon_slot_index] is ItemDataWeaponRanged:
 		EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
-		await player_model.fire(weapon_resource_array[active_weapon_slot_index].rate_of_fire)
+		await weapon_model.fire(weapon_resource_array[active_weapon_slot_index].rate_of_fire)
 	
 	# Change state to READY
 	change_state(STATES.READY)
@@ -250,7 +259,7 @@ func reload_weapon():
 	change_state(STATES.RELOADING)
 	
 	# Call player model for animation
-	await player_model.reload()
+	await weapon_model.reload()
 	
 	# Call resource reload func for ammo mgmt
 	weapon_resource_array[active_weapon_slot_index].reload(reload_amount)
