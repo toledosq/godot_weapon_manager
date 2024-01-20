@@ -32,6 +32,8 @@ func _on_timer_timeout():
 			body.hit(total_damage)
 	
 	mesh_instance_3d.hide()
+	blast_area_debug.hide()
+	
 	smoke_particles.show()
 	smoke_particles.emitting = true
 
