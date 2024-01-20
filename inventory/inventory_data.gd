@@ -55,6 +55,7 @@ func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	if not slot_data:
 		slot_datas[index] = grabbed_slot_data.create_single_slot_data()
 	# If it can be merged, do that
+	# Note calling can_merge_with since we are testing against a single item
 	elif slot_data.can_merge_with(grabbed_slot_data):
 		slot_data.fully_merge_with(grabbed_slot_data.create_single_slot_data())
 	
@@ -81,11 +82,13 @@ func use_slot_data(index: int) -> void:
 		# If nothing left in stack, remove item from inventory
 		if slot_data.quantity < 1:
 			slot_datas[index] = null
-
-	print(slot_data.item_data.name)
+		# Tell player manager item was used
+		PlayerManager.use_slot_data(slot_data)
 	
-	# Tell player manager item was used
-	PlayerManager.use_slot_data(slot_data)
+	# If grenade is used, move it to the grenade inventory
+	elif slot_data.item_data is ItemDataGrenade:
+		var returned_slot_data = PlayerManager.player.grenade_inventory_data.drop_slot_data(slot_data, 0)
+		slot_datas[index] = returned_slot_data
 	
 	# Alert inventory panel of update
 	inventory_updated.emit(self)

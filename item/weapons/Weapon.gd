@@ -28,11 +28,6 @@ var ads := false
 const ADS_LERP := 20
 
 
-func _ready():
-	position = default_position
-	rotation = default_rotation
-
-
 func _process(delta):
 	if ads:
 		position = position.lerp(ads_position, ADS_LERP * delta)
@@ -86,7 +81,7 @@ func reload():
 
 func lerp_recoil(delta: float) -> void:
 	# If weapon just fired
-	if current_time < 0.05:
+	if current_time < 0.1:
 		# Increment timer
 		current_time += delta
 		
@@ -108,7 +103,7 @@ func apply_recoil():
 	# Rotate
 	target_rot.z = recoil_rotation_z.sample(0)
 	target_rot.x = recoil_rotation_x.sample(0)
-	target_rot.y = recoil_rotation_y.sample(0) * 0.1
+	target_rot.y = recoil_rotation_y.sample(0)
 	
 	# Move gun backwards
 	target_pos.z = recoil_position_z.sample(0)

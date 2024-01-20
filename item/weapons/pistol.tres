@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=7 format=3 uid="uid://bke0gsniyl1t4"]
+[gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=6 format=3 uid="uid://bke0gsniyl1t4"]
 
 [ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="1_aqghw"]
 [ext_resource type="PackedScene" uid="uid://cq1whxsacte53" path="res://item/weapons/pistol.tscn" id="2_f82n3"]
 [ext_resource type="Script" path="res://item/item_data_weapon_ranged.gd" id="2_oidbl"]
 [ext_resource type="Texture2D" uid="uid://dk0xksws8yuka" path="res://assets/items/textures/test_icons.png" id="3_ekp3h"]
-[ext_resource type="Curve" uid="uid://763d20qh4fo6" path="res://resources/recoil_curve/recoil_curve.tres" id="3_p1y1b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pudp5"]
 atlas = ExtResource("3_ekp3h")
@@ -14,23 +13,12 @@ region = Rect2(128, 192, 32, 32)
 script = ExtResource("2_oidbl")
 current_ammo = 10
 max_ammo = 10
-ammo_type = "pistol"
 rate_of_fire = 360
-dynamic_recoil = true
-recoil_rotation_x = ExtResource("3_p1y1b")
-recoil_rotation_y = ExtResource("3_p1y1b")
-recoil_rotation_z = ExtResource("3_p1y1b")
-recoil_position_z = ExtResource("3_p1y1b")
-recoil_amplitude = Vector3(1, 1, 1)
-lerp_speed = 1.0
 player_model = ExtResource("2_f82n3")
 base_damage = 20
 base_range = 1000
 single_fire = true
-default_position = Vector3(0.25, -0.29, -0.57)
-default_rotation = Vector3(0, -3.14159, 0)
-ads_position = Vector3(0, -0.184, -0.57)
-ads_rotation = Vector3(-0.0437554, -3.14159, -1.10999e-07)
+ammo_type = "pistol"
 itemID = 1
 name = "Glock"
 value = 300

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://giq451xcik8x"]
+[gd_scene load_steps=35 format=3 uid="uid://giq451xcik8x"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://item/pickup/pickup.tscn" id="2_10460"]
@@ -9,7 +9,9 @@
 [ext_resource type="Resource" uid="uid://d27ee4dnn45fm" path="res://item/weapons/rifle.tres" id="7_10lmg"]
 [ext_resource type="Resource" uid="uid://eol2uf3pkpqe" path="res://item/consumable/pills.tres" id="8_ena0f"]
 [ext_resource type="Texture2D" uid="uid://ce3tgu3q1oek1" path="res://assets/prototype/texture_01.png" id="8_wd1ma"]
+[ext_resource type="Resource" uid="uid://doby5fljcaryo" path="res://item/weapons/grenade.tres" id="9_tt56x"]
 [ext_resource type="Texture2D" uid="uid://dt7c020x7j8a6" path="res://assets/prototype/texture_02.png" id="9_vefh7"]
+[ext_resource type="Texture2D" uid="uid://c8yw4k4t5nqyr" path="res://assets/crosshairs/crosshair118.png" id="11_mw053"]
 [ext_resource type="PackedScene" uid="uid://bh267nu3soeiq" path="res://interactable/ammo_crate.tscn" id="11_tn7qr"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
@@ -49,9 +51,14 @@ script = ExtResource("4_kjg3y")
 item_data = ExtResource("8_ena0f")
 quantity = 3
 
+[sub_resource type="Resource" id="Resource_xc6g7"]
+script = ExtResource("4_kjg3y")
+item_data = ExtResource("9_tt56x")
+quantity = 5
+
 [sub_resource type="Resource" id="Resource_6xgok"]
 script = ExtResource("6_hgy81")
-slot_datas = Array[ExtResource("4_kjg3y")]([SubResource("Resource_j0iae"), SubResource("Resource_4yqe5"), SubResource("Resource_saum2"), null, null])
+slot_datas = Array[ExtResource("4_kjg3y")]([SubResource("Resource_j0iae"), SubResource("Resource_4yqe5"), SubResource("Resource_saum2"), SubResource("Resource_xc6g7"), null, null])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o7dp0"]
 albedo_texture = ExtResource("8_wd1ma")
@@ -95,6 +102,10 @@ uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23ios"]
 albedo_texture = ExtResource("9_vefh7")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lyxbt"]
+albedo_texture = ExtResource("8_wd1ma")
 uv1_triplanar = true
 
 [node name="test_world" type="Node3D"]
@@ -279,8 +290,39 @@ material = SubResource("StandardMaterial3D_23ios")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.5, 0.5)
 text = "2.0m"
 
+[node name="GrenadeTest" type="Node3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 0)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="CSG/GrenadeTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+operation = 2
+use_collision = true
+collision_mask = 0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSG/GrenadeTest/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+size = Vector3(0.5, 4, 7)
+material = SubResource("StandardMaterial3D_lyxbt")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSG/GrenadeTest/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+operation = 2
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSG/GrenadeTest/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+operation = 2
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSG/GrenadeTest/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
+operation = 2
+
+[node name="Decal" type="Decal" parent="CSG/GrenadeTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, 0)
+texture_albedo = ExtResource("11_mw053")
+modulate = Color(0, 0, 1, 1)
+
 [node name="AmmoCrate" parent="." instance=ExtResource("11_tn7qr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.346855, -8)
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 4.5, 0.346855, -2.5)
 
 [node name="Label3D" type="Label3D" parent="AmmoCrate"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

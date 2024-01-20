@@ -4,6 +4,7 @@ extends Control
 signal drop_slot_data(slot_data: SlotData)
 signal force_close()
 signal weapon_inventory_updated()
+signal grenade_inventory_updated()
 
 var grabbed_slot_data: SlotData
 var container
@@ -13,6 +14,8 @@ var container
 @onready var container_inventory = $ContainerInventory
 @onready var armor_inventory = $ArmorInventory
 @onready var weapon_inventory = $WeaponInventory
+@onready var grenade_inventory = $GrenadeInventory
+
 
 func _physics_process(_delta):
 	# If an item is grabbed (grabbed), have it follow the cursor
@@ -31,19 +34,27 @@ func set_player_inventory_data(inventory_data: InventoryData) -> void:
 	player_inventory.set_inventory_data(inventory_data)
 
 
-func set_armor_inventory_data(inventory_data: InventoryData) -> void:
+func set_armor_inventory_data(inventory_data: InventoryDataArmor) -> void:
 	# Connect to the inventory data's interaction signal
 	inventory_data.inventory_interact.connect(on_inventory_interact)
 	# Call armor's set_inventory_data function
 	armor_inventory.set_inventory_data(inventory_data)
 
 
-func set_weapon_inventory_data(inventory_data: InventoryData) -> void:
+func set_weapon_inventory_data(inventory_data: InventoryDataWeapon) -> void:
 	# Connect to the inventory data's interaction signal
 	inventory_data.inventory_interact.connect(on_inventory_interact)
 	# Call armor's set_inventory_data function
 	weapon_inventory.set_inventory_data(inventory_data)
 	weapon_inventory_updated.emit()
+
+
+func set_grenade_inventory_data(inventory_data: InventoryDataGrenade):
+	# Connect to the inventory data's interaction signal
+	inventory_data.inventory_interact.connect(on_inventory_interact)
+	# Call armor's set_inventory_data function
+	grenade_inventory.set_inventory_data(inventory_data)
+	grenade_inventory_updated.emit()
 
 
 func set_container_inventory(_container) -> void:

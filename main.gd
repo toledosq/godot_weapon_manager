@@ -32,6 +32,9 @@ func initialize_inventories() -> void:
 	# Populate weapon inventory
 	inventory_interface.set_weapon_inventory_data(PlayerManager.player.weapon_inventory_data)
 	
+	print("Main: Populating Player Grenade Inventory")
+	inventory_interface.set_grenade_inventory_data(PlayerManager.player.grenade_inventory_data)
+	
 	#print("Main: Populating Player Hot Bar")
 	## Populate hotbar with player inventory data
 	#hot_bar_inventory.set_inventory_data(PlayerManager.player.inventory_data)

@@ -10,15 +10,18 @@ signal weapon_array_updated(weapon_array)
 @export var ammo_reserve: AmmoReserve
 
 var debug_bullet := preload("res://object/debug/debug_bullet.tscn")
+var grenade_scene := preload("res://item/weapons/grenade.tscn")
 
 var max_weapon_slots: int = 2
 var active_weapon_slot_index: int = 0:
 	set(val):
 		active_weapon_slot_index = val
 		print("WeaponManager: Active weapon slot set to %s" % active_weapon_slot_index)
+var grenade_data: SlotData
 var single_fire: bool = true
 
 var weapon_resource_array: Array[ItemDataWeapon]	# Stores the Weapon's resource data
+var grenade_slot: SlotData
 var player_model : Node3D
 var return_position : Vector3
 var return_rotation : Vector3
@@ -38,11 +41,13 @@ var current_time: float
 
 
 func _ready():
-	weapon_resource_array.resize(2)
+	weapon_resource_array.resize(max_weapon_slots)
 	print("WeaponManager: weapon_resource_array size: %s" % weapon_resource_array.size())
 	
 	EventBus.add_weapon.connect(_on_add_weapon)
 	EventBus.remove_weapon.connect(_on_remove_weapon)
+	EventBus.add_grenade.connect(_on_add_grenade)
+	EventBus.remove_grenade.connect(_on_remove_grenade)
 	active_weapon_slot_index = 0
 
 
@@ -54,17 +59,29 @@ func _process(delta):
 			player_model.ads = false
 	
 	# Only do this if the player is controlling character
-	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and STATE == STATES.READY:
-		if single_fire:
-			if Input.is_action_just_pressed("weapon_fire"):
-				fire_weapon()
-		else:
-			if Input.is_action_pressed("weapon_fire"):
-				fire_weapon()
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		if STATE == STATES.READY:
+			if single_fire:
+				if Input.is_action_just_pressed("weapon_fire"):
+					fire_weapon()
+			else:
+				if Input.is_action_pressed("weapon_fire"):
+					fire_weapon()
+			
+			if Input.is_action_just_pressed("weapon_reload"):
+				reload_weapon()
 		
-		if Input.is_action_just_pressed("weapon_reload"):
-			reload_weapon()
+		if Input.is_action_just_pressed("primary_weapon"):
+			print("WeaponManager: Equip primary weapon")
+			set_active_weapon_slot(0)
 		
+		if Input.is_action_just_pressed("secondary_weapon"):
+			print("WeaponManager: Equip secondary weapon")
+			set_active_weapon_slot(1)
+			
+		if Input.is_action_just_pressed("weapon_grenade"):
+			print("WeaponManager: Throw Grenade")
+			throw_grenade()
 
 
 func change_state(new_state: STATES):
@@ -93,6 +110,18 @@ func _on_remove_weapon(weapon_slot_index):
 	weapon_resource_array[weapon_slot_index] = null
 
 
+func _on_add_grenade(slot_data):
+	print("Grenade Added")
+	grenade_data = slot_data
+	EventBus.grenade_ammo_changed.emit(grenade_data.quantity)
+
+
+func _on_remove_grenade():
+	print("Grenade Removed")
+	grenade_data = null
+	EventBus.grenade_ammo_changed.emit(0)
+
+
 func set_active_weapon_slot(weapon_slot_index):
 	if !weapon_resource_array[weapon_slot_index]:
 		print("WeaponManager: Slot is empty, cannot change")
@@ -117,9 +146,11 @@ func equip_weapon(fast: bool = false):
 	await unequip_weapon(fast)
 	
 	print("WeaponManager: Equip weapon %s" % active_weapon_slot_index)
-	player_model = weapon_resource_array[active_weapon_slot_index].player_model.instantiate()
-	PlayerManager.player.FPS_RIG.add_child(player_model)
-	
+	if weapon_resource_array[active_weapon_slot_index].player_model:
+		player_model = weapon_resource_array[active_weapon_slot_index].player_model.instantiate()
+		PlayerManager.player.FPS_RIG.add_child(player_model)
+		player_model.equip(fast)
+		
 	if weapon_resource_array[active_weapon_slot_index].single_fire:
 		single_fire = true
 	else:
@@ -127,11 +158,10 @@ func equip_weapon(fast: bool = false):
 	
 	EventBus.weapon_equipped.emit(weapon_resource_array[active_weapon_slot_index].name)
 	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
-	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
-	
-	player_model.equip(fast)
 	
 	change_state(STATES.READY)
+	
+	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
 
 
 func unequip_weapon(fast: bool = false):
@@ -177,7 +207,6 @@ func reload_weapon():
 	
 	# Call resource reload func for ammo mgmt
 	weapon_resource_array[active_weapon_slot_index].reload(reload_amount)
-	# Globals.player_ammo_reserve_current -= reload_amount
 	
 	# Broadcast reloaded event
 	EventBus.weapon_reloaded.emit()
@@ -196,7 +225,8 @@ func fire_weapon():
 		print("WeaponManager: Slot is empty, cannot fire")
 		return
 	
-	if weapon_resource_array[active_weapon_slot_index].current_ammo <= 0:
+	
+	if weapon_resource_array[active_weapon_slot_index] is ItemDataWeaponRanged and weapon_resource_array[active_weapon_slot_index].current_ammo <= 0:
 		print("WeaponManager: Cannot fire, no ammo")
 		return
 	
@@ -209,15 +239,49 @@ func fire_weapon():
 	# Call the weapon resource's fire function to decrement weapon ammo
 	weapon_resource_array[active_weapon_slot_index].fire()
 	
-	# Broadcast weapon fired event (listened to by at least camera)
-	
-	EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
-	
-	# Call the weapon model's fire function for animation/timing
-	await player_model.fire(weapon_resource_array[active_weapon_slot_index].rate_of_fire)
+	# Alert UI that weapon ammo changed
+	if weapon_resource_array[active_weapon_slot_index] is ItemDataWeaponRanged:
+		EventBus.weapon_ammo_changed.emit(weapon_resource_array[active_weapon_slot_index].current_ammo)
+		await player_model.fire(weapon_resource_array[active_weapon_slot_index].rate_of_fire)
 	
 	# Change state to READY
 	change_state(STATES.READY)
+
+
+func throw_grenade():
+		if !grenade_data:
+			print("Cannot throw grenade, no grenades equipped")
+			return
+			
+		if grenade_data.quantity < 1:
+			print("Grenades empty")
+			return
+			
+		print("Grenades available: ", grenade_data.quantity)
+		# Get reference to camera position and direction
+		var camera_ = get_viewport().get_camera_3d()
+		var direction = -camera_.global_transform.basis.z
+		
+		# Bring grenade into the world
+		var grenade = grenade_scene.instantiate()
+		var world = get_tree().get_root().get_child(0)
+		world.add_child(grenade)
+		
+		# Set grenade's starting position and direction
+		grenade.global_position = camera_.global_position + direction
+		
+		# Throw the grenade
+		grenade.throw(direction)
+		
+		# signal -> EventBus -> PlayerManager -> GrenadeInventory
+		EventBus.grenade_thrown.emit()
+		EventBus.grenade_ammo_changed.emit(grenade_data.quantity)
+		
+		# If GrenadeInventory is now empty, sync w/ WeaponManager
+		if grenade_data.quantity < 1:
+			grenade_data = null
+		
+		
 
 
 func get_camera_collision(distance) -> Vector3:
@@ -256,7 +320,8 @@ func _on_get_ammo_type() -> String:
 	if STATE != STATES.NONE:
 		return weapon_resource_array[active_weapon_slot_index].ammo_type
 	else:
-		return "pistol"
+		return ""
 
 func _on_refill_ammo_reserve() -> void:
 	ammo_reserve.fill_all_ammo_reserve()
+	EventBus.reserve_ammo_changed.emit(ammo_reserve.ammo_reserve)
