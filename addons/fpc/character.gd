@@ -72,6 +72,7 @@ var is_ads : bool = false
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") # Don't set this as a const, see the gravity section in _physics_process
 
 
+#region Called Every Frame: built-ins
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
@@ -136,7 +137,7 @@ func _unhandled_input(event):
 			
 			CAMERA.sway(Vector2(event.relative.x, event.relative.y))
 		
-		if Input.is_action_pressed("weapon_ads") and state != STATES.SPRINTING:
+		if Input.is_action_just_pressed("weapon_ads") and state != STATES.SPRINTING:
 			toggle_ads(true)
 	
 	if Input.is_action_just_pressed("inventory"):
@@ -173,9 +174,9 @@ func handle_movement(delta, input_dir):
 		else:
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
+#endregion
 
-
-#region Player State Management (crouching, sprinting, normal)
+#region Called Every Frame: Player State Management
 func handle_state(moving):
 	# Handle sprinting
 	if sprint_enabled:
@@ -232,18 +233,23 @@ func handle_crouch_mode_1(moving):
 			enter_normal_state()
 
 
-# Any enter state function should only be called once when you want to enter that state, not every frame.
 func enter_normal_state():
 	#print("entering normal state")
 	var prev_state = state
 	state = STATES.NORMAL
 	speed = base_speed
+	# If player is holding ADS when entering normal state, toggle true
+	if Input.is_action_pressed("weapon_ads"):
+			toggle_ads(true)
 
 func enter_crouch_state():
 	#print("entering crouch state")
 	var prev_state = state
 	state = STATES.CROUCHING
 	speed = crouch_speed
+	# If player is holding ADS when entering crouched state, toggle true
+	if Input.is_action_pressed("weapon_ads"):
+			toggle_ads(true)
 
 func enter_sprint_state():
 	#print("entering sprint state")
@@ -258,9 +264,9 @@ func update_camera_fov():
 	if state == STATES.SPRINTING:
 		CAMERA.fov = lerp(CAMERA.fov, 85.0, 0.1)
 	elif is_ads:
-		CAMERA.fov = lerp(CAMERA.fov, 65.0, 0.3)
+		CAMERA.fov = lerp(CAMERA.fov, 65.0, 0.1)
 	else:
-		CAMERA.fov = lerp(CAMERA.fov, 75.0, 0.3)
+		CAMERA.fov = lerp(CAMERA.fov, 75.0, 0.1)
 
 
 func update_collision_scale():
@@ -285,6 +291,8 @@ func get_drop_position() -> Vector3:
 	return CAMERA.global_position + direction
 
 
+# Relayed to Managers
+# TODO: Signals?
 func hit(damage):
 	HEALTH_MANAGER.hit(damage)
 
