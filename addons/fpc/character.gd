@@ -44,6 +44,7 @@ var state: STATES = STATES.NORMAL
 @export_group("Feature Settings")
 @export var immobile : bool = false
 @export var jumping_enabled : bool = true
+@export var continuous_jumping : bool = true
 @export var in_air_momentum : bool = true
 @export var motion_smoothing : bool = true
 @export var sprint_enabled : bool = true
@@ -51,7 +52,6 @@ var state: STATES = STATES.NORMAL
 @export_enum("Hold to Crouch", "Toggle Crouch") var crouch_mode : int = 0
 @export_enum("Hold to Sprint", "Toggle Sprint") var sprint_mode : int = 0
 @export var dynamic_fov : bool = true
-@export var continuous_jumping : bool = true
 
 @export_group("Inventory")
 @export var inventory_data: InventoryData
@@ -66,7 +66,6 @@ var speed : float = base_speed
 
 var low_ceiling : bool = false # This is for when the cieling is too low and the player needs to crouch.
 var is_ads : bool = false
-
 
 # Get the gravity from the project settings to be synced with RigidBody nodes
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") # Don't set this as a const, see the gravity section in _physics_process
