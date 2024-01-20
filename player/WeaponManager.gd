@@ -280,8 +280,6 @@ func throw_grenade():
 		# If GrenadeInventory is now empty, sync w/ WeaponManager
 		if grenade_data.quantity < 1:
 			grenade_data = null
-		
-		
 
 
 func get_camera_collision(distance) -> Vector3:

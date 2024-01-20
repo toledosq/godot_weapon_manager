@@ -281,9 +281,6 @@ func _unhandled_input(event):
 	
 	if Input.is_action_just_pressed("inventory"):
 		toggle_inventory.emit()
-	
-	if Input.is_action_just_pressed("interact"):
-		interact()
 
 
 func toggle_ads(ads: bool):
@@ -292,13 +289,7 @@ func toggle_ads(ads: bool):
 	reticle_1.visible = !ads
 
 
-func interact() -> void:
-	print("Player: Interact called")
-	if INTERACT_RAY.is_colliding():
-		var interact_object = INTERACT_RAY.get_collider()
-		if interact_object.has_method("interact"):
-			print("Player: Calling interact on %s" % interact_object.name)
-			interact_object.interact()
+
 
 
 func get_drop_position() -> Vector3:
