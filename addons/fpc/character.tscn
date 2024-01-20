@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=21 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
@@ -40,103 +40,21 @@ material = SubResource("StandardMaterial3D_kp17n")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
 
-[sub_resource type="Animation" id="Animation_gh776"]
-resource_name = "RESET"
-length = 0.001
-loop_mode = 1
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera:position:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_lrqmv"]
-resource_name = "headbob"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0.04, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -0.04, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0.04, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(-0.05, -0.25, 0, 0.2, 0.005, 0, -0.25, 0, 0.25, 0, -0.05, -0.2, 0.005, 0.2, 0.005, 0, -0.25, 0, 0.25, 0, -0.05, -0.2, 0.005, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera:position:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_o0unb"]
-_data = {
-"RESET": SubResource("Animation_gh776"),
-"headbob": SubResource("Animation_lrqmv")
-}
-
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "RETICLE", "COLLISION_MESH", "CROUCHED_CEILING_DETECT", "INTERACT_RAY", "FPS_RIG", "WEAPON_MANAGER", "HEALTH_MANAGER")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "FPS_RIG", "RETICLE", "COLLISION_MESH", "CROUCHED_CEILING_DETECT", "INTERACT_RAY", "WEAPON_MANAGER", "HEALTH_MANAGER")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_0t4e8")
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
-CAMERA_ANIMATION = NodePath("Head/camera_animation")
+FPS_RIG = NodePath("Head/Camera/FPSRig")
 RETICLE = NodePath("Reticle")
 COLLISION_MESH = NodePath("Collision")
 CROUCHED_CEILING_DETECT = NodePath("CrouchCeilingDetection")
 INTERACT_RAY = NodePath("Head/Camera/InteractRay")
-FPS_RIG = NodePath("Head/Camera/FPSRig")
 WEAPON_MANAGER = NodePath("WeaponManager")
 HEALTH_MANAGER = NodePath("HealthManager")
+continuous_jumping = false
 inventory_data = SubResource("Resource_5yuaq")
 armor_inventory_data = SubResource("Resource_ki7oc")
 weapon_inventory_data = SubResource("Resource_hieul")
@@ -160,7 +78,7 @@ script = ExtResource("5_pgif6")
 [node name="FPSRig" type="Node3D" parent="Head/Camera"]
 
 [node name="InteractRay" type="RayCast3D" parent="Head/Camera"]
-target_position = Vector3(0, 0, -2.5)
+target_position = Vector3(0, 0, -2)
 collision_mask = 16
 script = ExtResource("7_xdbxf")
 
@@ -169,12 +87,6 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -2.95929)
 visible = false
 modulate = Color(1, 0, 0, 1)
 texture = ExtResource("7_37vqj")
-
-[node name="camera_animation" type="AnimationPlayer" parent="Head"]
-libraries = {
-"": SubResource("AnimationLibrary_o0unb")
-}
-blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"headbob", &"RESET", 0.5]
 
 [node name="CrouchCeilingDetection" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

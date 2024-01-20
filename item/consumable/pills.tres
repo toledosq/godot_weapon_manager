@@ -16,6 +16,7 @@ name = "Pain Pills"
 value = 0
 description = "Pills here!"
 stackable = true
+is_unique = false
 texture = SubResource("AtlasTexture_tsxgp")
 mesh = ExtResource("1_y5bma")
 mesh_scale_modifier = 1.0

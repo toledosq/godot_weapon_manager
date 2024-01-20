@@ -17,12 +17,11 @@ var state: STATES = STATES.NORMAL
 @export_group("Nodes")
 @export var HEAD : Node3D
 @export var CAMERA : Camera3D
-@export var CAMERA_ANIMATION : AnimationPlayer
+@export var FPS_RIG : Node3D
 @export var RETICLE : Reticle
 @export var COLLISION_MESH : CollisionShape3D
 @export var CROUCHED_CEILING_DETECT : RayCast3D
 @export var INTERACT_RAY : RayCast3D
-@export var FPS_RIG : Node3D
 @export var WEAPON_MANAGER : WeaponManager
 @export var HEALTH_MANAGER : HealthManager
 
@@ -53,7 +52,6 @@ var state: STATES = STATES.NORMAL
 @export_enum("Hold to Sprint", "Toggle Sprint") var sprint_mode : int = 0
 @export var dynamic_fov : bool = true
 @export var continuous_jumping : bool = true
-@export var view_bobbing : bool = true
 
 @export_group("Inventory")
 @export var inventory_data: InventoryData
@@ -82,9 +80,32 @@ func _ready():
 	# Set the camera rotation to initial facing direction
 	if initial_facing_direction and HEAD.rotation_degrees != Vector3.ZERO:
 		HEAD.set_rotation_degrees(initial_facing_direction)
+
+
+func _process(delta):
 	
-	# Reset the camera position
-	CAMERA_ANIMATION.play("RESET")
+	if Input.is_action_just_pressed(PAUSE):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	if Input.is_action_just_released("weapon_ads"):
+		toggle_ads(false)
+	
+	if Input.is_action_pressed("weapon_ads"):
+		if state != STATES.SPRINTING:
+			toggle_ads(true)
+	
+	if Input.is_action_just_pressed("test_health"):
+		hit(5)
+	
+	HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+	
+	# Uncomment if you want full controller support
+	#var controller_view_rotation = Input.get_vector(LOOK_LEFT, LOOK_RIGHT, LOOK_UP, LOOK_DOWN)
+	#HEAD.rotation_degrees.y -= controller_view_rotation.x * 1.5
+	#HEAD.rotation_degrees.x -= controller_view_rotation.y * 1.5
 
 
 func _physics_process(delta):
@@ -109,19 +130,25 @@ func _physics_process(delta):
 	if dynamic_fov:
 		update_camera_fov()
 	update_collision_scale()
+
+
+func _unhandled_input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
+		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
+		
+		CAMERA.sway(Vector2(event.relative.x, event.relative.y))
 	
-	if view_bobbing:
-		headbob_animation(input_dir)
+	if Input.is_action_just_pressed("inventory"):
+		toggle_inventory.emit()
 
 
 func handle_jumping():
-	if jumping_enabled:
-		if continuous_jumping:
-			if Input.is_action_pressed(JUMP) and is_on_floor():
-				velocity.y += jump_velocity
-		else:
-			if Input.is_action_just_pressed(JUMP) and is_on_floor():
-				velocity.y += jump_velocity
+	if jumping_enabled and is_on_floor():
+		if continuous_jumping and Input.is_action_pressed(JUMP):
+			velocity.y += jump_velocity
+		elif Input.is_action_just_pressed(JUMP):
+			velocity.y += jump_velocity
 
 
 func handle_movement(delta, input_dir):
@@ -235,55 +262,12 @@ func update_camera_fov():
 
 
 func update_collision_scale():
-	if state == STATES.CROUCHING: # Add your own crouch animation code
-		COLLISION_MESH.scale.y = lerp(COLLISION_MESH.scale.y, 0.75, 0.2)
+	# Add animation here
+	# TODO: This causes a bug with the collision detection and the Ceiling detection
+	if state == STATES.CROUCHING: 
+		COLLISION_MESH.scale.y = lerp(COLLISION_MESH.scale.y, 0.5, 0.2)
 	else:
 		COLLISION_MESH.scale.y = lerp(COLLISION_MESH.scale.y, 1.0, 0.2)
-
-
-func headbob_animation(moving):
-	if moving and is_on_floor():
-		CAMERA_ANIMATION.play("headbob", 0.25)
-		CAMERA_ANIMATION.speed_scale = (speed / base_speed) * 1.75
-	else:
-		CAMERA_ANIMATION.play("RESET", 0.25)
-
-
-func _process(delta):
-	
-	if Input.is_action_just_pressed(PAUSE):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	if Input.is_action_just_released("weapon_ads"):
-		toggle_ads(false)
-	
-	if Input.is_action_pressed("weapon_ads"):
-		if state != STATES.SPRINTING:
-			toggle_ads(true)
-	
-	if Input.is_action_just_pressed("test_health"):
-		hit(5)
-	
-	HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-	
-	# Uncomment if you want full controller support
-	#var controller_view_rotation = Input.get_vector(LOOK_LEFT, LOOK_RIGHT, LOOK_UP, LOOK_DOWN)
-	#HEAD.rotation_degrees.y -= controller_view_rotation.x * 1.5
-	#HEAD.rotation_degrees.x -= controller_view_rotation.y * 1.5
-
-
-func _unhandled_input(event):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
-		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
-		
-		CAMERA.sway(Vector2(event.relative.x, event.relative.y))
-	
-	if Input.is_action_just_pressed("inventory"):
-		toggle_inventory.emit()
 
 
 # Handled here due to sprinting cancel and reticle
