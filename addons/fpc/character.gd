@@ -1,6 +1,7 @@
 class_name Player extends CharacterBody3D
 
-# TODO: Add descriptions for each value
+enum STATES { NORMAL, CROUCHING, SPRINTING }
+var state: STATES = STATES.NORMAL
 
 @export_category("Character")
 @export var base_speed : float = 3.0
@@ -17,7 +18,9 @@ class_name Player extends CharacterBody3D
 @export var HEAD : Node3D
 @export var CAMERA : Camera3D
 @export var CAMERA_ANIMATION : AnimationPlayer
+@export var RETICLE : Reticle
 @export var COLLISION_MESH : CollisionShape3D
+@export var CROUCHED_CEILING_DETECT : RayCast3D
 @export var INTERACT_RAY : RayCast3D
 @export var FPS_RIG : Node3D
 @export var WEAPON_MANAGER : WeaponManager
@@ -63,11 +66,10 @@ signal toggle_inventory()
 
 # Member variables
 var speed : float = base_speed
-# States: normal, crouching, sprinting
-var state : String = "normal"
+
 var low_ceiling : bool = false # This is for when the cieling is too low and the player needs to crouch.
 var is_ads : bool = false
-@onready var reticle_1 = $UserInterface/Reticle_1
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") # Don't set this as a const, see the gravity section in _physics_process
@@ -90,16 +92,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	# Add some debug data
-	$UserInterface/DebugPanel.add_property("Movement Speed", speed, 1)
-	var cv : Vector3 = get_real_velocity()
-	var vd : Array[float] = [
-		snappedf(cv.x, 0.001),
-		snappedf(cv.y, 0.001),
-		snappedf(cv.z, 0.001)
-	]
-	var readable_velocity : String = "X: " + str(vd[0]) + " Y: " + str(vd[1]) + " Z: " + str(vd[2])
-	$UserInterface/DebugPanel.add_property("Velocity", readable_velocity, 2)
+	# TODO: Move to it's own debug component
 	
 	# Gravity
 	#gravity = ProjectSettings.get_setting("physics/3d/default_gravity") # If the gravity changes during your game, uncomment this code
@@ -113,9 +106,10 @@ func _physics_process(delta):
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 	handle_movement(delta, input_dir)
 	
-	low_ceiling = $CrouchCeilingDetection.is_colliding()
+	low_ceiling = CROUCHED_CEILING_DETECT.is_colliding()
 	
 	handle_state(input_dir)
+	
 	if dynamic_fov:
 		update_camera_fov()
 	update_collision_scale()
@@ -156,69 +150,87 @@ func handle_movement(delta, input_dir):
 			velocity.z = direction.z * speed
 
 
+#region Player State Management (crouching, sprinting, normal)
 func handle_state(moving):
+	# Handle sprinting
 	if sprint_enabled:
-		if sprint_mode == 0:
-			if Input.is_action_pressed(SPRINT) and !Input.is_action_pressed(CROUCH):
-				if moving:
-					if state != "sprinting":
-						enter_sprint_state()
-				else:
-					if state == "sprinting":
-						enter_normal_state()
-			elif state == "sprinting":
-				enter_normal_state()
-		elif sprint_mode == 1:
-			if moving:
-				if Input.is_action_just_pressed(SPRINT):
-					match state:
-						"normal":
-							enter_sprint_state()
-						"sprinting":
-							enter_normal_state()
-			elif state == "sprinting":
-				enter_normal_state()
-	
+		handle_sprinting(moving)
+
+	# Handle crouching
 	if crouch_enabled:
-		if crouch_mode == 0:
-			if Input.is_action_pressed(CROUCH) and !Input.is_action_pressed(SPRINT):
-				if state != "crouching":
-					enter_crouch_state()
-			elif state == "crouching" and !$CrouchCeilingDetection.is_colliding():
-				enter_normal_state()
-		elif crouch_mode == 1:
-			if Input.is_action_just_pressed(CROUCH):
-				match state:
-					"normal":
-						enter_crouch_state()
-					"crouching":
-						if !$CrouchCeilingDetection.is_colliding():
-							enter_normal_state()
+		handle_crouching(moving)
+
+
+func handle_sprinting(moving):
+	if sprint_mode == 0:
+		handle_sprint_mode_0(moving)
+	elif sprint_mode == 1:
+		handle_sprint_mode_1(moving)
+
+
+func handle_sprint_mode_0(moving):
+	var is_sprinting = Input.is_action_pressed(SPRINT) and not Input.is_action_pressed(CROUCH)
+	if is_sprinting and moving and state != STATES.SPRINTING:
+		enter_sprint_state()
+	elif (not is_sprinting or not moving) and state == STATES.SPRINTING:
+		enter_normal_state()
+
+
+func handle_sprint_mode_1(moving):
+	if moving and Input.is_action_just_pressed(SPRINT):
+		state = STATES.SPRINTING if state == STATES.NORMAL else STATES.NORMAL
+		enter_sprint_state() if state == STATES.SPRINTING else enter_normal_state()
+	elif not moving and state == STATES.SPRINTING:
+		enter_normal_state()
+
+
+func handle_crouching(moving):
+	if crouch_mode == 0:
+		handle_crouch_mode_0(moving)
+	elif crouch_mode == 1:
+		handle_crouch_mode_1(moving)
+
+
+func handle_crouch_mode_0(moving):
+	var is_crouching = Input.is_action_pressed(CROUCH) and not Input.is_action_pressed(SPRINT)
+	if is_crouching and state != STATES.CROUCHING:
+		enter_crouch_state()
+	elif not is_crouching and state == STATES.CROUCHING and not low_ceiling:
+		enter_normal_state()
+
+
+func handle_crouch_mode_1(moving):
+	if Input.is_action_just_pressed(CROUCH):
+		if state == STATES.NORMAL:
+			enter_crouch_state()
+		elif state == STATES.CROUCHING and not low_ceiling:
+			enter_normal_state()
 
 
 # Any enter state function should only be called once when you want to enter that state, not every frame.
-
 func enter_normal_state():
 	#print("entering normal state")
 	var prev_state = state
-	state = "normal"
+	state = STATES.NORMAL
 	speed = base_speed
 
 func enter_crouch_state():
 	#print("entering crouch state")
 	var prev_state = state
-	state = "crouching"
+	state = STATES.CROUCHING
 	speed = crouch_speed
 
 func enter_sprint_state():
 	#print("entering sprint state")
 	var prev_state = state
-	state = "sprinting"
+	state = STATES.SPRINTING
 	speed = sprint_speed
 	toggle_ads(false)
+#endregion
+
 
 func update_camera_fov():
-	if state == "sprinting":
+	if state == STATES.SPRINTING:
 		CAMERA.fov = lerp(CAMERA.fov, 85.0, 0.1)
 	elif is_ads:
 		CAMERA.fov = lerp(CAMERA.fov, 65.0, 0.3)
@@ -227,7 +239,7 @@ func update_camera_fov():
 
 
 func update_collision_scale():
-	if state == "crouching": # Add your own crouch animation code
+	if state == STATES.CROUCHING: # Add your own crouch animation code
 		COLLISION_MESH.scale.y = lerp(COLLISION_MESH.scale.y, 0.75, 0.2)
 	else:
 		COLLISION_MESH.scale.y = lerp(COLLISION_MESH.scale.y, 1.0, 0.2)
@@ -242,11 +254,6 @@ func headbob_animation(moving):
 
 
 func _process(delta):
-	$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
-	var status : String = state
-	if !is_on_floor():
-		status += " in the air"
-	$UserInterface/DebugPanel.add_property("State", status, 0)
 	
 	if Input.is_action_just_pressed(PAUSE):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -258,7 +265,7 @@ func _process(delta):
 		toggle_ads(false)
 	
 	if Input.is_action_pressed("weapon_ads"):
-		if state != "sprinting":
+		if state != STATES.SPRINTING:
 			toggle_ads(true)
 	
 	if Input.is_action_just_pressed("test_health"):
@@ -283,13 +290,11 @@ func _unhandled_input(event):
 		toggle_inventory.emit()
 
 
+# Handled here due to sprinting cancel and reticle
 func toggle_ads(ads: bool):
 	is_ads = ads
 	WEAPON_MANAGER.ads = ads
-	reticle_1.visible = !ads
-
-
-
+	RETICLE.visible = !ads
 
 
 func get_drop_position() -> Vector3:

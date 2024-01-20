@@ -1,5 +1,7 @@
 extends Node
 
+signal player_ready
+
 var player: Player
 
 
@@ -18,7 +20,12 @@ func get_global_position() -> Vector3:
 
 func _set_active_player(active_player):
 	player = active_player
+	player.ready.connect(_on_player_ready)
 	print("PlayerManager: Active player set to %s" % player)
+
+
+func _on_player_ready():
+	player_ready.emit()
 
 
 func get_ammo_type() -> String:

@@ -1,10 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=24 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
-[ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
+[ext_resource type="PackedScene" uid="uid://c4mn0hk7ukjp1" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
 [ext_resource type="Script" path="res://inventory/inventory_data_armor.gd" id="3_radmv"]
-[ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 [ext_resource type="Script" path="res://inventory/inventory_data_weapon.gd" id="4_c4tes"]
 [ext_resource type="Script" path="res://inventory/inventory_data_grenade.gd" id="5_d3fca"]
 [ext_resource type="Script" path="res://addons/fpc/Camera.gd" id="5_pgif6"]
@@ -13,6 +12,7 @@
 [ext_resource type="Script" path="res://addons/fpc/InteractRay.gd" id="7_xdbxf"]
 [ext_resource type="Resource" uid="uid://0g3fwiht7j32" path="res://resources/ammo/ammo_reserve.tres" id="9_2qw64"]
 [ext_resource type="Script" path="res://player/HealthManager.gd" id="9_o1n28"]
+[ext_resource type="PackedScene" uid="uid://bgo6wyjgnxjr5" path="res://ui/debug/debug_panel.tscn" id="9_vjjbc"]
 
 [sub_resource type="Resource" id="Resource_5yuaq"]
 script = ExtResource("2_4ykg7")
@@ -122,13 +122,7 @@ _data = {
 "headbob": SubResource("Animation_lrqmv")
 }
 
-[sub_resource type="Theme" id="Theme_wdf0f"]
-MarginContainer/constants/margin_bottom = 10
-MarginContainer/constants/margin_left = 10
-MarginContainer/constants/margin_right = 10
-MarginContainer/constants/margin_top = 10
-
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "COLLISION_MESH", "INTERACT_RAY", "FPS_RIG", "WEAPON_MANAGER", "HEALTH_MANAGER")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "RETICLE", "COLLISION_MESH", "CROUCHED_CEILING_DETECT", "INTERACT_RAY", "FPS_RIG", "WEAPON_MANAGER", "HEALTH_MANAGER")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 collision_layer = 2
 collision_mask = 5
@@ -136,7 +130,9 @@ script = ExtResource("1_0t4e8")
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
 CAMERA_ANIMATION = NodePath("Head/camera_animation")
+RETICLE = NodePath("Reticle")
 COLLISION_MESH = NodePath("Collision")
+CROUCHED_CEILING_DETECT = NodePath("CrouchCeilingDetection")
 INTERACT_RAY = NodePath("Head/Camera/InteractRay")
 FPS_RIG = NodePath("Head/Camera/FPSRig")
 WEAPON_MANAGER = NodePath("WeaponManager")
@@ -184,34 +180,8 @@ blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"headbob", &
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 target_position = Vector3(0, 1, 0)
 
-[node name="UserInterface" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="Reticle_1" parent="UserInterface" node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
-layout_mode = 1
-reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
-character = NodePath("../..")
-
-[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 453.0
-offset_bottom = 50.0
-theme = SubResource("Theme_wdf0f")
-script = ExtResource("3_x1wcc")
-
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
-layout_mode = 2
+[node name="DebugPanel" parent="." instance=ExtResource("9_vjjbc")]
+unique_name_in_owner = true
 
 [node name="WeaponManager" type="Node3D" parent="."]
 script = ExtResource("7_ru6it")
@@ -220,4 +190,9 @@ ammo_reserve = ExtResource("9_2qw64")
 [node name="HealthManager" type="Node" parent="."]
 script = ExtResource("9_o1n28")
 
-[editable path="UserInterface/Reticle_1"]
+[node name="Reticle" parent="." node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
+unique_name_in_owner = true
+reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
+character = NodePath("..")
+
+[editable path="Reticle"]
