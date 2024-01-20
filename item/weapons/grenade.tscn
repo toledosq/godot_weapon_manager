@@ -1,7 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://c2nk75nqe6x4r"]
+[gd_scene load_steps=14 format=3 uid="uid://c2nk75nqe6x4r"]
 
 [ext_resource type="Script" path="res://item/weapons/grenade.gd" id="1_6wtes"]
 [ext_resource type="Texture2D" uid="uid://i7lfuuw7y653" path="res://assets/prototype/explosion_1_63.png" id="2_ipna1"]
+
+[sub_resource type="Curve" id="Curve_uto1m"]
+bake_resolution = 10
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.251376, 1), 1.99905e-05, 1.99905e-05, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="SphereMesh" id="SphereMesh_cj38n"]
 radius = 0.1
@@ -41,11 +46,19 @@ alpha_curve = SubResource("CurveTexture_mf4u1")
 
 [sub_resource type="QuadMesh" id="QuadMesh_yj0b2"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wspqa"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.25098)
+
+[sub_resource type="SphereMesh" id="SphereMesh_fmscr"]
+material = SubResource("StandardMaterial3D_wspqa")
+
 [node name="Grenade" type="RigidBody3D"]
 collision_layer = 4
 collision_mask = 3
 continuous_cd = true
 script = ExtResource("1_6wtes")
+damage_curve = SubResource("Curve_uto1m")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_cj38n")
@@ -76,6 +89,9 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_iltj8")
 draw_pass_1 = SubResource("QuadMesh_yj0b2")
+
+[node name="BlastAreaDebug" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_fmscr")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="finished" from="SmokeParticles" to="." method="_on_smoke_particles_finished"]

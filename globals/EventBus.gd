@@ -20,3 +20,5 @@ signal player_armor_updated(armor)
 signal player_died()
 
 signal display_alert_text(text)
+signal interact_ray_stopped_colliding()
+signal interact_ray_colliding()
