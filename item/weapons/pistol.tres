@@ -24,6 +24,7 @@ name = "Glock"
 value = 300
 description = "Ol reliable"
 stackable = false
+is_unique = true
 texture = SubResource("AtlasTexture_pudp5")
 mesh = ExtResource("1_aqghw")
 mesh_scale_modifier = 1.0

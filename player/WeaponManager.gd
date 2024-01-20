@@ -154,18 +154,18 @@ func set_active_weapon_slot(weapon_slot_index):
 
 
 #region Equipping/Unequipping
-func equip_weapon(fast: bool = false):
+func equip_weapon():
 	if STATE == STATES.FIRING or STATE == STATES.RELOADING:
 		return
 	
 	change_state(STATES.NOT_READY)
-	await unequip_weapon(fast)
+	await unequip_weapon()
 	
 	print("WeaponManager: Equip weapon %s" % active_weapon_slot_index)
 	if weapon_resource_array[active_weapon_slot_index].player_model:
 		player_model = weapon_resource_array[active_weapon_slot_index].player_model.instantiate()
 		PlayerManager.player.FPS_RIG.add_child(player_model)
-		player_model.equip(fast)
+		player_model.equip()
 		
 	if weapon_resource_array[active_weapon_slot_index].single_fire:
 		single_fire = true
@@ -177,7 +177,7 @@ func equip_weapon(fast: bool = false):
 	force_ui_refresh()
 
 
-func unequip_weapon(fast: bool = false):
+func unequip_weapon():
 	if player_model == null:
 		return
 		
@@ -185,8 +185,7 @@ func unequip_weapon(fast: bool = false):
 	
 	print("WeaponManager: Unequip weapon %s" % active_weapon_slot_index)
 	
-	if !fast:
-		await player_model.unequip()
+	await player_model.unequip()
 	player_model.queue_free()
 	
 	force_ui_refresh()

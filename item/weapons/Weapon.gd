@@ -26,6 +26,11 @@ var target_pos: Vector3
 
 var ads := false
 const ADS_LERP := 20
+@onready var mesh_instance_3d = $MeshInstance3D
+
+
+func _ready():
+	mesh_instance_3d.hide()
 
 
 func _process(delta):
@@ -65,9 +70,9 @@ func unequip():
 		await animation_player.animation_finished
 
 
-func equip(fast):
+func equip():
 	print("%s: Equipping" % name)
-	if !fast and animation_player:
+	if animation_player:
 		animation_player.play("equip")
 		await animation_player.animation_finished
 

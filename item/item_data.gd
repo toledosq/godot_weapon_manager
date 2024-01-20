@@ -1,6 +1,5 @@
 class_name ItemData extends Resource
 
-@export var unique = false
 
 @export_group("Item Details")
 @export var itemID: int
@@ -8,6 +7,7 @@ class_name ItemData extends Resource
 @export var value: int
 @export_multiline var description: String = ""
 @export var stackable: bool = false
+@export var is_unique = false
 
 @export_group("Item Rendering")
 @export var texture: AtlasTexture

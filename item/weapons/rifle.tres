@@ -26,6 +26,7 @@ name = "Rifle"
 value = 100
 description = "una rifle-ola"
 stackable = false
+is_unique = true
 texture = SubResource("AtlasTexture_a3cv8")
 mesh = ExtResource("1_yd2x7")
 mesh_scale_modifier = 1.0
