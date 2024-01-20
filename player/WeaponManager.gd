@@ -76,28 +76,32 @@ func _process(delta):
 	
 	# Only do this if the player is controlling character
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		if STATE == STATES.READY:
-			if single_fire:
-				if Input.is_action_just_pressed("weapon_fire"):
-					fire_weapon()
-			else:
-				if Input.is_action_pressed("weapon_fire"):
-					fire_weapon()
-			
-			if Input.is_action_just_pressed("weapon_reload"):
-				reload_weapon()
+		handle_input()
+
+
+func handle_input():
+	if STATE == STATES.READY:
+		if single_fire:
+			if Input.is_action_just_pressed("weapon_fire"):
+				fire_weapon()
+		else:
+			if Input.is_action_pressed("weapon_fire"):
+				fire_weapon()
 		
-		if Input.is_action_just_pressed("primary_weapon"):
-			print("WeaponManager: Equip primary weapon")
-			set_active_weapon_slot(0)
+		if Input.is_action_just_pressed("weapon_reload"):
+			reload_weapon()
 		
-		if Input.is_action_just_pressed("secondary_weapon"):
-			print("WeaponManager: Equip secondary weapon")
-			set_active_weapon_slot(1)
-			
-		if Input.is_action_just_pressed("weapon_grenade"):
-			print("WeaponManager: Throw Grenade")
-			throw_grenade()
+	if Input.is_action_just_pressed("primary_weapon"):
+		print("WeaponManager: Equip primary weapon")
+		set_active_weapon_slot(0)
+	
+	if Input.is_action_just_pressed("secondary_weapon"):
+		print("WeaponManager: Equip secondary weapon")
+		set_active_weapon_slot(1)
+		
+	if Input.is_action_just_pressed("weapon_grenade"):
+		print("WeaponManager: Throw Grenade")
+		throw_grenade()
 
 
 func change_state(new_state: STATES):
