@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqh1gptdx3pqu"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r2yyu"]
+load_path = "res://.godot/imported/test_icons.png-1ede0258be7e19b60f0971a4db166e0b.s3tc.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tg8ng"]
+atlas = SubResource("CompressedTexture2D_r2yyu")
+region = Rect2(0, 576, 32, 32)
+
+[node name="StatBar" type="HBoxContainer"]
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("AtlasTexture_tg8ng")
+expand_mode = 2
+
+[node name="Bar" type="ProgressBar" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3

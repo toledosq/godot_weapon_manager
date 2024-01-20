@@ -1,0 +1,218 @@
+[gd_scene load_steps=8 format=3 uid="uid://ba2ddo5rcpo2r"]
+
+[ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="1_mvig0"]
+[ext_resource type="Script" path="res://inventory/inventory.gd" id="2_bnwqq"]
+[ext_resource type="PackedScene" uid="uid://btwia68styqve" path="res://inventory/slot.tscn" id="3_m4l8v"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r2yyu"]
+load_path = "res://.godot/imported/test_icons.png-1ede0258be7e19b60f0971a4db166e0b.s3tc.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apydg"]
+atlas = SubResource("CompressedTexture2D_r2yyu")
+region = Rect2(96, 576, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gs7ty"]
+atlas = SubResource("CompressedTexture2D_r2yyu")
+region = Rect2(32, 576, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtmby"]
+atlas = SubResource("CompressedTexture2D_r2yyu")
+region = Rect2(0, 576, 32, 32)
+
+[node name="InventoryInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mvig0")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerInventory" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_bnwqq")
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/PlayerInventory"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/PlayerInventory/MarginContainer"]
+layout_mode = 2
+columns = 6
+
+[node name="CenterPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CenterPanelVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CenterPanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="EquippedPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox"]
+layout_mode = 2
+
+[node name="EquippedVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel"]
+layout_mode = 2
+
+[node name="WeaponInventory" type="PanelContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("2_bnwqq")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/WeaponInventory"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/WeaponInventory/MarginContainer"]
+layout_mode = 2
+
+[node name="Slot" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/WeaponInventory/MarginContainer/ItemGrid" instance=ExtResource("3_m4l8v")]
+layout_mode = 2
+
+[node name="Slot2" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/WeaponInventory/MarginContainer/ItemGrid" instance=ExtResource("3_m4l8v")]
+layout_mode = 2
+
+[node name="ArmorInventory" type="PanelContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox"]
+layout_mode = 2
+script = ExtResource("2_bnwqq")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/ArmorInventory"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/ArmorInventory/MarginContainer"]
+layout_mode = 2
+columns = 6
+
+[node name="Slot" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/ArmorInventory/MarginContainer/ItemGrid" instance=ExtResource("3_m4l8v")]
+layout_mode = 2
+
+[node name="GrenadeInventory" type="PanelContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox"]
+layout_mode = 2
+script = ExtResource("2_bnwqq")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/GrenadeInventory"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/GrenadeInventory/MarginContainer"]
+layout_mode = 2
+columns = 6
+
+[node name="Slot" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/EquippedPanel/EquippedVBox/GrenadeInventory/MarginContainer/ItemGrid" instance=ExtResource("3_m4l8v")]
+layout_mode = 2
+
+[node name="StatsPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="StatsVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="StaminaStatBar" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox/StaminaStatBar"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_apydg")
+expand_mode = 2
+
+[node name="Bar" type="ProgressBar" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox/StaminaStatBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="ArmorStatBar" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox/ArmorStatBar"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_gs7ty")
+expand_mode = 2
+
+[node name="Bar" type="ProgressBar" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox/ArmorStatBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 50.0
+value = 50.0
+
+[node name="HealthStatBar" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox/HealthStatBar"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_rtmby")
+expand_mode = 2
+
+[node name="Bar" type="ProgressBar" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelVBox/StatsPanel/MarginContainer/StatsVBox/HealthStatBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="ContainerInventory" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_bnwqq")
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/ContainerInventory"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/ContainerInventory/MarginContainer"]
+layout_mode = 2
+columns = 6
+
+[node name="GrabbedSlot" parent="." instance=ExtResource("3_m4l8v")]
+visible = false
+modulate = Color(1, 1, 1, 0.501961)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
