@@ -29,7 +29,6 @@ ssao_enabled = true
 ssao_power = 2.0
 ssao_light_affect = 1.0
 ssao_ao_channel_affect = 1.0
-ssil_enabled = true
 
 [sub_resource type="Resource" id="Resource_bet0b"]
 script = ExtResource("4_kjg3y")

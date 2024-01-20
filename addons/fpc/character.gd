@@ -93,10 +93,6 @@ func _process(delta):
 	if Input.is_action_just_released("weapon_ads"):
 		toggle_ads(false)
 	
-	if Input.is_action_pressed("weapon_ads"):
-		if state != STATES.SPRINTING:
-			toggle_ads(true)
-	
 	if Input.is_action_just_pressed("test_health"):
 		hit(5)
 	
@@ -133,13 +129,19 @@ func _physics_process(delta):
 
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
-		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		if event is InputEventMouseMotion:
+			HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
+			HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
+			
+			CAMERA.sway(Vector2(event.relative.x, event.relative.y))
 		
-		CAMERA.sway(Vector2(event.relative.x, event.relative.y))
+		if Input.is_action_pressed("weapon_ads") and state != STATES.SPRINTING:
+			toggle_ads(true)
 	
 	if Input.is_action_just_pressed("inventory"):
+		if is_ads:
+			toggle_ads(false)
 		toggle_inventory.emit()
 
 
