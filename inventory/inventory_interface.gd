@@ -1,4 +1,4 @@
-extends Control
+class_name InventoryInterface extends Control
 
 # Signal if item dropped on ground
 signal drop_slot_data(slot_data: SlotData)
@@ -9,12 +9,12 @@ signal grenade_inventory_updated()
 var grabbed_slot_data: SlotData
 var container
 
-@onready var player_inventory = $PlayerInventory
-@onready var grabbed_slot = $GrabbedSlot
-@onready var container_inventory = $ContainerInventory
-@onready var armor_inventory = $ArmorInventory
-@onready var weapon_inventory = $WeaponInventory
-@onready var grenade_inventory = $GrenadeInventory
+@onready var player_inventory = %PlayerInventory
+@onready var grabbed_slot = %GrabbedSlot
+@onready var container_inventory = %ContainerInventory
+@onready var armor_inventory = %ArmorInventory
+@onready var weapon_inventory = %WeaponInventory
+@onready var grenade_inventory = %GrenadeInventory
 
 
 func _physics_process(_delta):

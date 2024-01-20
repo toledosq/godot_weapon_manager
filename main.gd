@@ -2,7 +2,7 @@ extends Node
 
 const PickUp = preload("res://item/pickup/pickup.tscn")
 
-@onready var inventory_interface = $UI/InventoryInterface
+@onready var inventory_interface = $UI/IngameInterface
 
 
 func _ready() -> void:

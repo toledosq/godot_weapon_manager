@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba486i1a5fah8"]
+
+[ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="1_1k0dj"]
+[ext_resource type="PackedScene" uid="uid://dgx5uhiu3bkra" path="res://ui/ui_elements/inventory_panel.tscn" id="2_aeh8s"]
+[ext_resource type="PackedScene" uid="uid://btwia68styqve" path="res://ui/ui_elements/slot.tscn" id="3_a1tg8"]
+
+[node name="InventoryInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1k0dj")
+
+[node name="PlayerInventory" parent="." instance=ExtResource("2_aeh8s")]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 50.0
+
+[node name="ArmorInventory" parent="." instance=ExtResource("2_aeh8s")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 100.0
+offset_right = 490.0
+offset_bottom = 140.0
+
+[node name="WeaponInventory" parent="." instance=ExtResource("2_aeh8s")]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 10.0
+offset_right = 490.0
+offset_bottom = 50.0
+
+[node name="GrenadeInventory" parent="." instance=ExtResource("2_aeh8s")]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 100.0
+offset_right = 580.0
+offset_bottom = 140.0
+
+[node name="ContainerInventory" parent="." instance=ExtResource("2_aeh8s")]
+visible = false
+layout_mode = 0
+offset_left = 600.0
+offset_top = 10.0
+offset_right = 640.0
+offset_bottom = 50.0
+
+[node name="GrabbedSlot" parent="." instance=ExtResource("3_a1tg8")]
+visible = false
+modulate = Color(1, 1, 1, 0.501961)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
