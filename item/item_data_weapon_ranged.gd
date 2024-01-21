@@ -40,14 +40,14 @@ func add_attachment(attachment: ItemDataAttachment):
 	return prev_attachment
 
 
-func remove_attachment(attachment_type: String):
+func remove_attachment(attachment_type: int):
 	var prev_attachment: ItemDataAttachment
 	
 	match attachment_type:
-		"scope":
+		1:
 			prev_attachment = scope
 			scope = null
-		"grip":
+		2:
 			prev_attachment = grip
 			grip = null
 	

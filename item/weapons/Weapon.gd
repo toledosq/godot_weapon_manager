@@ -88,22 +88,34 @@ func reload():
 		await animation_player.animation_finished
 
 
-func attach_scope(scope_resource: PackedScene):
+func equip_attachment(attachment_type: int, attachment_scene: PackedScene):
+	var attachment_instance = attachment_scene.instantiate()
+	match attachment_type:
+		1:
+			attach_scope(attachment_instance)
+		2:
+			attach_grip(attachment_instance)
+
+
+func attach_scope(attachment_instance):
+	if scope_attach_point.get_child_count() > 0:
+		remove_scope()
+	
 	print("Weapon: Attaching scope")
-	var scope_instance = scope_resource.instantiate()
-	scope_attach_point.add_child(scope_instance)
+	scope_attach_point.add_child(attachment_instance)
+
+
+func attach_grip(attachment_instance):
+	if grip_attach_point.get_child_count() > 0:
+		remove_grip()
+	print("Weapon: Attaching grip")
+	grip_attach_point.add_child(attachment_instance)
 
 
 func remove_scope():
 	print("Weapon: Removing scope")
 	var scope_instance = scope_attach_point.get_child(0)
 	scope_instance.queue_free()
-
-
-func attach_grip(grip_resource: PackedScene):
-	print("Weapon: Attaching grip")
-	var grip_instance = grip_resource.instantiate()
-	grip_attach_point.add_child(grip_instance)
 
 
 func remove_grip():

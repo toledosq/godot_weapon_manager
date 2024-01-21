@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=30 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://inventory/inventory_data.gd" id="2_4ykg7"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://dmg700nh4q775" path="res://item/attachments/scope.tres" id="5_g1wxv"]
 [ext_resource type="Script" path="res://addons/fpc/Camera.gd" id="5_pgif6"]
 [ext_resource type="Resource" uid="uid://dw3cobpgbbxf7" path="res://item/attachments/grip.tres" id="6_mfqe3"]
+[ext_resource type="Resource" uid="uid://ococbyr81vng" path="res://item/attachments/scope2.tres" id="7_4wkw8"]
 [ext_resource type="Texture2D" uid="uid://c8exgis8hi50l" path="res://assets/crosshairs/crosshair160.png" id="7_37vqj"]
 [ext_resource type="Script" path="res://player/WeaponManager.gd" id="7_ru6it"]
 [ext_resource type="Script" path="res://addons/fpc/InteractRay.gd" id="7_xdbxf"]
@@ -33,9 +34,14 @@ script = ExtResource("4_qjh0a")
 item_data = ExtResource("6_mfqe3")
 quantity = 1
 
+[sub_resource type="Resource" id="Resource_b7im7"]
+script = ExtResource("4_qjh0a")
+item_data = ExtResource("7_4wkw8")
+quantity = 1
+
 [sub_resource type="Resource" id="Resource_5yuaq"]
 script = ExtResource("2_4ykg7")
-slot_datas = Array[ExtResource("4_qjh0a")]([SubResource("Resource_o3g4s"), SubResource("Resource_0bkhl"), SubResource("Resource_w06rm"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("4_qjh0a")]([SubResource("Resource_o3g4s"), SubResource("Resource_0bkhl"), SubResource("Resource_w06rm"), SubResource("Resource_b7im7"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="Resource" id="Resource_ki7oc"]
 script = ExtResource("3_radmv")

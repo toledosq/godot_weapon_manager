@@ -192,11 +192,16 @@ func equip_weapon():
 
 func equip_attachment(attachment_resource: ItemDataAttachment, weapon_slot_index):
 	if weapon_slot_index == active_weapon_slot_index and weapon_model:
+		weapon_model.equip_attachment(attachment_resource.attachment_type, attachment_resource.attachment_scene)
+
+
+func unequip_attachment(attachment_resource: ItemDataAttachment, weapon_slot_index):
+	if weapon_slot_index == active_weapon_slot_index and weapon_model:
 		match attachment_resource.attachment_type:
 			1:
-				weapon_model.attach_scope(attachment_resource.attachment_scene)
+				weapon_model.remove_scope()
 			2:
-				weapon_model.attach_grip(attachment_resource.attachment_scene)
+				weapon_model.remove_grip()
 
 
 func unequip_weapon():
