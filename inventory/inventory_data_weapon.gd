@@ -26,25 +26,15 @@ func grab_slot_data(index: int) -> SlotData:
 # When player drops an item into equip inventory, check that it's equipable
 func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	
-	var slot_data = slot_datas[index]
-	
-	# Check if attachment:
+	## IF ATTACHMENT DROPPED
 	if grabbed_slot_data.item_data is ItemDataAttachment:
-		if slot_data:
-			# Null if added
-			# Original ItemDataAttachment if swapped
-			# Grabbed ItemDataAttachment if fail
-			var a = slot_data.item_data.add_attachment(grabbed_slot_data.item_data)
-			if a:
-				grabbed_slot_data.item_data = a
-			else:
-				grabbed_slot_data = null
-			return grabbed_slot_data
+		return handle_attachments(grabbed_slot_data, index)
 	
-	# If it's not an equipable item, don't drop it, give it back
+	## IF ITEM NOT WEAPON DROPPED
 	if not grabbed_slot_data.item_data is ItemDataWeapon or grabbed_slot_data.item_data is ItemDataGrenade:
 		return grabbed_slot_data
 	
+	## IF WEAPON DROPPED
 	# Otherwise, drop it into the slot (using parents' function)
 	EventBus.add_weapon.emit(index, grabbed_slot_data.item_data)
 	return super.drop_slot_data(grabbed_slot_data, index)
@@ -53,10 +43,36 @@ func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 # When player drops a single item into equip inventory, check that it's equipable
 func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	
+	## IF ATTACHMENT DROPPED
+	if grabbed_slot_data.item_data is ItemDataAttachment:
+		return handle_attachments(grabbed_slot_data, index)
+	
+	## IF ITEM NOT WEAPON DROPPED
 	# If it's not an equipable item, don't drop it, give it back
 	if not grabbed_slot_data.item_data is ItemDataWeapon or grabbed_slot_data.item_data is ItemDataGrenade:
 		return grabbed_slot_data
 	
+	## IF WEAPON DROPPED
 	# Otherwise, drop it into the slot (using parents' function)
 	EventBus.add_weapon.emit(index, grabbed_slot_data.item_data)
 	return super.drop_single_slot_data(grabbed_slot_data, index)
+
+
+func handle_attachments(grabbed_slot_data: SlotData, index: int):
+	var slot_data = slot_datas[index]
+	if slot_data:
+		
+		# Attempt to attach
+		var returned_attachment = slot_data.item_data.add_attachment(grabbed_slot_data.item_data)
+		
+		# If swapped
+		if returned_attachment and returned_attachment != grabbed_slot_data.item_data:
+				EventBus.attachment_added.emit(grabbed_slot_data, index)
+				grabbed_slot_data.item_data = returned_attachment
+				
+		# If added, not swapped
+		else:
+			EventBus.attachment_added.emit(grabbed_slot_data.item_data, index)
+			grabbed_slot_data = null
+		
+		return grabbed_slot_data

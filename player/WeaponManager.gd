@@ -48,6 +48,7 @@ func _ready():
 	EventBus.remove_weapon.connect(_on_remove_weapon)
 	EventBus.add_grenade.connect(_on_add_grenade)
 	EventBus.remove_grenade.connect(_on_remove_grenade)
+	EventBus.attachment_added.connect(equip_attachment)
 	active_weapon_slot_index = 0
 	
 	PlayerManager.player_ready.connect(_on_player_ready)
@@ -308,6 +309,11 @@ func throw_grenade():
 			grenade_data = null
 #endregion
 
+
+func equip_attachment(attachment_resource: ItemDataAttachment, weapon_slot_index):
+	if weapon_slot_index == active_weapon_slot_index and weapon_model:
+		weapon_model.attach_scope(attachment_resource.attachment_scene)
+	
 
 func get_camera_collision(distance) -> Vector3:
 	# Get active camera

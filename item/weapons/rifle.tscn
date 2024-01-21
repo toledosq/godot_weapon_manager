@@ -190,12 +190,14 @@ _data = {
 "unequip": SubResource("Animation_glhd0")
 }
 
-[node name="Pistol" type="Node3D" node_paths=PackedStringArray("animation_player", "fire_audio")]
+[node name="Pistol" type="Node3D" node_paths=PackedStringArray("scope_attach_point", "grip_attach_point", "animation_player", "fire_audio")]
 script = ExtResource("1_setpl")
 default_position = Vector3(0.25, -0.29, -0.57)
 default_rotation = Vector3(0, -3.14159, 0)
 ads_position = Vector3(0, -0.184, -0.57)
 ads_rotation = Vector3(-0.0437554, -3.14159, -1.10999e-07)
+scope_attach_point = NodePath("MeshInstance3D/ScopeAttachmentPoint")
+grip_attach_point = NodePath("MeshInstance3D/GripAttachmentPoint")
 animation_player = NodePath("AnimationPlayer")
 fire_audio = NodePath("FireAudio")
 recoil_rotation_x = ExtResource("2_uh3sa")
@@ -207,6 +209,12 @@ recoil_position_z = ExtResource("2_uh3sa")
 mesh = ExtResource("2_ebkpp")
 surface_material_override/0 = SubResource("StandardMaterial3D_sgi8u")
 
+[node name="ScopeAttachmentPoint" type="Marker3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152528, 0.155107)
+
+[node name="GripAttachmentPoint" type="Marker3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0486448, 0.155107)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_doqsb")
@@ -216,9 +224,3 @@ libraries = {
 stream = ExtResource("3_78cn6")
 volume_db = -4.0
 max_polyphony = 3
-
-[node name="ScopeAttachmentPoint" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152528, 0.155107)
-
-[node name="GripAttachmentPoint" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0486448, 0.155107)

@@ -89,16 +89,14 @@ func reload():
 
 
 func attach_scope(scope_resource: PackedScene):
-	var scope_instance = scope_resource.instance()
-	scope_attach_point
-	scope_instance.transform = scope_attach_point.global_transform
+	print("Weapon: Attaching scope")
+	var scope_instance = scope_resource.instantiate()
 	scope_attach_point.add_child(scope_instance)
 
 
 func remove_scope():
 	var scope_instance = scope_attach_point.get_child(0)
 	scope_instance.queue_free()
-	
 
 
 func lerp_recoil(delta: float) -> void:

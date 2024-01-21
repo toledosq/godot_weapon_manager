@@ -31,6 +31,7 @@ func add_attachment(attachment: ItemDataAttachment):
 		1:
 			prev_attachment = scope
 			scope = attachment
+			print("Attached scope")
 		2:
 			prev_attachment = grip
 			grip = attachment
