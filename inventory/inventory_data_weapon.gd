@@ -27,7 +27,7 @@ func grab_slot_data(index: int) -> SlotData:
 func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	
 	# If it's not an equipable item, don't drop it, give it back
-	if not grabbed_slot_data.item_data is ItemDataWeapon:
+	if not grabbed_slot_data.item_data is ItemDataWeapon or grabbed_slot_data.item_data is ItemDataGrenade:
 		return grabbed_slot_data
 	
 	# Otherwise, drop it into the slot (using parents' function)
@@ -39,7 +39,7 @@ func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	
 	# If it's not an equipable item, don't drop it, give it back
-	if not grabbed_slot_data.item_data is ItemDataWeapon:
+	if not grabbed_slot_data.item_data is ItemDataWeapon or grabbed_slot_data.item_data is ItemDataGrenade:
 		return grabbed_slot_data
 	
 	# Otherwise, drop it into the slot (using parents' function)

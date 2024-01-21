@@ -1,15 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ba2ddo5rcpo2r"]
+[gd_scene load_steps=11 format=3 uid="uid://ba2ddo5rcpo2r"]
 
 [ext_resource type="Script" path="res://ui/ingame_interface.gd" id="1_daqnu"]
+[ext_resource type="StyleBox" uid="uid://dqlqjqtupa5f8" path="res://ui/style_box_default.tres" id="2_3bb67"]
 [ext_resource type="PackedScene" uid="uid://dgx5uhiu3bkra" path="res://ui/ui_elements/inventory_panel.tscn" id="2_vrht3"]
 [ext_resource type="PackedScene" uid="uid://btwia68styqve" path="res://ui/ui_elements/slot.tscn" id="3_go75v"]
 [ext_resource type="Texture2D" uid="uid://44ppud4c8jir" path="res://icon.svg" id="3_va6ys"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i2ksn"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eeq54"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r2yyu"]
 load_path = "res://.godot/imported/test_icons.png-1ede0258be7e19b60f0971a4db166e0b.s3tc.ctex"
@@ -25,9 +20,6 @@ region = Rect2(32, 576, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_rtmby"]
 atlas = SubResource("CompressedTexture2D_r2yyu")
 region = Rect2(0, 576, 32, 32)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6a8jp"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45o7u"]
 
@@ -61,12 +53,12 @@ alignment = 1
 [node name="InformationPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_i2ksn")
+theme_override_styles/panel = ExtResource("2_3bb67")
 
 [node name="CenterPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_eeq54")
+theme_override_styles/panel = ExtResource("2_3bb67")
 
 [node name="CenterPanelStack" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CenterPanel"]
 layout_mode = 2
@@ -82,17 +74,14 @@ layout_mode = 2
 [node name="WeaponInventory" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelStack/EquippedPanel/EquippedStack" instance=ExtResource("2_vrht3")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="ArmorInventory" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelStack/EquippedPanel/EquippedStack" instance=ExtResource("2_vrht3")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="GrenadeInventory" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelStack/EquippedPanel/EquippedStack" instance=ExtResource("2_vrht3")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="StatsPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/CenterPanel/CenterPanelStack"]
 layout_mode = 2
@@ -181,7 +170,7 @@ text = "0"
 [node name="InventoryPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_6a8jp")
+theme_override_styles/panel = ExtResource("2_3bb67")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/InventoryPanel"]
 layout_mode = 2
@@ -206,8 +195,6 @@ horizontal_scroll_mode = 0
 unique_name_in_owner = true
 clip_contents = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -227,8 +214,6 @@ size_flags_vertical = 3
 [node name="ContainerInventory" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer/VBoxContainer/ContainerInventoryScroller" instance=ExtResource("2_vrht3")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="GrabbedSlot" parent="." instance=ExtResource("3_go75v")]
 unique_name_in_owner = true
