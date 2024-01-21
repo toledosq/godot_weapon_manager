@@ -31,10 +31,11 @@ func add_attachment(attachment: ItemDataAttachment):
 		1:
 			prev_attachment = scope
 			scope = attachment
-			print("Attached scope")
+			print("WeaponResource: Added scope")
 		2:
 			prev_attachment = grip
 			grip = attachment
+			print("WeaponResource: Added grip")
 	
 	return prev_attachment
 

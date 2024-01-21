@@ -171,6 +171,8 @@ func equip_weapon():
 		# Equip any attachments already on weapon
 		if weapon_resource_array[active_weapon_slot_index].scope:
 			equip_attachment(weapon_resource_array[active_weapon_slot_index].scope, active_weapon_slot_index)
+		if weapon_resource_array[active_weapon_slot_index].grip:
+			equip_attachment(weapon_resource_array[active_weapon_slot_index].grip, active_weapon_slot_index)
 		
 		PlayerManager.player.FPS_RIG.add_child(weapon_model)
 		weapon_model.equip()
@@ -190,7 +192,11 @@ func equip_weapon():
 
 func equip_attachment(attachment_resource: ItemDataAttachment, weapon_slot_index):
 	if weapon_slot_index == active_weapon_slot_index and weapon_model:
-		weapon_model.attach_scope(attachment_resource.attachment_scene)
+		match attachment_resource.attachment_type:
+			1:
+				weapon_model.attach_scope(attachment_resource.attachment_scene)
+			2:
+				weapon_model.attach_grip(attachment_resource.attachment_scene)
 
 
 func unequip_weapon():

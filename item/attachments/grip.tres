@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemDataAttachmentGrip" load_steps=5 format=3 uid="uid://dw3cobpgbbxf7"]
+
+[ext_resource type="Script" path="res://item/item_data_attachment_grip.gd" id="1_2ji63"]
+[ext_resource type="PackedScene" uid="uid://cj68vixcmmq87" path="res://assets/attachments/grip.tscn" id="1_qlmi3"]
+[ext_resource type="Texture2D" uid="uid://j0ormpwrrvx" path="res://assets/items/textures/test_icons_atlas.tres" id="3_voaar"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jbt0i"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.4
+radial_segments = 16
+
+[resource]
+script = ExtResource("1_2ji63")
+attachment_type = 2
+attachment_scene = ExtResource("1_qlmi3")
+itemID = 101
+name = "PineAppleGrip"
+value = 50
+description = "anana"
+stackable = false
+is_unique = false
+texture = ExtResource("3_voaar")
+mesh = SubResource("CylinderMesh_jbt0i")
+mesh_scale_modifier = 1.0

@@ -95,8 +95,21 @@ func attach_scope(scope_resource: PackedScene):
 
 
 func remove_scope():
+	print("Weapon: Removing scope")
 	var scope_instance = scope_attach_point.get_child(0)
 	scope_instance.queue_free()
+
+
+func attach_grip(grip_resource: PackedScene):
+	print("Weapon: Attaching grip")
+	var grip_instance = grip_resource.instantiate()
+	grip_attach_point.add_child(grip_instance)
+
+
+func remove_grip():
+	print("Weapon: Removing grip")
+	var grip_instance = grip_attach_point.get_child(0)
+	grip_instance.queue_free()
 
 
 func lerp_recoil(delta: float) -> void:

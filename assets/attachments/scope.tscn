@@ -3,7 +3,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_7bx04"]
 size = Vector3(0.05, 0.05, 0.1)
 
-[node name="Node3D" type="Node3D"]
+[node name="Scope" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0)
