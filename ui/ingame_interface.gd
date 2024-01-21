@@ -5,6 +5,7 @@ extends InventoryInterface
 @onready var stamina_bar = %StaminaBar
 
 
+
 func _ready():
 	EventBus.player_health_updated.connect(update_player_health_bar)
 	EventBus.player_armor_updated.connect(update_player_armor_bar)

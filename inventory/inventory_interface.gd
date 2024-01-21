@@ -12,9 +12,11 @@ var container
 @onready var player_inventory = %PlayerInventory
 @onready var grabbed_slot = %GrabbedSlot
 @onready var container_inventory = %ContainerInventory
+@onready var container_inventory_scroller = %ContainerInventoryScroller
 @onready var armor_inventory = %ArmorInventory
 @onready var weapon_inventory = %WeaponInventory
 @onready var grenade_inventory = %GrenadeInventory
+@onready var container_inventory_label = %ContainerInventoryLabel
 
 
 func _physics_process(_delta):
@@ -71,6 +73,8 @@ func set_container_inventory(_container) -> void:
 	
 		# Show the external inventory panel
 		container_inventory.show()
+		container_inventory_scroller.show()
+		container_inventory_label.show()
 
 
 func clear_container_inventory() -> void:
@@ -85,6 +89,9 @@ func clear_container_inventory() -> void:
 		
 	# Hide the external inventory panel
 	container_inventory.hide()
+	container_inventory_scroller.hide()
+	container_inventory_label.hide()
+	
 	# unlink the external inventory from the interface
 	container = null
 

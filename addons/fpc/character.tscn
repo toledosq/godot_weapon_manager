@@ -16,7 +16,7 @@
 
 [sub_resource type="Resource" id="Resource_5yuaq"]
 script = ExtResource("2_4ykg7")
-slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[Resource("res://inventory/slot_data.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="Resource" id="Resource_ki7oc"]
 script = ExtResource("3_radmv")
