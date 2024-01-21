@@ -6,6 +6,10 @@ class_name Weapon extends Node3D
 @export var ads_position : Vector3
 @export var ads_rotation : Vector3
 
+@export_category("Attachments")
+@export var scope_attach_point: Marker3D
+@export var grip_attach_point: Marker3D
+
 @export_category("Animations & Audio")
 @export var animation_player: AnimationPlayer
 @export var fire_audio: AudioStreamPlayer
@@ -82,6 +86,14 @@ func reload():
 	if animation_player:
 		animation_player.play("reload")
 		await animation_player.animation_finished
+
+
+func attach_scope(scope_resource: PackedScene):
+	var scope_instance = scope_resource.instance()
+	scope_attach_point
+	scope_instance.transform = scope_attach_point.global_transform
+	scope_attach_point.add_child(scope_instance)
+
 
 
 func lerp_recoil(delta: float) -> void:

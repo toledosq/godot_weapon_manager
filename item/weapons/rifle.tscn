@@ -216,3 +216,9 @@ libraries = {
 stream = ExtResource("3_78cn6")
 volume_db = -4.0
 max_polyphony = 3
+
+[node name="ScopeAttachmentPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152528, 0.155107)
+
+[node name="GripAttachmentPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0486448, 0.155107)
