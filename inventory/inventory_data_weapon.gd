@@ -67,12 +67,12 @@ func handle_attachments(grabbed_slot_data: SlotData, index: int):
 		
 		# If swapped
 		if returned_attachment and returned_attachment != grabbed_slot_data.item_data:
-				EventBus.attachment_added.emit(grabbed_slot_data, index)
-				grabbed_slot_data.item_data = returned_attachment
+			EventBus.attachment_added.emit(grabbed_slot_data.item_data, index)
+			grabbed_slot_data.item_data = returned_attachment
 				
 		# If added, not swapped
 		else:
 			EventBus.attachment_added.emit(grabbed_slot_data.item_data, index)
 			grabbed_slot_data = null
 		
-		return grabbed_slot_data
+	return grabbed_slot_data

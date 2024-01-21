@@ -167,6 +167,11 @@ func equip_weapon():
 	# Render weapon and play equip animation
 	if weapon_resource_array[active_weapon_slot_index].weapon_model:
 		weapon_model = weapon_resource_array[active_weapon_slot_index].weapon_model.instantiate()
+		
+		# Equip any attachments already on weapon
+		if weapon_resource_array[active_weapon_slot_index].scope:
+			equip_attachment(weapon_resource_array[active_weapon_slot_index].scope, active_weapon_slot_index)
+		
 		PlayerManager.player.FPS_RIG.add_child(weapon_model)
 		weapon_model.equip()
 	
@@ -181,6 +186,11 @@ func equip_weapon():
 	
 	# Force UI refresh
 	force_ui_refresh()
+
+
+func equip_attachment(attachment_resource: ItemDataAttachment, weapon_slot_index):
+	if weapon_slot_index == active_weapon_slot_index and weapon_model:
+		weapon_model.attach_scope(attachment_resource.attachment_scene)
 
 
 func unequip_weapon():
@@ -310,9 +320,7 @@ func throw_grenade():
 #endregion
 
 
-func equip_attachment(attachment_resource: ItemDataAttachment, weapon_slot_index):
-	if weapon_slot_index == active_weapon_slot_index and weapon_model:
-		weapon_model.attach_scope(attachment_resource.attachment_scene)
+
 	
 
 func get_camera_collision(distance) -> Vector3:
