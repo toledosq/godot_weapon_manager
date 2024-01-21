@@ -1,12 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bsdx2usalhemp"]
+[gd_scene load_steps=11 format=3 uid="uid://bsdx2usalhemp"]
 
 [ext_resource type="Script" path="res://item/weapons/Weapon.gd" id="1_setpl"]
-[ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="2_ebkpp"]
 [ext_resource type="Curve" uid="uid://763d20qh4fo6" path="res://resources/curves/recoil_curve.tres" id="2_uh3sa"]
 [ext_resource type="AudioStream" uid="uid://dstepgdm88yx8" path="res://assets/audio/sfx/9mm-pistol-shot-trimmed.mp3" id="3_78cn6"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgi8u"]
-albedo_color = Color(0.254902, 0.00784314, 0.0196078, 1)
+[ext_resource type="ArrayMesh" uid="uid://1kfqdhmvqxjm" path="res://assets/weapons/rifle/machinegun.obj" id="3_e5qwy"]
 
 [sub_resource type="Animation" id="Animation_nu76r"]
 length = 0.001
@@ -190,7 +187,7 @@ _data = {
 "unequip": SubResource("Animation_glhd0")
 }
 
-[node name="Pistol" type="Node3D" node_paths=PackedStringArray("scope_attach_point", "grip_attach_point", "animation_player", "fire_audio")]
+[node name="Rifle" type="Node3D" node_paths=PackedStringArray("scope_attach_point", "grip_attach_point", "animation_player", "fire_audio")]
 script = ExtResource("1_setpl")
 default_position = Vector3(0.25, -0.29, -0.57)
 default_rotation = Vector3(0, -3.14159, 0)
@@ -206,14 +203,14 @@ recoil_rotation_z = ExtResource("2_uh3sa")
 recoil_position_z = ExtResource("2_uh3sa")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = ExtResource("2_ebkpp")
-surface_material_override/0 = SubResource("StandardMaterial3D_sgi8u")
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+mesh = ExtResource("3_e5qwy")
 
 [node name="ScopeAttachmentPoint" type="Marker3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152528, 0.155107)
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0.0207593, 1.5527e-05)
 
 [node name="GripAttachmentPoint" type="Marker3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0486448, 0.155107)
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, -0.000800973, 0.0266969)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

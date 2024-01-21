@@ -1,12 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cq1whxsacte53"]
+[gd_scene load_steps=11 format=3 uid="uid://cq1whxsacte53"]
 
-[ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="1_75bwf"]
 [ext_resource type="Script" path="res://item/weapons/Weapon.gd" id="1_ppkwk"]
 [ext_resource type="Curve" uid="uid://763d20qh4fo6" path="res://resources/curves/recoil_curve.tres" id="2_htmpd"]
 [ext_resource type="AudioStream" uid="uid://dstepgdm88yx8" path="res://assets/audio/sfx/9mm-pistol-shot-trimmed.mp3" id="3_bfhg7"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7klqe"]
-albedo_color = Color(0.121569, 0.121569, 0.121569, 1)
+[ext_resource type="ArrayMesh" uid="uid://ct0hi3lelvj2p" path="res://assets/weapons/pistol/pistol.obj" id="3_e5wc3"]
 
 [sub_resource type="Animation" id="Animation_nu76r"]
 length = 0.001
@@ -206,14 +203,14 @@ recoil_rotation_z = ExtResource("2_htmpd")
 recoil_position_z = ExtResource("2_htmpd")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = ExtResource("1_75bwf")
-surface_material_override/0 = SubResource("StandardMaterial3D_7klqe")
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+mesh = ExtResource("3_e5wc3")
 
 [node name="ScopeAttachmentPoint" type="Marker3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152528, 0.155107)
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0.0180609, 0.0157954)
 
 [node name="GripAttachmentPoint" type="Marker3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0486448, 0.155107)
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0.00696304, 0.0193884)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

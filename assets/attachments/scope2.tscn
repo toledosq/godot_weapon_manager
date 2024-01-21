@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://csxrxc8pof11e"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_uku7m"]
-top_radius = 0.05
-bottom_radius = 0.05
+top_radius = 0.04
+bottom_radius = 0.03
 height = 0.2
 
 [node name="Scope" type="Node3D"]
