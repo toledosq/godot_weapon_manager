@@ -5,6 +5,10 @@ class_name ItemDataWeaponRanged extends ItemDataWeapon
 @export var projectile: PackedScene
 @export var rate_of_fire: int = 100
 
+@export_category("Attachments")
+@export var scope: ItemDataAttachmentScope
+@export var grip: ItemDataAttachmentGrip
+
 
 func fire():
 	print("%s: Fire" % [name])
@@ -15,3 +19,32 @@ func fire():
 func reload(amount):
 	current_ammo += amount
 	
+
+func add_attachment(attachment: ItemDataAttachment):
+	var prev_attachment: ItemDataAttachment
+	
+	match attachment.attachment_type:
+		"scope":
+			prev_attachment = scope
+			scope = attachment
+		"grip":
+			prev_attachment = grip
+			grip = attachment
+	
+	# return original attachment if swapped else null
+	return prev_attachment
+
+
+func remove_attachment(attachment_type: String):
+	var prev_attachment: ItemDataAttachment
+	
+	match attachment_type:
+		"scope":
+			prev_attachment = scope
+			scope = null
+		"grip":
+			prev_attachment = grip
+			grip = null
+	
+	# Give attachment to caller
+	return prev_attachment
