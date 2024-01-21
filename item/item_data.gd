@@ -10,7 +10,7 @@ class_name ItemData extends Resource
 @export var is_unique = false
 
 @export_group("Item Rendering")
-@export var texture: AtlasTexture
+@export var texture: Texture
 @export var mesh: Mesh
 @export var mesh_scale_modifier: float = 1.0
 

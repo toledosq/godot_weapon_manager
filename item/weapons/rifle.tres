@@ -1,15 +1,9 @@
-[gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=6 format=3 uid="uid://d27ee4dnn45fm"]
+[gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=5 format=3 uid="uid://d27ee4dnn45fm"]
 
 [ext_resource type="PackedScene" uid="uid://bsdx2usalhemp" path="res://item/weapons/rifle.tscn" id="1_72lhd"]
+[ext_resource type="ArrayMesh" uid="uid://1kfqdhmvqxjm" path="res://assets/weapons/rifle/machinegun.obj" id="1_cx3s0"]
 [ext_resource type="Script" path="res://item/item_data_weapon_ranged.gd" id="1_vugfe"]
-[ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="1_yd2x7"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7xaja"]
-load_path = "res://.godot/imported/test_icons.png-1ede0258be7e19b60f0971a4db166e0b.s3tc.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a3cv8"]
-atlas = SubResource("CompressedTexture2D_7xaja")
-region = Rect2(160, 192, 32, 32)
+[ext_resource type="Texture2D" uid="uid://crormp8t0jr01" path="res://assets/weapons/rifle/machinegun.png" id="3_aoc3v"]
 
 [resource]
 script = ExtResource("1_vugfe")
@@ -27,6 +21,6 @@ value = 100
 description = "una rifle-ola"
 stackable = false
 is_unique = true
-texture = SubResource("AtlasTexture_a3cv8")
-mesh = ExtResource("1_yd2x7")
-mesh_scale_modifier = 1.0
+texture = ExtResource("3_aoc3v")
+mesh = ExtResource("1_cx3s0")
+mesh_scale_modifier = 8.0
