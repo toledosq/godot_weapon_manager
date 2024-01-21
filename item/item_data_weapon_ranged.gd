@@ -18,20 +18,23 @@ func fire():
 
 func reload(amount):
 	current_ammo += amount
-	
+
 
 func add_attachment(attachment: ItemDataAttachment):
-	var prev_attachment: ItemDataAttachment
+	# Will return attachment if incompatible
+	# Will return prev attachment if swapped
+	# Will return null if added
+	
+	var prev_attachment = attachment
 	
 	match attachment.attachment_type:
-		"scope":
+		1:
 			prev_attachment = scope
 			scope = attachment
-		"grip":
+		2:
 			prev_attachment = grip
 			grip = attachment
 	
-	# return original attachment if swapped else null
 	return prev_attachment
 
 

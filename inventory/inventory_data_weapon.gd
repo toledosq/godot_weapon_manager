@@ -26,6 +26,21 @@ func grab_slot_data(index: int) -> SlotData:
 # When player drops an item into equip inventory, check that it's equipable
 func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	
+	var slot_data = slot_datas[index]
+	
+	# Check if attachment:
+	if grabbed_slot_data.item_data is ItemDataAttachment:
+		if slot_data:
+			# Null if added
+			# Original ItemDataAttachment if swapped
+			# Grabbed ItemDataAttachment if fail
+			var a = slot_data.item_data.add_attachment(grabbed_slot_data.item_data)
+			if a:
+				grabbed_slot_data.item_data = a
+			else:
+				grabbed_slot_data = null
+			return grabbed_slot_data
+	
 	# If it's not an equipable item, don't drop it, give it back
 	if not grabbed_slot_data.item_data is ItemDataWeapon or grabbed_slot_data.item_data is ItemDataGrenade:
 		return grabbed_slot_data

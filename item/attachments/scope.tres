@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemDataAttachmentScope" load_steps=5 format=3 uid="uid://dmg700nh4q775"]
+
+[ext_resource type="Script" path="res://item/item_data_attachment_scope.gd" id="1_ym7at"]
+[ext_resource type="Texture2D" uid="uid://dk0xksws8yuka" path="res://assets/items/textures/test_icons.png" id="2_8xse3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_r7aji"]
+size = Vector3(0.1, 0.1, 0.2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6s4hn"]
+atlas = ExtResource("2_8xse3")
+region = Rect2(224, 320, 32, 32)
+
+[resource]
+script = ExtResource("1_ym7at")
+zoom_level = 2.0
+aim_offset = Vector2(0, 0)
+attachment_type = 1
+itemID = 100
+name = "RedDotSight"
+value = 120
+description = ""
+stackable = false
+is_unique = false
+texture = SubResource("AtlasTexture_6s4hn")
+mesh = SubResource("BoxMesh_r7aji")
+mesh_scale_modifier = 1.0

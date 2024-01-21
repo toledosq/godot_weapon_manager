@@ -95,6 +95,11 @@ func attach_scope(scope_resource: PackedScene):
 	scope_attach_point.add_child(scope_instance)
 
 
+func remove_scope():
+	var scope_instance = scope_attach_point.get_child(0)
+	scope_instance.queue_free()
+	
+
 
 func lerp_recoil(delta: float) -> void:
 	# If weapon just fired
