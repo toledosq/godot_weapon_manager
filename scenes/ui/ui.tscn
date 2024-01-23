@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bqslsrof1c25y"]
 
-[ext_resource type="Script" path="res://ui/ui.gd" id="1_pr4e2"]
-[ext_resource type="PackedScene" uid="uid://ba2ddo5rcpo2r" path="res://ui/ingame_interface.tscn" id="3_nacsk"]
+[ext_resource type="Script" path="res://scripts/ui/ui.gd" id="1_pr4e2"]
+[ext_resource type="PackedScene" uid="uid://ba2ddo5rcpo2r" path="res://scenes/ui/ingame_interface.tscn" id="3_nacsk"]
 [ext_resource type="Texture2D" uid="uid://44ppud4c8jir" path="res://icon.svg" id="5_8dvbn"]
 
 [sub_resource type="Animation" id="Animation_7ohl6"]

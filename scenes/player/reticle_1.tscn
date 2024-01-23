@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c4mn0hk7ukjp1"]
 
-[ext_resource type="Script" path="res://addons/fpc/reticles/reticle_1.gd" id="1_3t0yp"]
+[ext_resource type="Script" path="res://scripts/player/reticle_1.gd" id="1_3t0yp"]
 
 [node name="Reticle" type="CenterContainer"]
 anchors_preset = 8

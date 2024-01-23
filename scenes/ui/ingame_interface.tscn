@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://ba2ddo5rcpo2r"]
 
-[ext_resource type="Script" path="res://ui/ingame_interface.gd" id="1_daqnu"]
-[ext_resource type="StyleBox" uid="uid://dqlqjqtupa5f8" path="res://ui/style_box_default.tres" id="2_3bb67"]
-[ext_resource type="PackedScene" uid="uid://dgx5uhiu3bkra" path="res://ui/ui_elements/inventory_panel.tscn" id="2_vrht3"]
-[ext_resource type="PackedScene" uid="uid://btwia68styqve" path="res://ui/ui_elements/slot.tscn" id="3_go75v"]
+[ext_resource type="Script" path="res://scripts/ui/ingame_interface.gd" id="1_daqnu"]
+[ext_resource type="StyleBox" uid="uid://dqlqjqtupa5f8" path="res://resources/ui/style_box_default.tres" id="2_3bb67"]
+[ext_resource type="PackedScene" uid="uid://dgx5uhiu3bkra" path="res://scenes/ui/ui_elements/inventory_panel.tscn" id="2_vrht3"]
+[ext_resource type="PackedScene" uid="uid://btwia68styqve" path="res://scenes/ui/ui_elements/slot.tscn" id="3_go75v"]
 [ext_resource type="Texture2D" uid="uid://44ppud4c8jir" path="res://icon.svg" id="3_va6ys"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r2yyu"]

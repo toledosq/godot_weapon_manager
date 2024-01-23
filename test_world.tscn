@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://giq451xcik8x"]
 
-[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/player/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://scenes/items/pickup/pickup.tscn" id="2_10460"]
 [ext_resource type="Resource" uid="uid://bke0gsniyl1t4" path="res://resources/weapons/pistol.tres" id="3_2pijc"]
 [ext_resource type="Script" path="res://scripts/inventory/slot_data.gd" id="4_kjg3y"]
