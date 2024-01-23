@@ -14,6 +14,7 @@ var current_context_menu: ContextMenu
 var context_menu_slot_index: int
 var context_menu_inventory_data: InventoryData
 
+var POPUP_PANEL = preload("res://scenes/ui/ui_elements/inspection_window.tscn")
 var INSPECTION_PANEL = preload("res://scenes/ui/inspection_panel.tscn")
 
 
@@ -166,9 +167,10 @@ func close_context_menu():
 
 func open_inspect_window(slot_data):
 	print("InventoryInterface: Opening inspect window")
-	var inspection_window = INSPECTION_PANEL.instantiate()
+	var inspection_window = POPUP_PANEL.instantiate()
+	var inspection_panel = INSPECTION_PANEL.instantiate()
+	inspection_window.add_child(inspection_panel)
 	add_child(inspection_window)
-	
 	open_windows.append(inspection_window)
 	
 

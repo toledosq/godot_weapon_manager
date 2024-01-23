@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccce5nb0iuy5s"]
+
+[ext_resource type="PackedScene" uid="uid://d4p11rr7p5f3" path="res://scenes/ui/inspection_panel.tscn" id="1_gqc4o"]
+[ext_resource type="Script" path="res://scenes/ui/ui_elements/inspection_window.gd" id="1_yq06m"]
+
+[node name="Window" type="Window"]
+disable_3d = true
+initial_position = 1
+size = Vector2i(853, 485)
+wrap_controls = true
+always_on_top = true
+extend_to_title = true
+mouse_passthrough = true
+max_size = Vector2i(1280, 720)
+keep_title_visible = true
+script = ExtResource("1_yq06m")
+
+[node name="InspectionPanel" parent="." instance=ExtResource("1_gqc4o")]
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]

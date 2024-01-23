@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtrqe2cd0ilqd"]
+
+[ext_resource type="Script" path="res://scenes/ui/ui_elements/popup_panel.gd" id="1_awu7a"]
+[ext_resource type="PackedScene" uid="uid://d4p11rr7p5f3" path="res://scenes/ui/inspection_panel.tscn" id="1_ix2vq"]
+
+[node name="PopupPanel" type="PopupPanel"]
+disable_3d = true
+title = "Inspect"
+initial_position = 1
+size = Vector2i(968, 548)
+visible = true
+unresizable = false
+borderless = false
+always_on_top = true
+extend_to_title = true
+mouse_passthrough = true
+max_size = Vector2i(1280, 720)
+content_scale_aspect = 1
+script = ExtResource("1_awu7a")
+
+[node name="InspectionPanel" parent="." instance=ExtResource("1_ix2vq")]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 964.0
+offset_bottom = 544.0
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]

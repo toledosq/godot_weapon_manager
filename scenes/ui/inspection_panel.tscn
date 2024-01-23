@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4p11rr7p5f3"]
+[gd_scene load_steps=3 format=3 uid="uid://d4p11rr7p5f3"]
 
 [ext_resource type="Script" path="res://scripts/ui/inspection_panel.gd" id="1_4s88g"]
 [ext_resource type="Texture2D" uid="uid://crormp8t0jr01" path="res://assets/weapons/rifle/machinegun.png" id="2_mtm2l"]
-[ext_resource type="Texture2D" uid="uid://c8exgis8hi50l" path="res://assets/crosshairs/crosshair160.png" id="3_7f0ss"]
 
 [node name="InspectionPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(960, 540)
@@ -26,7 +25,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 64
+theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
@@ -35,10 +34,10 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 127
-theme_override_constants/margin_top = 63
-theme_override_constants/margin_right = 127
-theme_override_constants/margin_bottom = 63
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 80
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
@@ -46,13 +45,3 @@ texture = ExtResource("2_mtm2l")
 expand_mode = 2
 stretch_mode = 5
 flip_h = true
-
-[node name="Button" type="Button" parent="."]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-icon = ExtResource("3_7f0ss")
-expand_icon = true
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
