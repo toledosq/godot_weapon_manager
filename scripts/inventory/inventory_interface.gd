@@ -14,7 +14,7 @@ var current_context_menu: ContextMenu
 var context_menu_slot_index: int
 var context_menu_inventory_data: InventoryData
 
-var INSPECTION_WINDOW = preload("res://scenes/ui/ui_elements/inspection_window.tscn")
+var INSPECTION_PANEL = preload("res://scenes/ui/inspection_panel.tscn")
 
 
 var open_windows: Array
@@ -166,7 +166,7 @@ func close_context_menu():
 
 func open_inspect_window(slot_data):
 	print("InventoryInterface: Opening inspect window")
-	var inspection_window = INSPECTION_WINDOW.instantiate()
+	var inspection_window = INSPECTION_PANEL.instantiate()
 	add_child(inspection_window)
 	
 	open_windows.append(inspection_window)
@@ -211,7 +211,8 @@ func _on_visibility_changed():
 		# If there are open windows (eg item inspect), close them
 		if len(open_windows) > 0:
 			for open_window in open_windows:
-				open_window.queue_free()
+				if open_window != null:
+					open_window.queue_free()
 			open_windows.clear()
 
 
