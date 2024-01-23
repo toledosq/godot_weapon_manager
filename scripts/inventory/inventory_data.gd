@@ -121,4 +121,4 @@ func pick_up_slot_data(slot_data: SlotData) -> bool:
 
 func on_slot_clicked(index: int, button: int) -> void:
 	# Received from slot -> relay to inventory_interface
-	inventory_interact.emit(self, index,  button)
+	inventory_interact.emit(self, index, button)

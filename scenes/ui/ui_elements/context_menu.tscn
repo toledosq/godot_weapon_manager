@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn8aw6k53lsvi"]
+
+[ext_resource type="Script" path="res://scripts/ui/context_menu.gd" id="1_vhecf"]
+
+[node name="ContextMenu" type="PanelContainer"]
+offset_right = 80.0
+offset_bottom = 90.0
+script = ExtResource("1_vhecf")
+
+[node name="ItemList" type="ItemList" parent="."]
+layout_mode = 2
+auto_height = true
+same_column_width = true
+fixed_column_width = 80
+
+[connection signal="item_clicked" from="ItemList" to="." method="_on_item_list_item_clicked"]

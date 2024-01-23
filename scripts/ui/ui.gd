@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+@onready var HUD = $HUD
+@onready var INGAME_INTERFACE: InventoryInterface = $IngameInterface
+
 @onready var weapon_name_label = %WeaponNameLabel
 @onready var ammo_counter_label = %AmmoCounterLabel
 @onready var ammo_reserve_counter_label = %AmmoReserveCounterLabel
@@ -66,3 +69,7 @@ func show_interact_alert():
 
 func hide_interact_alert():
 	interact_alert_box.hide()
+
+
+func _on_open_inspect_window(slot_data):
+	print("UI: Opening inspect window")

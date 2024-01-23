@@ -9,6 +9,12 @@ signal grenade_inventory_updated()
 var grabbed_slot_data: SlotData
 var container
 
+const CONTEXT_MENU = preload("res://scenes/ui/ui_elements/context_menu.tscn")
+var context_menu_slot_index: int
+var context_menu_inventory_data: InventoryData
+
+var open_windows: Array
+
 @onready var player_inventory = %PlayerInventory
 @onready var grabbed_slot = %GrabbedSlot
 @onready var container_inventory = %ContainerInventory
@@ -17,6 +23,10 @@ var container
 @onready var weapon_inventory = %WeaponInventory
 @onready var grenade_inventory = %GrenadeInventory
 @onready var container_inventory_label = %ContainerInventoryLabel
+
+
+func _ready():
+	print("Inventory Interface ready")
 
 
 func _physics_process(_delta):
@@ -111,10 +121,15 @@ func on_inventory_interact(inventory_data: InventoryData, index: int, button: in
 			# Drop slot data from the slot's index in inventory_data
 			grabbed_slot_data = inventory_data.drop_slot_data(grabbed_slot_data, index)
 			
-		# If nothing is currently grabbed, use item
-		# TODO: Refactor to show subpanel with options
+		# If nothing is currently grabbed, show context menu
 		[null, MOUSE_BUTTON_RIGHT]:
-			inventory_data.use_slot_data(index)
+			if CONTEXT_MENU.can_instantiate():
+				context_menu_inventory_data = inventory_data
+				context_menu_slot_index = index
+				var context_menu = CONTEXT_MENU.instantiate()
+				context_menu.item_clicked.connect(_on_context_menu_item_clicked)
+				add_child(context_menu)
+				context_menu.position = get_local_mouse_position()
 			
 		# If something is grabbed
 		[_, MOUSE_BUTTON_RIGHT]:
@@ -131,6 +146,11 @@ func update_grabbed_slot() -> void:
 		grabbed_slot.show()
 	else:
 		grabbed_slot.hide()
+
+
+func open_inspect_window(slot_data):
+	print("InventoryInterface: Opening inspect window")
+
 
 
 # Handles GUI input where it is not handled in child panels
@@ -162,3 +182,19 @@ func _on_visibility_changed():
 		drop_slot_data.emit(grabbed_slot_data)
 		grabbed_slot_data = null
 		update_grabbed_slot()
+
+
+func _on_context_menu_item_clicked(item_text):
+	print("InventoryInterface: Received context menu click on item %s" % item_text)
+	match item_text:
+		"Inspect":
+			print("InventoryInterface: Emit open_inspect_window")
+			var slot_data = context_menu_inventory_data.slot_datas[context_menu_slot_index]
+			open_inspect_window(slot_data)
+		"Use":
+			print("InventoryInterface: Use Item")
+			context_menu_inventory_data.use_slot_data(context_menu_slot_index)
+		"Drop":
+			print("InventoryInterface: Drop Item")
+
+
