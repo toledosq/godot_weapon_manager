@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=4 format=3 uid="uid://bj52dqmmabrs3"]
+
+[ext_resource type="Script" path="res://scripts/items/item_data_weapon_ranged.gd" id="1_a80vh"]
+[ext_resource type="Texture2D" uid="uid://crormp8t0jr01" path="res://assets/weapons/rifle/machinegun.png" id="2_b3l66"]
+[ext_resource type="PackedScene" uid="uid://cs5p1mcy0cg5g" path="res://scenes/weapons/rifle2.tscn" id="3_ffb68"]
+
+[resource]
+script = ExtResource("1_a80vh")
+current_ammo = 30
+max_ammo = 30
+rate_of_fire = 800
+weapon_model = ExtResource("3_ffb68")
+base_damage = 20
+base_range = 1000
+single_fire = false
+ammo_type = "rifle"
+itemID = 200
+name = "HK416"
+value = 400
+description = ""
+stackable = false
+is_unique = true
+texture = ExtResource("2_b3l66")
+mesh_scale_modifier = 1.0

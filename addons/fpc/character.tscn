@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_data.gd" id="2_4ykg7"]
 [ext_resource type="PackedScene" uid="uid://c4mn0hk7ukjp1" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
-[ext_resource type="Resource" uid="uid://d27ee4dnn45fm" path="res://resources/weapons/rifle.tres" id="3_2rmyg"]
+[ext_resource type="Resource" uid="uid://bj52dqmmabrs3" path="res://resources/weapons/rifle2.tres" id="3_g51k6"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_data_armor.gd" id="3_radmv"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_data_weapon.gd" id="4_c4tes"]
 [ext_resource type="Script" path="res://scripts/inventory/slot_data.gd" id="4_qjh0a"]
@@ -21,7 +21,7 @@
 
 [sub_resource type="Resource" id="Resource_o3g4s"]
 script = ExtResource("4_qjh0a")
-item_data = ExtResource("3_2rmyg")
+item_data = ExtResource("3_g51k6")
 quantity = 1
 
 [sub_resource type="Resource" id="Resource_0bkhl"]
