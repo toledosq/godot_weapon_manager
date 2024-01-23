@@ -10,6 +10,7 @@ var grabbed_slot_data: SlotData
 var container
 
 const CONTEXT_MENU = preload("res://scenes/ui/ui_elements/context_menu.tscn")
+var current_context_menu: ContextMenu
 var context_menu_slot_index: int
 var context_menu_inventory_data: InventoryData
 
@@ -123,13 +124,12 @@ func on_inventory_interact(inventory_data: InventoryData, index: int, button: in
 			
 		# If nothing is currently grabbed, show context menu
 		[null, MOUSE_BUTTON_RIGHT]:
-			if CONTEXT_MENU.can_instantiate():
-				context_menu_inventory_data = inventory_data
-				context_menu_slot_index = index
-				var context_menu = CONTEXT_MENU.instantiate()
-				context_menu.item_clicked.connect(_on_context_menu_item_clicked)
-				add_child(context_menu)
-				context_menu.position = get_local_mouse_position()
+			if current_context_menu != null:
+				close_context_menu()
+				
+			context_menu_inventory_data = inventory_data
+			context_menu_slot_index = index
+			open_context_menu()
 			
 		# If something is grabbed
 		[_, MOUSE_BUTTON_RIGHT]:
@@ -146,6 +146,19 @@ func update_grabbed_slot() -> void:
 		grabbed_slot.show()
 	else:
 		grabbed_slot.hide()
+
+
+func open_context_menu():
+	var context_menu = CONTEXT_MENU.instantiate()
+	context_menu.item_clicked.connect(_on_context_menu_item_clicked)
+	add_child(context_menu)
+	context_menu.position = get_local_mouse_position()
+	current_context_menu = context_menu
+
+
+func close_context_menu():
+	current_context_menu.queue_free()
+	current_context_menu = null
 
 
 func open_inspect_window(slot_data):
@@ -178,10 +191,20 @@ func _on_gui_input(event):
 
 func _on_visibility_changed():
 	# If an item slot is grabbed when the interface closes, drop it
-	if not visible and grabbed_slot_data:
-		drop_slot_data.emit(grabbed_slot_data)
-		grabbed_slot_data = null
-		update_grabbed_slot()
+	if not visible:
+		if grabbed_slot_data:
+			drop_slot_data.emit(grabbed_slot_data)
+			grabbed_slot_data = null
+			update_grabbed_slot()
+		
+		# If a context menu is open, close it
+		if current_context_menu != null:
+			close_context_menu()
+		
+		# If there are open windows (eg item inspect), close them
+		if len(open_windows) > 0:
+			for open_window in open_windows:
+				open_window.close()
 
 
 func _on_context_menu_item_clicked(item_text):

@@ -69,7 +69,3 @@ func show_interact_alert():
 
 func hide_interact_alert():
 	interact_alert_box.hide()
-
-
-func _on_open_inspect_window(slot_data):
-	print("UI: Opening inspect window")
