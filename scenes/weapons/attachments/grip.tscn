@@ -42,6 +42,6 @@ shadow_mesh = SubResource("ArrayMesh_raomi")
 [node name="Grip" type="Node3D"]
 
 [node name="Grip" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.042618, 0)
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, -0.316669, 0)
 mesh = SubResource("ArrayMesh_bond6")
 skeleton = NodePath("")

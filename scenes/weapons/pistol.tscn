@@ -176,7 +176,7 @@ _data = {
 "unequip": SubResource("Animation_glhd0")
 }
 
-[node name="Pistol" type="Node3D" node_paths=PackedStringArray("weapon_mesh", "scope_attach_point", "grip_attach_point", "animation_player", "fire_audio")]
+[node name="Pistol" type="Node3D" node_paths=PackedStringArray("weapon_mesh", "scope_attach_point", "animation_player", "fire_audio")]
 script = ExtResource("1_ppkwk")
 default_position = Vector3(0.152128, -0.29, -0.537024)
 default_rotation = Vector3(0, 1.5708, 0)
@@ -184,7 +184,6 @@ ads_position = Vector3(0, -0.186854, -0.375348)
 ads_rotation = Vector3(0.013, 1.571, 0)
 weapon_mesh = NodePath("WeaponMesh")
 scope_attach_point = NodePath("WeaponMesh/ScopeAttachmentPoint")
-grip_attach_point = NodePath("WeaponMesh/GripAttachmentPoint")
 animation_player = NodePath("AnimationPlayer")
 fire_audio = NodePath("FireAudio")
 recoil_rotation_x = ExtResource("2_htmpd")
@@ -200,7 +199,7 @@ skeleton = NodePath("")
 [node name="ScopeAttachmentPoint" type="Marker3D" parent="WeaponMesh"]
 transform = Transform3D(-1.74845e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, 0.275018, 0.722123, -2.2094e-08)
 
-[node name="GripAttachmentPoint" type="Marker3D" parent="WeaponMesh"]
+[node name="UnderBarrelAttachmentPoint" type="Marker3D" parent="WeaponMesh"]
 transform = Transform3D(-1.74845e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, 1.10034, 0.224, -2.79753e-08)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
