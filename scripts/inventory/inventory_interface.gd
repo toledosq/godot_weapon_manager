@@ -14,6 +14,9 @@ var current_context_menu: ContextMenu
 var context_menu_slot_index: int
 var context_menu_inventory_data: InventoryData
 
+var INSPECTION_WINDOW = preload("res://scenes/ui/ui_elements/inspection_window.tscn")
+
+
 var open_windows: Array
 
 @onready var player_inventory = %PlayerInventory
@@ -124,9 +127,6 @@ func on_inventory_interact(inventory_data: InventoryData, index: int, button: in
 			
 		# If nothing is currently grabbed, show context menu
 		[null, MOUSE_BUTTON_RIGHT]:
-			if current_context_menu != null:
-				close_context_menu()
-				
 			context_menu_inventory_data = inventory_data
 			context_menu_slot_index = index
 			open_context_menu()
@@ -149,6 +149,9 @@ func update_grabbed_slot() -> void:
 
 
 func open_context_menu():
+	if current_context_menu != null:
+		close_context_menu()
+	
 	var context_menu = CONTEXT_MENU.instantiate()
 	context_menu.item_clicked.connect(_on_context_menu_item_clicked)
 	add_child(context_menu)
@@ -163,7 +166,11 @@ func close_context_menu():
 
 func open_inspect_window(slot_data):
 	print("InventoryInterface: Opening inspect window")
-
+	var inspection_window = INSPECTION_WINDOW.instantiate()
+	add_child(inspection_window)
+	
+	open_windows.append(inspection_window)
+	
 
 
 # Handles GUI input where it is not handled in child panels
@@ -204,15 +211,18 @@ func _on_visibility_changed():
 		# If there are open windows (eg item inspect), close them
 		if len(open_windows) > 0:
 			for open_window in open_windows:
-				open_window.close()
+				open_window.queue_free()
+			open_windows.clear()
 
 
 func _on_context_menu_item_clicked(item_text):
 	print("InventoryInterface: Received context menu click on item %s" % item_text)
 	match item_text:
 		"Inspect":
-			print("InventoryInterface: Emit open_inspect_window")
+			print("InventoryInterface: Open Inspection Window")
+			# Get the slot_data from the inventory
 			var slot_data = context_menu_inventory_data.slot_datas[context_menu_slot_index]
+			# Open an inspection window
 			open_inspect_window(slot_data)
 		"Use":
 			print("InventoryInterface: Use Item")
