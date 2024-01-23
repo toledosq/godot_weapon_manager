@@ -145,13 +145,12 @@ func lerp_recoil(delta: float) -> void:
 
 func apply_recoil():
 	# Randomize which y direction the gun rotates
-	recoil_amplitude.y *= -1 if randf() > 0.6 else 1
+	recoil_amplitude.y *= -1 if randf() > 0.8 else 1
 	
 	# Rotate
 	target_rot.z = recoil_rotation_z.sample(0)
 	target_rot.x = recoil_rotation_x.sample(0)
-	target_rot.y = recoil_rotation_y.sample(0)
 	
 	# Move gun backwards
 	target_pos.z = recoil_position_z.sample(0)
-	current_time = 0
+	current_time = 0.0

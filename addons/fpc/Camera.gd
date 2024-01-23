@@ -27,8 +27,8 @@ func sway(sway_amount):
 
 func apply_recoil():
 	# Apply random recoil effect
-	target_rotation_degrees.x = original_rotation_degrees.x + base_recoil_pitch_strength + randf_range(-randomness_factor, randomness_factor)
+	target_rotation_degrees.x = rotation_degrees.x + base_recoil_pitch_strength + randf_range(-randomness_factor, randomness_factor)
 	# Optional: add randomized yaw recoil for horizontal shake
-	target_rotation_degrees.y = original_rotation_degrees.y + randf_range(-randomness_factor, randomness_factor)
+	target_rotation_degrees.y = rotation_degrees.y + randf_range(-randomness_factor, randomness_factor)
 	
-	rotation_degrees = target_rotation_degrees
+	rotation_degrees = lerp(rotation_degrees, target_rotation_degrees, 0.6)
