@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ItemDataAttachmentGrip" load_steps=6 format=3 uid="uid://dw3cobpgbbxf7"]
+
+[ext_resource type="Script" path="res://scripts/items/item_data_attachment_grip.gd" id="1_2ji63"]
+[ext_resource type="PackedScene" uid="uid://cj68vixcmmq87" path="res://scenes/weapons/attachments/grip.tscn" id="1_qlmi3"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jbt0i"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.4
+radial_segments = 16
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yy0av"]
+load_path = "res://.godot/imported/test_icons.png-1ede0258be7e19b60f0971a4db166e0b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib7pp"]
+atlas = SubResource("CompressedTexture2D_yy0av")
+region = Rect2(0, 544, 32, 32)
+
+[resource]
+script = ExtResource("1_2ji63")
+attachment_type = 2
+attachment_scene = ExtResource("1_qlmi3")
+itemID = 101
+name = "PineAppleGrip"
+value = 50
+description = "anana"
+stackable = false
+is_unique = false
+texture = SubResource("AtlasTexture_ib7pp")
+mesh = SubResource("CylinderMesh_jbt0i")
+mesh_scale_modifier = 1.0

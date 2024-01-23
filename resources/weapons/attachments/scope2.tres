@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="ItemDataAttachmentScope" load_steps=5 format=3 uid="uid://ococbyr81vng"]
+
+[ext_resource type="PackedScene" uid="uid://csxrxc8pof11e" path="res://scenes/weapons/attachments/scope2.tscn" id="1_ev1qy"]
+[ext_resource type="Script" path="res://scripts/items/item_data_attachment_scope.gd" id="1_gubnp"]
+[ext_resource type="Texture2D" uid="uid://j0ormpwrrvx" path="res://assets/items/textures/test_icons_atlas.tres" id="2_t62ns"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cd6oi"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.4
+radial_segments = 16
+
+[resource]
+script = ExtResource("1_gubnp")
+zoom_level = 4.0
+aim_offset = Vector2(0, 0)
+attachment_type = 1
+attachment_scene = ExtResource("1_ev1qy")
+itemID = 102
+name = "BigScope"
+value = 150
+description = ""
+stackable = false
+is_unique = false
+texture = ExtResource("2_t62ns")
+mesh = SubResource("CylinderMesh_cd6oi")
+mesh_scale_modifier = 1.0
