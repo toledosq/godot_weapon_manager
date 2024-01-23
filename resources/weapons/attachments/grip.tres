@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemDataAttachmentGrip" load_steps=6 format=3 uid="uid://dw3cobpgbbxf7"]
 
-[ext_resource type="Script" path="res://scripts/items/item_data_attachment_grip.gd" id="1_2ji63"]
+[ext_resource type="Script" path="res://scripts/items/item_data_attachment_underbarrel.gd" id="1_2ji63"]
 [ext_resource type="PackedScene" uid="uid://cj68vixcmmq87" path="res://scenes/weapons/attachments/grip.tscn" id="1_qlmi3"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_jbt0i"]

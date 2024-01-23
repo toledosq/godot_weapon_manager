@@ -23,4 +23,4 @@ stackable = false
 is_unique = true
 texture = ExtResource("3_aoc3v")
 mesh = ExtResource("1_vctxm")
-mesh_scale_modifier = 0.1
+mesh_scale_modifier = 0.25

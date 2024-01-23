@@ -115,7 +115,7 @@ _data = {
 "unequip": SubResource("Animation_glhd0")
 }
 
-[node name="Rifle" type="Node3D" node_paths=PackedStringArray("weapon_mesh", "scope_attach_point", "animation_player", "fire_audio")]
+[node name="Rifle" type="Node3D" node_paths=PackedStringArray("weapon_mesh", "scope_attach_point", "underbarrel_attach_point", "animation_player", "fire_audio")]
 script = ExtResource("1_setpl")
 default_position = Vector3(0.167827, -0.29, -0.293405)
 default_rotation = Vector3(0, 1.57117, 0)
@@ -123,6 +123,7 @@ ads_position = Vector3(0, -0.23, -0.13)
 ads_rotation = Vector3(-3.0976e-06, 1.57117, 0.00829031)
 weapon_mesh = NodePath("WeaponMesh")
 scope_attach_point = NodePath("WeaponMesh/ScopeAttachmentPoint")
+underbarrel_attach_point = NodePath("WeaponMesh/UnderBarrelAttachmentPoint")
 animation_player = NodePath("AnimationPlayer")
 fire_audio = NodePath("FireAudio")
 recoil_rotation_x = ExtResource("2_uh3sa")

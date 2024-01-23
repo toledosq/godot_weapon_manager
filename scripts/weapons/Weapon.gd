@@ -11,7 +11,7 @@ class_name Weapon extends Node3D
 
 @export_category("Attachments")
 @export var scope_attach_point: Marker3D
-@export var under_barrel_attach_point: Marker3D
+@export var underbarrel_attach_point: Marker3D
 
 @export_category("Animations & Audio")
 @export var animation_player: AnimationPlayer
@@ -108,10 +108,10 @@ func attach_scope(attachment_instance):
 
 
 func attach_under_barrel(attachment_instance):
-	if under_barrel_attach_point.get_child_count() > 0:
-		remove_under_barrel()
+	if underbarrel_attach_point.get_child_count() > 0:
+		remove_underbarrel()
 	print("Weapon: Attaching under_barrel")
-	under_barrel_attach_point.add_child(attachment_instance)
+	underbarrel_attach_point.add_child(attachment_instance)
 
 
 func remove_scope():
@@ -120,10 +120,10 @@ func remove_scope():
 	scope_instance.queue_free()
 
 
-func remove_under_barrel():
+func remove_underbarrel():
 	print("Weapon: Removing under_barrel")
-	var under_barrel_instance = under_barrel_attach_point.get_child(0)
-	under_barrel_instance.queue_free()
+	var underbarrel_instance = underbarrel_attach_point.get_child(0)
+	underbarrel_instance.queue_free()
 
 
 func lerp_recoil(delta: float) -> void:

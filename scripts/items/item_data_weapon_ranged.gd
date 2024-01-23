@@ -7,7 +7,7 @@ class_name ItemDataWeaponRanged extends ItemDataWeapon
 
 @export_category("Attachments")
 @export var scope: ItemDataAttachmentScope
-@export var grip: ItemDataAttachmentGrip
+@export var underbarrel: ItemDataAttachmentUnderBarrel
 
 
 func fire():
@@ -33,9 +33,9 @@ func add_attachment(attachment: ItemDataAttachment):
 			scope = attachment
 			print("WeaponResource: Added scope")
 		2:
-			prev_attachment = grip
-			grip = attachment
-			print("WeaponResource: Added grip")
+			prev_attachment = underbarrel
+			underbarrel = attachment
+			print("WeaponResource: Added underbarrel")
 	
 	return prev_attachment
 
@@ -48,8 +48,8 @@ func remove_attachment(attachment_type: int):
 			prev_attachment = scope
 			scope = null
 		2:
-			prev_attachment = grip
-			grip = null
+			prev_attachment = underbarrel
+			underbarrel = null
 	
 	# Give attachment to caller
 	return prev_attachment
