@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4p11rr7p5f3"]
+[gd_scene load_steps=4 format=3 uid="uid://d4p11rr7p5f3"]
 
 [ext_resource type="Script" path="res://scripts/ui/inspection_panel.gd" id="1_4s88g"]
-[ext_resource type="Texture2D" uid="uid://crormp8t0jr01" path="res://assets/weapons/rifle/machinegun.png" id="2_mtm2l"]
+[ext_resource type="Texture2D" uid="uid://dp0ae4xmxuf70" path="res://assets/crosshairs/crosshair086.png" id="2_bywgr"]
+[ext_resource type="Texture2D" uid="uid://cu2ywedy0lea6" path="res://assets/crosshairs/crosshair114.png" id="2_ccq4b"]
 
 [node name="InspectionPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(960, 540)
@@ -18,30 +19,58 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 script = ExtResource("1_4s88g")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="PanelTitleLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Inspect"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+texture_normal = ExtResource("2_bywgr")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+[node name="MainWindow" type="PanelContainer" parent="VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/MainWindow"]
 layout_mode = 2
 theme_override_constants/margin_left = 150
 theme_override_constants/margin_top = 80
 theme_override_constants/margin_right = 150
 theme_override_constants/margin_bottom = 80
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+[node name="WeaponImage" type="TextureRect" parent="VBoxContainer/MarginContainer/MainWindow/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("2_mtm2l")
+texture = ExtResource("2_ccq4b")
 expand_mode = 2
 stretch_mode = 5
 flip_h = true
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
