@@ -128,7 +128,7 @@ func remove_grip():
 
 func lerp_recoil(delta: float) -> void:
 	# If weapon just fired
-	if current_time < 0.1:
+	if current_time < 0.2:
 		# Increment timer
 		current_time += delta
 		

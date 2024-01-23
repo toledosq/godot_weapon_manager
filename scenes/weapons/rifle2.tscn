@@ -130,6 +130,7 @@ recoil_rotation_x = ExtResource("2_k3kvq")
 recoil_rotation_y = ExtResource("2_k3kvq")
 recoil_rotation_z = ExtResource("2_k3kvq")
 recoil_position_z = ExtResource("2_k3kvq")
+recoil_amplitude = Vector3(-1, 0.5, 1)
 
 [node name="WeaponMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)

@@ -2,21 +2,21 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tbcg"]
 resource_name = "Black"
-cull_mode = 2
-albedo_color = Color(0.179114, 0.180971, 0.186652, 1)
+albedo_color = Color(0.0823529, 0.0823529, 0.0862745, 1)
+metallic_specular = 0.1
 roughness = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_erub5"]
 resource_name = "DarkMetal"
-cull_mode = 2
-albedo_color = Color(0.240094, 0.239986, 0.236899, 1)
-roughness = 0.5
+albedo_color = Color(0.0392157, 0.0392157, 0.0392157, 1)
+metallic_specular = 0.1
+roughness = 0.75
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lgo71"]
 resource_name = "Metal"
-cull_mode = 2
-albedo_color = Color(0.286274, 0.290196, 0.287072, 1)
-roughness = 0.5
+albedo_color = Color(0.0313726, 0.0313726, 0.0313726, 1)
+metallic_specular = 0.1
+roughness = 0.85
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_rdgqa"]
 _surfaces = [{

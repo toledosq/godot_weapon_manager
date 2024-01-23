@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemDataWeaponRanged" load_steps=5 format=3 uid="uid://bke0gsniyl1t4"]
 
-[ext_resource type="ArrayMesh" uid="uid://ct0hi3lelvj2p" path="res://assets/weapons/pistol/pistol.obj" id="1_7tdxf"]
+[ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="1_lvhsl"]
 [ext_resource type="PackedScene" uid="uid://cq1whxsacte53" path="res://scenes/weapons/pistol.tscn" id="2_f82n3"]
 [ext_resource type="Script" path="res://scripts/items/item_data_weapon_ranged.gd" id="2_oidbl"]
 [ext_resource type="Texture2D" uid="uid://c8oipdcstt4vs" path="res://assets/weapons/pistol/pistol.png" id="3_4sicu"]
@@ -22,5 +22,5 @@ description = "Ol reliable"
 stackable = false
 is_unique = true
 texture = ExtResource("3_4sicu")
-mesh = ExtResource("1_7tdxf")
-mesh_scale_modifier = 8.0
+mesh = ExtResource("1_lvhsl")
+mesh_scale_modifier = 0.25

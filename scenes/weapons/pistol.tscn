@@ -3,14 +3,14 @@
 [ext_resource type="Script" path="res://scripts/weapons/Weapon.gd" id="1_ppkwk"]
 [ext_resource type="Curve" uid="uid://763d20qh4fo6" path="res://resources/curves/recoil_curve.tres" id="2_htmpd"]
 [ext_resource type="AudioStream" uid="uid://dstepgdm88yx8" path="res://assets/audio/sfx/9mm-pistol-shot-trimmed.mp3" id="3_bfhg7"]
-[ext_resource type="ArrayMesh" uid="uid://ct0hi3lelvj2p" path="res://assets/weapons/pistol/pistol.obj" id="3_e5wc3"]
+[ext_resource type="ArrayMesh" uid="uid://qraoyvubtu6g" path="res://assets/weapons/pistol/pistol.tres" id="3_i2qen"]
 
 [sub_resource type="Animation" id="Animation_nu76r"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:position")
+tracks/0/path = NodePath("WeaponMesh:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -22,7 +22,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:rotation")
+tracks/1/path = NodePath("WeaponMesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -34,7 +34,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MeshInstance3D:visible")
+tracks/2/path = NodePath("WeaponMesh:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -47,38 +47,39 @@ tracks/2/keys = {
 [sub_resource type="Animation" id="Animation_b1et4"]
 resource_name = "equip"
 length = 0.5
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:position")
+tracks/0/path = NodePath("WeaponMesh:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, -0.246261, 0), Vector3(0, 0, 0)]
+"values": [Vector3(0, -0.199758, 0), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:rotation")
+tracks/1/path = NodePath("WeaponMesh:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0.97351, 0, 0), Vector3(0, 0, 0)]
+"values": [Vector3(0, 1.5708, -1.0472), Vector3(0, 0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MeshInstance3D:visible")
+tracks/2/path = NodePath("WeaponMesh:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1),
+"times": PackedFloat32Array(0, 0.05),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -89,26 +90,26 @@ resource_name = "fire"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:position")
+tracks/0/path = NodePath("WeaponMesh:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.050244), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.122173), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:rotation")
+tracks/1/path = NodePath("WeaponMesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.363308, 0, 0), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(-0.1, 0, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_0vdty"]
@@ -116,26 +117,14 @@ resource_name = "reload"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:position")
+tracks/0/path = NodePath("WeaponMesh:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(3.14159, 0, 0), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.523599), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_glhd0"]
@@ -144,35 +133,35 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:position")
+tracks/0/path = NodePath("WeaponMesh:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.22866, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, -0.200221, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:rotation")
+tracks/1/path = NodePath("WeaponMesh:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.82479, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 1.5708, -1.0472)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MeshInstance3D:visible")
+tracks/2/path = NodePath("WeaponMesh:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -189,13 +178,13 @@ _data = {
 
 [node name="Pistol" type="Node3D" node_paths=PackedStringArray("weapon_mesh", "scope_attach_point", "grip_attach_point", "animation_player", "fire_audio")]
 script = ExtResource("1_ppkwk")
-default_position = Vector3(0.25, -0.29, -0.57)
-default_rotation = Vector3(0, -3.14159, 0)
-ads_position = Vector3(0, -0.184, -0.57)
-ads_rotation = Vector3(-0.0437554, -3.14159, -1.10999e-07)
-weapon_mesh = NodePath("MeshInstance3D")
-scope_attach_point = NodePath("MeshInstance3D/ScopeAttachmentPoint")
-grip_attach_point = NodePath("MeshInstance3D/GripAttachmentPoint")
+default_position = Vector3(0.152128, -0.29, -0.537024)
+default_rotation = Vector3(0, 1.5708, 0)
+ads_position = Vector3(0, -0.186854, -0.375348)
+ads_rotation = Vector3(0.013, 1.571, 0)
+weapon_mesh = NodePath("WeaponMesh")
+scope_attach_point = NodePath("WeaponMesh/ScopeAttachmentPoint")
+grip_attach_point = NodePath("WeaponMesh/GripAttachmentPoint")
 animation_player = NodePath("AnimationPlayer")
 fire_audio = NodePath("FireAudio")
 recoil_rotation_x = ExtResource("2_htmpd")
@@ -203,15 +192,16 @@ recoil_rotation_y = ExtResource("2_htmpd")
 recoil_rotation_z = ExtResource("2_htmpd")
 recoil_position_z = ExtResource("2_htmpd")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
-mesh = ExtResource("3_e5wc3")
+[node name="WeaponMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("3_i2qen")
+skeleton = NodePath("")
 
-[node name="ScopeAttachmentPoint" type="Marker3D" parent="MeshInstance3D"]
-transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0.0180609, 0.0157954)
+[node name="ScopeAttachmentPoint" type="Marker3D" parent="WeaponMesh"]
+transform = Transform3D(-1.74845e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, 0.275018, 0.722123, -2.2094e-08)
 
-[node name="GripAttachmentPoint" type="Marker3D" parent="MeshInstance3D"]
-transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0.007, 0.02)
+[node name="GripAttachmentPoint" type="Marker3D" parent="WeaponMesh"]
+transform = Transform3D(-1.74845e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, 1.10034, 0.224, -2.79753e-08)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
