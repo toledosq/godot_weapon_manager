@@ -2,7 +2,7 @@ extends PanelContainer
 
 signal hot_bar_use(index: int)
 
-const SLOT = preload("res://ui/ui_elements/slot.tscn")
+const SLOT = preload("res://scenes/ui/ui_elements/slot.tscn")
 
 @onready var h_box_container = $MarginContainer/HBoxContainer
 
