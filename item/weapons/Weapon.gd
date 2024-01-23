@@ -6,6 +6,9 @@ class_name Weapon extends Node3D
 @export var ads_position : Vector3
 @export var ads_rotation : Vector3
 
+@export_category("Model")
+@export var weapon_mesh : Node3D
+
 @export_category("Attachments")
 @export var scope_attach_point: Marker3D
 @export var grip_attach_point: Marker3D
@@ -30,11 +33,10 @@ var target_pos: Vector3
 
 var ads := false
 const ADS_LERP := 20
-@onready var mesh_instance_3d = $MeshInstance3D
 
 
 func _ready():
-	mesh_instance_3d.hide()
+	weapon_mesh.hide()
 
 
 func _process(delta):
