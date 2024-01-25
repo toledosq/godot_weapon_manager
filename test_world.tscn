@@ -118,7 +118,7 @@ uv1_triplanar = true
 [node name="test_world" type="Node3D"]
 
 [node name="Character" parent="." instance=ExtResource("1_e18vq")]
-transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, -18)
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -1, 0, -16)
 floor_stop_on_slope = false
 floor_max_angle = 0.872665
 
@@ -137,7 +137,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30056, -6.09891)
 slot_data = SubResource("Resource_bet0b")
 
 [node name="Chest" parent="." instance=ExtResource("5_2dg3g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, -2.5)
 inventory_data = SubResource("Resource_6xgok")
 
 [node name="Label3D" type="Label3D" parent="Chest"]
@@ -358,7 +358,7 @@ texture_albedo = ExtResource("11_mw053")
 modulate = Color(1, 0, 0, 1)
 
 [node name="AmmoCrate" parent="." instance=ExtResource("11_tn7qr")]
-transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 4.5, 0.346855, -2.5)
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 1, 0.346855, -17)
 
 [node name="Label3D" type="Label3D" parent="AmmoCrate"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
