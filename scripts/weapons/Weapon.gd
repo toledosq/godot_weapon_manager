@@ -36,7 +36,7 @@ const ADS_LERP := 20
 
 
 func _ready():
-	#weapon_mesh.hide()
+	weapon_mesh.hide()
 	pass
 
 
@@ -60,7 +60,7 @@ func fire(rof=60.0):
 		fire_audio.pitch_scale = randf_range(0.9, 1.05)
 		fire_audio.play()
 		
-	if animation_player and "fire" in animation_player:
+	if animation_player and animation_player.has_animation("fire"):
 		animation_player.play("fire", -1, rof / 60.0)
 		await animation_player.animation_finished
 		
@@ -70,21 +70,23 @@ func fire(rof=60.0):
 
 func unequip():
 	print("%s: Unequipping" % name)
-	if animation_player and "unequip" in animation_player:
+	if animation_player and animation_player.has_animation("unequip"):
 		animation_player.play("unequip")
 		await animation_player.animation_finished
 
 
 func equip():
 	print("%s: Equipping" % name)
-	if animation_player and "equip" in animation_player:
+	if animation_player and animation_player.has_animation("equip"):
 		animation_player.play("equip")
 		await animation_player.animation_finished
+	else:
+		weapon_mesh.show()
 
 
 func reload():
 	print("%s: Reloading" % name)
-	if animation_player and "reload" in animation_player:
+	if animation_player and animation_player.has_animation("reload"):
 		animation_player.play("reload")
 		await animation_player.animation_finished
 
