@@ -11,9 +11,7 @@ class_name ItemDataWeaponRanged extends ItemDataWeapon
 
 
 func fire():
-	print("%s: Fire" % [name])
 	current_ammo -= 1
-	print("%s: Remaining ammo - %s" % [name, current_ammo])
 
 
 func reload(amount):

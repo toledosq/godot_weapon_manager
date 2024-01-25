@@ -243,6 +243,9 @@ func _on_context_menu_item_clicked(item_text):
 			
 		"Drop":
 			print("InventoryInterface: Drop Item")
+			grabbed_slot_data = context_menu_inventory_data.grab_slot_data(context_menu_slot_index)
+			drop_slot_data.emit(grabbed_slot_data)
+			grabbed_slot_data = null
 			
 		"Remove Attachment":
 			print("InventoryInterface: Remove attachment")
@@ -252,31 +255,19 @@ func _on_context_menu_item_clicked(item_text):
 
 
 func handle_remove_attachments(slot_data: SlotData):
-	# Get attachment data by removing from resource
-	var attachment_data = slot_data.item_data.remove_attachment(1)
 	
-	if attachment_data != null:
-		# Remove attachment from render model if equipped
-		if context_menu_inventory_data is InventoryDataWeapon:
-			EventBus.attachment_removed.emit(attachment_data, context_menu_slot_index)
+	for i in range(0,3):
+		# Remove attachment item from weapon item
+		var attachment_data = slot_data.item_data.remove_attachment(i)
 		
-		# Create new slot data to give to player
-		var new_slot_data = SlotData.new()
-		new_slot_data.item_data = attachment_data
-		if PlayerManager.player.inventory_data.pick_up_slot_data(new_slot_data):
-			print("InventoryInterface: Removed Scope")
-	
-	# Get attachment data by removing from resource
-	attachment_data = slot_data.item_data.remove_attachment(2)
-	
-	if attachment_data != null:
-		# Remove attachment from render model if equipped
-		if context_menu_inventory_data is InventoryDataWeapon:
-			EventBus.attachment_removed.emit(attachment_data, context_menu_slot_index)
-		
-		# Create new slot data to give to player
-		var new_slot_data = SlotData.new()
-		new_slot_data.item_data = attachment_data
-		if PlayerManager.player.inventory_data.pick_up_slot_data(new_slot_data):
-			print("InventoryInterface: Removed Scope")
-
+		# If an attachment was returned
+		if attachment_data != null:
+			# Remove attachment from render model if equipped
+			if context_menu_inventory_data is InventoryDataWeapon:
+				EventBus.attachment_removed.emit(attachment_data, context_menu_slot_index)
+			
+			# Create new slot data to give to player
+			var new_slot_data = SlotData.new()
+			new_slot_data.item_data = attachment_data
+			if PlayerManager.player.inventory_data.pick_up_slot_data(new_slot_data):
+				print("InventoryInterface: Removed %s" % attachment_data.name)

@@ -103,7 +103,6 @@ func handle_input():
 
 
 func change_state(new_state: STATES):
-	print("WeaponManager: STATE = ", STATE)
 	STATE = new_state
 
 
@@ -121,7 +120,7 @@ func _on_remove_weapon(weapon_slot_index):
 	
 	if weapon_slot_index == active_weapon_slot_index:
 		if weapon_model != null:
-			unequip_weapon()
+			unequip_weapon(true)
 	
 	weapon_resource_array[weapon_slot_index] = null
 
@@ -205,7 +204,7 @@ func unequip_attachment(attachment_resource: ItemDataAttachment, weapon_slot_ind
 				weapon_model.remove_underbarrel()
 
 
-func unequip_weapon():
+func unequip_weapon(fast: bool = false):
 	# Check if weapon is being rendered
 	if weapon_model == null:
 		return
@@ -216,7 +215,8 @@ func unequip_weapon():
 	print("WeaponManager: Unequip weapon %s" % active_weapon_slot_index)
 	
 	# Play unequip animation and delete render model
-	await weapon_model.unequip()
+	if !fast:
+		await weapon_model.unequip()
 	weapon_model.queue_free()
 	
 	# Force UI refresh

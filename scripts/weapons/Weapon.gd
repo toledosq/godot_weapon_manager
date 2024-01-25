@@ -51,8 +51,6 @@ func _process(delta):
 
 
 func fire(rof=60.0):
-	print("WeaponModel: Firing")
-	
 	EventBus.weapon_fired.emit()
 	
 	apply_recoil()
