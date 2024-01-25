@@ -5,6 +5,7 @@ signal slot_clicked(index: int, button: int)
 @onready var texture_rect = $MarginContainer/TextureRect
 @onready var quantity_label = $QuantityLabel
 
+
 func set_slot_data(slot_data: SlotData) -> void:
 	var item_data = slot_data.item_data
 	# Set the slot's texture to the item's texture
@@ -20,6 +21,7 @@ func set_slot_data(slot_data: SlotData) -> void:
 	else:
 		quantity_label.hide()
 
+
 func _on_gui_input(event):
 	# If user left or right clicks on slot
 	if event is InputEventMouseButton \
@@ -29,3 +31,11 @@ func _on_gui_input(event):
 		# Emit slot_clicked signal with the slot's index and which mouse button was clicked
 		# Will be caught by inventory_data
 		slot_clicked.emit(get_index(), event.button_index)
+
+
+func _on_mouse_entered():
+	self_modulate = Color(0.5,0.5,0.5)
+
+
+func _on_mouse_exited():
+	self_modulate = Color(1.0,1.0,1.0)

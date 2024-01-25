@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=31 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://scripts/player/character.gd" id="1_vt664"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_data.gd" id="2_4mc1i"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://dmg700nh4q775" path="res://resources/weapons/attachments/scope.tres" id="5_5dwo5"]
 [ext_resource type="Resource" uid="uid://dw3cobpgbbxf7" path="res://resources/weapons/attachments/grip.tres" id="6_m24m1"]
 [ext_resource type="Resource" uid="uid://ococbyr81vng" path="res://resources/weapons/attachments/scope2.tres" id="7_o2u4v"]
+[ext_resource type="Resource" uid="uid://c0751cw5et6g5" path="res://resources/weapons/sniper_rifle.tres" id="8_81x31"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_data_armor.gd" id="8_vpjtp"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_data_weapon.gd" id="9_ccfmt"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_data_grenade.gd" id="10_6sqp8"]
@@ -39,9 +40,14 @@ script = ExtResource("4_8lk3s")
 item_data = ExtResource("7_o2u4v")
 quantity = 1
 
+[sub_resource type="Resource" id="Resource_r4dhc"]
+script = ExtResource("4_8lk3s")
+item_data = ExtResource("8_81x31")
+quantity = 1
+
 [sub_resource type="Resource" id="Resource_5yuaq"]
 script = ExtResource("2_4mc1i")
-slot_datas = Array[ExtResource("4_8lk3s")]([SubResource("Resource_o3g4s"), SubResource("Resource_0bkhl"), SubResource("Resource_w06rm"), SubResource("Resource_b7im7"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("4_8lk3s")]([SubResource("Resource_o3g4s"), SubResource("Resource_0bkhl"), SubResource("Resource_w06rm"), SubResource("Resource_b7im7"), SubResource("Resource_r4dhc"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="Resource" id="Resource_ki7oc"]
 script = ExtResource("8_vpjtp")

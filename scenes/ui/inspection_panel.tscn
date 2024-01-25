@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4p11rr7p5f3"]
+[gd_scene load_steps=6 format=3 uid="uid://d4p11rr7p5f3"]
 
 [ext_resource type="Script" path="res://scripts/ui/inspection_panel.gd" id="1_4s88g"]
 [ext_resource type="Texture2D" uid="uid://dp0ae4xmxuf70" path="res://assets/crosshairs/crosshair086.png" id="2_bywgr"]
 [ext_resource type="Texture2D" uid="uid://cu2ywedy0lea6" path="res://assets/crosshairs/crosshair114.png" id="2_ccq4b"]
-[ext_resource type="PackedScene" uid="uid://dgx5uhiu3bkra" path="res://scenes/ui/ui_elements/inventory_panel.tscn" id="4_2se02"]
-[ext_resource type="StyleBox" uid="uid://yjfqvq3qpovl" path="res://resources/ui/AttachmentSlotStyleBox.tres" id="5_h1s0m"]
+[ext_resource type="Texture2D" uid="uid://44ppud4c8jir" path="res://icon.svg" id="4_pkwc2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xlwy0"]
 bg_color = Color(0.262745, 0.168627, 0.203922, 1)
@@ -83,39 +82,34 @@ flip_h = true
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="AttachScopeSlot" parent="VBoxContainer/MarginContainer/MainWindow/AttachSlotsContainer" instance=ExtResource("4_2se02")]
+[node name="AttachScopeSlot" type="TextureRect" parent="VBoxContainer/MarginContainer/MainWindow/AttachSlotsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -36.0
-offset_top = -220.0
-offset_right = 28.0
-offset_bottom = -156.0
+anchors_preset = -1
+anchor_left = 0.462924
+anchor_top = 0.0167364
+anchor_right = 0.53072
+anchor_bottom = 0.150628
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
-theme_override_styles/panel = ExtResource("5_h1s0m")
+texture = ExtResource("4_pkwc2")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="AttachUnderbarrelSlot" parent="VBoxContainer/MarginContainer/MainWindow/AttachSlotsContainer" instance=ExtResource("4_2se02")]
+[node name="AttachUnderbarrelSlot" type="TextureRect" parent="VBoxContainer/MarginContainer/MainWindow/AttachSlotsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -260.0
-offset_top = 97.0
-offset_right = -220.0
-offset_bottom = 137.0
+anchors_preset = -1
+anchor_left = 0.14089
+anchor_top = 0.646443
+anchor_right = 0.208686
+anchor_bottom = 0.780335
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("5_h1s0m")
+texture = ExtResource("4_pkwc2")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

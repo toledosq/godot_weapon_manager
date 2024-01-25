@@ -3,8 +3,10 @@
 [ext_resource type="Script" path="res://scripts/ui/context_menu.gd" id="1_vhecf"]
 
 [node name="ContextMenu" type="PanelContainer"]
-offset_right = 80.0
-offset_bottom = 90.0
+custom_minimum_size = Vector2(175, 10)
+offset_bottom = 8.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 script = ExtResource("1_vhecf")
 
 [node name="ItemList" type="ItemList" parent="."]

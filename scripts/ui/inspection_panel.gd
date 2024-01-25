@@ -1,8 +1,5 @@
 class_name InspectionPanel extends PanelContainer
 
-
-
-
 var slot_data: SlotData:
 	set(val):
 		slot_data = val
@@ -44,7 +41,12 @@ func set_panel_title():
 func set_attach_slots():
 	if slot_data.item_data is ItemDataWeaponRanged:
 		print("InspectionPanel: Scope = %s" % slot_data.item_data.scope)
+		if slot_data.item_data.scope:
+			attach_scope_slot.texture = slot_data.item_data.scope.texture
+		
 		print("InspectionPanel: Underbarrel = %s" % slot_data.item_data.underbarrel)
+		if slot_data.item_data.underbarrel:
+			attach_underbarrel_slot.texture = slot_data.item_data.underbarrel.texture
 
 
 func _on_close_button_pressed():

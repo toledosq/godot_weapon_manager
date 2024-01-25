@@ -113,6 +113,9 @@ func clear_container_inventory() -> void:
 
 # Set up to allow multiple different inventories, useful for containers
 func on_inventory_interact(inventory_data: InventoryData, index: int, button: int) -> void:
+	if current_context_menu != null:
+		close_context_menu()
+		
 	# Match which slot was interacted with, and which mouse button it was
 	match [grabbed_slot_data, button]:
 		
@@ -128,9 +131,11 @@ func on_inventory_interact(inventory_data: InventoryData, index: int, button: in
 			
 		# If nothing is currently grabbed, show context menu
 		[null, MOUSE_BUTTON_RIGHT]:
-			context_menu_inventory_data = inventory_data
-			context_menu_slot_index = index
-			open_context_menu()
+			# But only if there is data in this slot
+			if inventory_data.slot_datas[index] != null:
+				context_menu_inventory_data = inventory_data
+				context_menu_slot_index = index
+				open_context_menu()
 			
 		# If something is grabbed
 		[_, MOUSE_BUTTON_RIGHT]:

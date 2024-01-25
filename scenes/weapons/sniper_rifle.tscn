@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxmbe6xkwjmji"]
+
+[ext_resource type="Script" path="res://scripts/weapons/Weapon.gd" id="1_4sg8b"]
+[ext_resource type="Curve" uid="uid://763d20qh4fo6" path="res://resources/curves/recoil_curve.tres" id="2_fe2df"]
+[ext_resource type="ArrayMesh" uid="uid://dshnn474sv508" path="res://assets/weapons/sniper_rifle/sniper_rifle.tres" id="3_qalma"]
+[ext_resource type="AudioStream" uid="uid://dstepgdm88yx8" path="res://assets/audio/sfx/9mm-pistol-shot-trimmed.mp3" id="4_0jgmi"]
+
+[node name="SniperRifle" type="Node3D" node_paths=PackedStringArray("weapon_mesh", "scope_attach_point", "underbarrel_attach_point", "animation_player", "fire_audio")]
+script = ExtResource("1_4sg8b")
+default_position = Vector3(0.0989808, -0.171661, -0.250114)
+default_rotation = Vector3(0, 1.5708, 0)
+ads_position = Vector3(0, -0.137, -0.235)
+ads_rotation = Vector3(0, 1.5708, 0)
+weapon_mesh = NodePath("WeaponMesh")
+scope_attach_point = NodePath("WeaponMesh/ScopeAttachmentPoint")
+underbarrel_attach_point = NodePath("WeaponMesh/UnderBarrelAttachmentPoint")
+animation_player = NodePath("AnimationPlayer")
+fire_audio = NodePath("FireAudio")
+recoil_rotation_x = ExtResource("2_fe2df")
+recoil_rotation_y = ExtResource("2_fe2df")
+recoil_rotation_z = ExtResource("2_fe2df")
+recoil_position_z = ExtResource("2_fe2df")
+recoil_amplitude = Vector3(-1, 0.5, 1)
+
+[node name="WeaponMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("3_qalma")
+skeleton = NodePath("")
+
+[node name="ScopeAttachmentPoint" type="Marker3D" parent="WeaponMesh"]
+
+[node name="UnderBarrelAttachmentPoint" type="Marker3D" parent="WeaponMesh"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="FireAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_0jgmi")
+volume_db = -10.0
+max_polyphony = 2
