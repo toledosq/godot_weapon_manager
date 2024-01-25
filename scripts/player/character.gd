@@ -105,10 +105,9 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	# TODO: Move to it's own debug component
-	
 	# Gravity
-	#gravity = ProjectSettings.get_setting("physics/3d/default_gravity") # If the gravity changes during your game, uncomment this code
+	# gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
@@ -130,16 +129,21 @@ func _physics_process(delta):
 
 func _unhandled_input(event):
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		# Mouse Motion
 		if event is InputEventMouseMotion:
 			HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
 			HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
 			
+			# Add Camera sway for mouse motion
 			CAMERA.sway(Vector2(event.relative.x, event.relative.y))
 		
+		# Toggle ADS
 		if Input.is_action_just_pressed("weapon_ads") and state != STATES.SPRINTING:
 			toggle_ads(true)
 	
+	# Toggle inventory
 	if Input.is_action_just_pressed("inventory"):
+		# Turn off ADS if active
 		if is_ads:
 			toggle_ads(false)
 		toggle_inventory.emit()
@@ -261,11 +265,11 @@ func enter_sprint_state():
 
 func update_camera_fov():
 	if state == STATES.SPRINTING:
-		CAMERA.fov = lerp(CAMERA.fov, 85.0, 0.1)
+		CAMERA.change_fov(85.0)
 	elif is_ads:
-		CAMERA.fov = lerp(CAMERA.fov, 65.0, 0.1)
+		CAMERA.change_fov(60.0, 0.2)
 	else:
-		CAMERA.fov = lerp(CAMERA.fov, 75.0, 0.1)
+		CAMERA.change_fov(75.0)
 
 
 func update_collision_scale():
