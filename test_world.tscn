@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://giq451xcik8x"]
+[gd_scene load_steps=37 format=3 uid="uid://giq451xcik8x"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/player/character.tscn" id="1_e18vq"]
 [ext_resource type="PackedScene" uid="uid://dgio4y25l8p1q" path="res://scenes/items/pickup/pickup.tscn" id="2_10460"]
@@ -8,11 +8,12 @@
 [ext_resource type="Script" path="res://scripts/inventory/inventory_data.gd" id="6_hgy81"]
 [ext_resource type="Resource" uid="uid://d27ee4dnn45fm" path="res://resources/weapons/rifle.tres" id="7_10lmg"]
 [ext_resource type="Resource" uid="uid://eol2uf3pkpqe" path="res://resources/items/pills.tres" id="8_ena0f"]
-[ext_resource type="Texture2D" uid="uid://ce3tgu3q1oek1" path="res://assets/prototype/texture_01.png" id="8_wd1ma"]
+[ext_resource type="Texture2D" uid="uid://ce3tgu3q1oek1" path="res://assets/prototype/dark.png" id="8_wd1ma"]
 [ext_resource type="Resource" uid="uid://doby5fljcaryo" path="res://resources/weapons/grenade.tres" id="9_tt56x"]
-[ext_resource type="Texture2D" uid="uid://dt7c020x7j8a6" path="res://assets/prototype/texture_02.png" id="9_vefh7"]
+[ext_resource type="Texture2D" uid="uid://dt7c020x7j8a6" path="res://assets/prototype/orange.png" id="9_vefh7"]
 [ext_resource type="Texture2D" uid="uid://c8yw4k4t5nqyr" path="res://assets/crosshairs/crosshair118.png" id="11_mw053"]
 [ext_resource type="PackedScene" uid="uid://bh267nu3soeiq" path="res://scenes/objects/interactable/ammo_crate.tscn" id="11_tn7qr"]
+[ext_resource type="Texture2D" uid="uid://d218y2upkfdun" path="res://assets/prototype/light.png" id="13_ehwfn"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -107,9 +108,17 @@ uv1_triplanar = true
 albedo_texture = ExtResource("8_wd1ma")
 uv1_triplanar = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2udo7"]
+disable_ambient_light = true
+albedo_color = Color(0.709804, 0.709804, 0.709804, 1)
+albedo_texture = ExtResource("13_ehwfn")
+metallic_specular = 0.0
+uv1_triplanar = true
+
 [node name="test_world" type="Node3D"]
 
 [node name="Character" parent="." instance=ExtResource("1_e18vq")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, -18)
 floor_stop_on_slope = false
 floor_max_angle = 0.872665
 
@@ -138,21 +147,21 @@ text = "Container"
 [node name="CSG" type="Node3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -7.5)
 use_collision = true
-size = Vector3(30, 1, 20)
+size = Vector3(30, 1, 35)
 material = SubResource("StandardMaterial3D_o7dp0")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2.5, -7.5)
 use_collision = true
-size = Vector3(1, 5, 20)
+size = Vector3(1, 5, 35)
 material = SubResource("StandardMaterial3D_0fyno")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, -7.5)
 use_collision = true
-size = Vector3(1, 5, 20)
+size = Vector3(1, 5, 35)
 material = SubResource("StandardMaterial3D_0fyno")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="CSG"]
@@ -162,7 +171,7 @@ size = Vector3(1, 5, 30)
 material = SubResource("StandardMaterial3D_0fyno")
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="CSG"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.5, -10)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.5, -25)
 use_collision = true
 size = Vector3(1, 5, 30)
 material = SubResource("StandardMaterial3D_0fyno")
@@ -205,6 +214,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 3, -6)
 use_collision = true
 mesh = SubResource("PrismMesh_31j33")
 material = SubResource("StandardMaterial3D_6woil")
+
+[node name="Label3D" type="Label3D" parent="CSG/InclineTest"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, 3, -2)
+text = "Inclines Testing"
 
 [node name="CurbTest" type="Node3D" parent="CSG"]
 
@@ -319,6 +332,30 @@ operation = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, 0)
 texture_albedo = ExtResource("11_mw053")
 modulate = Color(0, 0, 1, 1)
+
+[node name="Label3D" type="Label3D" parent="CSG/GrenadeTest"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 3.5, 0)
+text = "Grenade Testing"
+
+[node name="AccuracyTest" type="Node3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.5, -24.25)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSG/AccuracyTest"]
+use_collision = true
+size = Vector3(3, 5, 0.5)
+material = SubResource("StandardMaterial3D_2udo7")
+
+[node name="Decal" type="Decal" parent="CSG/AccuracyTest"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.5, 0)
+size = Vector3(1, 1, 1)
+texture_albedo = ExtResource("11_mw053")
+modulate = Color(1, 0, 0, 1)
+
+[node name="Decal2" type="Decal" parent="CSG/AccuracyTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 8)
+size = Vector3(1, 1, 1)
+texture_albedo = ExtResource("11_mw053")
+modulate = Color(1, 0, 0, 1)
 
 [node name="AmmoCrate" parent="." instance=ExtResource("11_tn7qr")]
 transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 4.5, 0.346855, -2.5)

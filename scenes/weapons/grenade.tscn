@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://c2nk75nqe6x4r"]
 
 [ext_resource type="Script" path="res://scripts/weapons/grenade.gd" id="1_6wtes"]
-[ext_resource type="Texture2D" uid="uid://ce3tgu3q1oek1" path="res://assets/prototype/texture_01.png" id="2_30ro6"]
+[ext_resource type="Texture2D" uid="uid://ce3tgu3q1oek1" path="res://assets/prototype/dark.png" id="2_30ro6"]
 [ext_resource type="Texture2D" uid="uid://i7lfuuw7y653" path="res://assets/prototype/explosion_1_63.png" id="2_ipna1"]
 
 [sub_resource type="Curve" id="Curve_uto1m"]
