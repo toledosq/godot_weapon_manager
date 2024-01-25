@@ -172,6 +172,8 @@ func open_inspect_window(slot_data):
 	open_windows.append(inspection_panel)
 	
 	inspection_panel.set_slot_data(slot_data)
+	
+	
 	# TODO: Research window options
 	#var inspection_window = POPUP_PANEL.instantiate()
 	#var inspection_panel = INSPECTION_PANEL.instantiate()
@@ -225,17 +227,56 @@ func _on_visibility_changed():
 
 func _on_context_menu_item_clicked(item_text):
 	print("InventoryInterface: Received context menu click on item %s" % item_text)
+	
 	match item_text:
+		
 		"Inspect":
 			print("InventoryInterface: Open Inspection Window")
 			# Get the slot_data from the inventory
 			var slot_data = context_menu_inventory_data.slot_datas[context_menu_slot_index]
 			# Open an inspection window
 			open_inspect_window(slot_data)
+			
 		"Use":
 			print("InventoryInterface: Use Item")
 			context_menu_inventory_data.use_slot_data(context_menu_slot_index)
+			
 		"Drop":
 			print("InventoryInterface: Drop Item")
+			
+		"Remove Attachment":
+			print("InventoryInterface: Remove attachment")
+			var slot_data = context_menu_inventory_data.slot_datas[context_menu_slot_index]
+			if slot_data.item_data is ItemDataWeaponRanged:
+				handle_remove_attachments(slot_data)
 
+
+func handle_remove_attachments(slot_data: SlotData):
+	# Get attachment data by removing from resource
+	var attachment_data = slot_data.item_data.remove_attachment(1)
+	
+	if attachment_data != null:
+		# Remove attachment from render model if equipped
+		if context_menu_inventory_data is InventoryDataWeapon:
+			EventBus.attachment_removed.emit(attachment_data, context_menu_slot_index)
+		
+		# Create new slot data to give to player
+		var new_slot_data = SlotData.new()
+		new_slot_data.item_data = attachment_data
+		if PlayerManager.player.inventory_data.pick_up_slot_data(new_slot_data):
+			print("InventoryInterface: Removed Scope")
+	
+	# Get attachment data by removing from resource
+	attachment_data = slot_data.item_data.remove_attachment(2)
+	
+	if attachment_data != null:
+		# Remove attachment from render model if equipped
+		if context_menu_inventory_data is InventoryDataWeapon:
+			EventBus.attachment_removed.emit(attachment_data, context_menu_slot_index)
+		
+		# Create new slot data to give to player
+		var new_slot_data = SlotData.new()
+		new_slot_data.item_data = attachment_data
+		if PlayerManager.player.inventory_data.pick_up_slot_data(new_slot_data):
+			print("InventoryInterface: Removed Scope")
 

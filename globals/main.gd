@@ -58,8 +58,12 @@ func toggle_inventory_interface(container = null) -> void:
 		#hot_bar_inventory.show()
 
 	# If an external inventory is being interacted with, populate the container panel
-	if container and inventory_interface.visible:
-		inventory_interface.set_container_inventory(container)
+	set_external_inventory(container)
+
+
+func set_external_inventory(external_inventory):
+	if external_inventory and inventory_interface.visible:
+		inventory_interface.set_container_inventory(external_inventory)
 	else:
 		inventory_interface.clear_container_inventory()
 

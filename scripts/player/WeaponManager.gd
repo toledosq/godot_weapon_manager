@@ -49,6 +49,7 @@ func _ready():
 	EventBus.add_grenade.connect(_on_add_grenade)
 	EventBus.remove_grenade.connect(_on_remove_grenade)
 	EventBus.attachment_added.connect(equip_attachment)
+	EventBus.attachment_removed.connect(unequip_attachment)
 	active_weapon_slot_index = 0
 	
 	PlayerManager.player_ready.connect(_on_player_ready)

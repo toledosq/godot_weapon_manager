@@ -2,7 +2,7 @@ class_name ContextMenu extends PanelContainer
 
 signal item_clicked(index)
 
-@export var menu_items: Array[String] = ["Inspect", "Use", "Drop"]
+@export var menu_items: Array[String] = ["Inspect", "Use", "Remove Attachment", "Drop"]
 
 @onready var item_list = $ItemList
 

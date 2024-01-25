@@ -13,6 +13,7 @@ signal weapon_ammo_changed(amount)
 signal reserve_ammo_changed(amount)
 
 signal attachment_added(attachment_resource, weapon_slot_index)
+signal attachment_removed(attachment_resource, weapon_slot_index)
 
 signal grenade_thrown()
 signal grenade_ammo_changed(amount)
