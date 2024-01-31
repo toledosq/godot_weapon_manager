@@ -15,7 +15,7 @@ func _on_player_ready():
 	display = true
 
 
-func _process(delta):
+func _process(_delta):
 	if display:
 		if visible:
 			pass

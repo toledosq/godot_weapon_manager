@@ -12,7 +12,7 @@ func _ready():
 		item_list.add_item(item, null, false)
 
 
-func _on_item_list_item_clicked(index, at_position, mouse_button_index):
+func _on_item_list_item_clicked(index, _at_position, _mouse_button_index):
 	var item_text = item_list.get_item_text(index)
 	print("ContextMenu: Clicked on %s" % item_text)
 	item_clicked.emit(item_text)
