@@ -1,4 +1,4 @@
-extends Node
+class_name RaidManager extends Node
 
 const PickUp = preload("res://scenes/items/pickup/pickup.tscn")
 
@@ -7,8 +7,10 @@ const PickUp = preload("res://scenes/items/pickup/pickup.tscn")
 
 func _ready() -> void:
 	initialize_inventories()
+	print("RaidManager: Ready")
 
 
+#region Inventory Management
 func initialize_inventories() -> void:
 	print("Main: Connecting to Inventory Interface")
 	# Connect player to inventory interface
@@ -73,3 +75,4 @@ func _on_inventory_interface_drop_slot_data(slot_data):
 	pick_up.slot_data = slot_data
 	pick_up.position = PlayerManager.player.get_drop_position()
 	add_child(pick_up)
+#endregion

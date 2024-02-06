@@ -55,7 +55,7 @@ func _ready():
 	PlayerManager.player_ready.connect(_on_player_ready)
 
 
-func _process(delta):
+func _process(_delta):
 	if weapon_model and STATE != STATES.NONE:
 		if ads:
 			weapon_model.ads = true

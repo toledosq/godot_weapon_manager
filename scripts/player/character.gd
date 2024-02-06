@@ -2,6 +2,7 @@ class_name Player extends CharacterBody3D
 
 enum STATES { NORMAL, CROUCHING, SPRINTING }
 var state: STATES = STATES.NORMAL
+var prev_state: STATES
 
 @export_category("Character")
 @export var base_speed : float = 3.0
@@ -82,7 +83,7 @@ func _ready():
 		HEAD.set_rotation_degrees(initial_facing_direction)
 
 
-func _process(delta):
+func _process(_delta):
 	
 	if Input.is_action_just_pressed(PAUSE):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -187,7 +188,7 @@ func handle_state(moving):
 
 	# Handle crouching
 	if crouch_enabled:
-		handle_crouching(moving)
+		handle_crouching()
 
 
 func handle_sprinting(moving):
@@ -213,14 +214,14 @@ func handle_sprint_mode_1(moving):
 		enter_normal_state()
 
 
-func handle_crouching(moving):
+func handle_crouching():
 	if crouch_mode == 0:
-		handle_crouch_mode_0(moving)
+		handle_crouch_mode_0()
 	elif crouch_mode == 1:
-		handle_crouch_mode_1(moving)
+		handle_crouch_mode_1()
 
 
-func handle_crouch_mode_0(moving):
+func handle_crouch_mode_0():
 	var is_crouching = Input.is_action_pressed(CROUCH) and not Input.is_action_pressed(SPRINT)
 	if is_crouching and state != STATES.CROUCHING:
 		enter_crouch_state()
@@ -228,7 +229,7 @@ func handle_crouch_mode_0(moving):
 		enter_normal_state()
 
 
-func handle_crouch_mode_1(moving):
+func handle_crouch_mode_1():
 	if Input.is_action_just_pressed(CROUCH):
 		if state == STATES.NORMAL:
 			enter_crouch_state()
@@ -238,7 +239,7 @@ func handle_crouch_mode_1(moving):
 
 func enter_normal_state():
 	#print("entering normal state")
-	var prev_state = state
+	prev_state = state
 	state = STATES.NORMAL
 	speed = base_speed
 	# If player is holding ADS when entering normal state, toggle true
@@ -247,7 +248,7 @@ func enter_normal_state():
 
 func enter_crouch_state():
 	#print("entering crouch state")
-	var prev_state = state
+	prev_state = state
 	state = STATES.CROUCHING
 	speed = crouch_speed
 	# If player is holding ADS when entering crouched state, toggle true
@@ -256,7 +257,7 @@ func enter_crouch_state():
 
 func enter_sprint_state():
 	#print("entering sprint state")
-	var prev_state = state
+	prev_state = state
 	state = STATES.SPRINTING
 	speed = sprint_speed
 	toggle_ads(false)
