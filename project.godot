@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="weapon_manager_test_3"
-run/main_scene="res://main.tscn"
+run/main_scene="res://raid_manager.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
